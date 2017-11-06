@@ -1,5 +1,5 @@
 package alpha.studentms.dao;
 
-public class ClassDAO {
+public class AssistantDAO {
 
 }
