@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-import com.oracle.webservices.internal.api.message.PropertySet;
 
 import alpha.studentms.bean.Post;
 import alpha.studentms.util.JdbcUtils;
@@ -18,6 +17,11 @@ public class PostDAO {
 	 * select by id
 	 */
 	private static String SELECT_BY_ID = "SELECT * FROM t_post WHERE pk_id = ?"; 
+	
+	/**
+	 * select by user_id
+	 */
+	private static String SELECT_BY_USER_ID = "SELECT * FROM t_post WHERE fk_user = ?";
 	
 	/**
 	 * select all post
@@ -61,6 +65,7 @@ public class PostDAO {
 	private PreparedStatement preState_insert;
 	private PreparedStatement preState_select_all;
 	private PreparedStatement preState_delete_all;
+	private PreparedStatement preState_select_by_userid;
 
 	/**
 	 * 初始化DAO
@@ -82,6 +87,7 @@ public class PostDAO {
 			preState_delete_by_id = connection.prepareStatement(DELETE_BY_ID);
 			preState_select_all = connection.prepareStatement(SELECT_ALL);
 			preState_delete_all = connection.prepareStatement(DELETE_ALL);
+			preState_select_by_userid = connection.prepareStatement(SELECT_BY_USER_ID);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,7 +103,6 @@ public class PostDAO {
 	 */
 	public Post select_by_id(String id){
 		try {
-			Post post;
 			preState_select_by_id.setString(1, id);
 			ResultSet set = preState_select_by_id.executeQuery();
 			if(set.next()){
@@ -196,6 +201,27 @@ public class PostDAO {
 		}
 		// when error occur
 		return -1;
+	}
+	
+	/**
+	 * select posts by user id
+	 * @param userid
+	 * @return
+	 */
+	public LinkedList<Post> select_by_userid(String userid){
+		try {
+			preState_select_by_userid.setString(1, userid);
+			ResultSet set = preState_select_by_userid.executeQuery();
+			LinkedList<Post> list = new LinkedList<>();
+			while (set.next()) {
+				list.add(resultset2post(set));
+			}
+			return list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/**

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import alpha.studentms.bean.Post;
 import alpha.studentms.dao.PostDAO;
+import javafx.geometry.Pos;
 
 import org.junit.Test;
 
@@ -49,5 +50,11 @@ public class PostDAOTest {
 		Post post = new Post("E180F91F0BC54A5BB34AF1865F411FFB", "123", "ccc", "content", 999);
 		int i = postDao.update_by_Id(post);
 		assertTrue(i == 1);
+	}
+	
+	@Test
+	public void test_select_by_userid(){
+		LinkedList<Post> list = postDao.select_by_userid("123");
+		assertTrue(list.size() == 4);
 	}
 }
