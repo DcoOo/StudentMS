@@ -72,6 +72,43 @@ public class Student {
 	 * 收藏夹(Json)字段
 	 */
 	private String collection;
+	
+		
+	/**
+	 * 构造学生实体
+	 * @param id
+	 * @param class_id
+	 * @param id_num
+	 * @param nation
+	 * @param number
+	 * @param name
+	 * @param sex
+	 * @param age
+	 * @param email
+	 * @param wechat
+	 * @param qq
+	 * @param phone
+	 * @param address
+	 * @param collection
+	 */
+	public Student(String id, String class_id, String id_num, String nation, String number, String name, String sex,
+			String age, String email, String wechat, String qq, String phone, String address, String collection) {
+		super();
+		this.id = id;
+		this.class_id = class_id;
+		this.id_num = id_num;
+		this.nation = nation;
+		this.number = number;
+		this.name = name;
+		this.sex = sex;
+		this.age = age;
+		this.email = email;
+		this.wechat = wechat;
+		this.qq = qq;
+		this.phone = phone;
+		this.address = address;
+		this.collection = collection;
+	}
 
 	public String getId() {
 		return id;

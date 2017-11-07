@@ -27,6 +27,24 @@ public class Post {
 	 */
 	private int reply_num;
 
+	
+	/**
+	 * 构造帖子
+	 * @param id
+	 * @param user_id
+	 * @param title
+	 * @param content
+	 * @param reply_num
+	 */
+	public Post(String id, String user_id, String title, String content, int reply_num) {
+		super();
+		this.id = id;
+		this.user_id = user_id;
+		this.title = title;
+		this.content = content;
+		this.reply_num = reply_num;
+	}
+
 	public String getId() {
 		return id;
 	}
