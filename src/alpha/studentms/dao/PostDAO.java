@@ -68,7 +68,7 @@ public class PostDAO {
 	private PreparedStatement preState_select_by_userid;
 
 	/**
-	 * 初始化DAO
+	 * constructor of PostDAO
 	 */
 	public PostDAO() {
 		// get db connection

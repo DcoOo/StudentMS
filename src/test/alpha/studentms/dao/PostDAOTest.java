@@ -6,7 +6,6 @@ import java.util.LinkedList;
 
 import alpha.studentms.bean.Post;
 import alpha.studentms.dao.PostDAO;
-import javafx.geometry.Pos;
 
 import org.junit.Test;
 
