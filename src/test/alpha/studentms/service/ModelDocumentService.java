@@ -1,4 +1,4 @@
-package alpha.studentms.service;
+package test.alpha.studentms.service;
 
 public class ModelDocumentService {
 

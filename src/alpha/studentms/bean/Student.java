@@ -3,6 +3,24 @@ package alpha.studentms.bean;
 public class Student {
 	
 	/**
+	 * is a CYL
+	 */
+	public static final int IS_CYL = 1;
+	public static final int NOT_CYL = 0;
+	
+	/**
+	 * is register
+	 */
+	public static final int IS_REIGSTER = 1;
+	public static final int NOT_REIGSTER = 0;
+	
+	/**
+	 * sex
+	 */
+	public static final int MAN = 1;
+	public static final int WOMAN = 0;
+
+	/**
 	 * 学生id
 	 */
 	private String id;
@@ -35,13 +53,13 @@ public class Student {
 	/**
 	 * 性别 
 	 */
-	private String sex;
+	private int sex;
 
 	/**
 	 * 年龄 
 	 */
 
-	private String age;
+	private int age;
 
 	/**
 	 * 邮箱 
@@ -69,13 +87,33 @@ public class Student {
 	private String address;
 	
 	/**
+	 * is CYL
+	 */
+	private int is_cyle;
+	
+	/**
+	 * is register
+	 */
+	private int register;
+	
+	/**
+	 * other info
+	 */
+	private String other_info;
+	
+	/**
+	 * english grade
+	 */
+	private float english_grade;
+
+	/**
 	 * 收藏夹(Json)字段
 	 */
 	private String collection;
 	
-		
+
 	/**
-	 * 构造学生实体
+	 * 
 	 * @param id
 	 * @param class_id
 	 * @param id_num
@@ -89,10 +127,15 @@ public class Student {
 	 * @param qq
 	 * @param phone
 	 * @param address
+	 * @param is_cyle
+	 * @param register
+	 * @param other_info
+	 * @param english_grade
 	 * @param collection
 	 */
-	public Student(String id, String class_id, String id_num, String nation, String number, String name, String sex,
-			String age, String email, String wechat, String qq, String phone, String address, String collection) {
+	public Student(String id, String class_id, String id_num, String nation, String number, String name, int sex,
+			int age, String email, String wechat, String qq, String phone, String address, int is_cyle, int register,
+			String other_info, float english_grade, String collection) {
 		super();
 		this.id = id;
 		this.class_id = class_id;
@@ -107,6 +150,10 @@ public class Student {
 		this.qq = qq;
 		this.phone = phone;
 		this.address = address;
+		this.is_cyle = is_cyle;
+		this.register = register;
+		this.other_info = other_info;
+		this.english_grade = english_grade;
 		this.collection = collection;
 	}
 
@@ -158,19 +205,19 @@ public class Student {
 		this.name = name;
 	}
 
-	public String getSex() {
+	public int getSex() {
 		return sex;
 	}
 
-	public void setSex(String sex) {
+	public void setSex(int sex) {
 		this.sex = sex;
 	}
 
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
 
-	public void setAge(String age) {
+	public void setAge(int age) {
 		this.age = age;
 	}
 
@@ -212,6 +259,40 @@ public class Student {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+
+	public int getIs_cyle() {
+		return is_cyle;
+	}
+
+	public void setIs_cyle(int is_cyle) {
+		this.is_cyle = is_cyle;
+	}
+
+	public int getRegister() {
+		return register;
+	}
+
+	public void setRegister(int register) {
+		this.register = register;
+	}
+	
+
+	public String getOther_info() {
+		return other_info;
+	}
+
+	public void setOther_info(String other_info) {
+		this.other_info = other_info;
+	}
+	
+	public float getEnglish_grade() {
+		return english_grade;
+	}
+
+	public void setEnglish_grade(float english_grade) {
+		this.english_grade = english_grade;
 	}
 
 	public String getCollection() {
