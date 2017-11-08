@@ -3,6 +3,7 @@ package alpha.studentms.util;
 import java.util.UUID;
 
 /**
+ * UUID generater
  * Created by Administrator on 2016/11/27.
  */
 public class UUIDGenerater {
