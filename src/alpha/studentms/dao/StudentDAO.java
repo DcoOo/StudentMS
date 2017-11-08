@@ -7,11 +7,11 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
-import alpha.studentms.bean.Collection;
 import alpha.studentms.bean.Student;
 import alpha.studentms.util.JdbcUtils;
-import test.alpha.studentms.util.JsonParser;
+import alpha.studentms.util.JsonParser;
 
 public class StudentDAO {
 
@@ -185,8 +185,19 @@ public class StudentDAO {
 	 * select collection by id
 	 * @param id
 	 * @return
+	 * a array with the id of post
 	 */
-	public Collection select_collection_by_id(String id){
+	public List<Object> select_collection_by_id(String id){
+		try {
+			preState_select_collection_by_id.setString(1, id);
+			ResultSet set = preState_select_collection_by_id.executeQuery();
+			if (set.next()) {
+				return JsonParser.toList(set.getString("collection"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return null;
 	}
 	
@@ -195,12 +206,12 @@ public class StudentDAO {
 	 * @param id
 	 * @return
 	 */
-	public HashMap<String, String> select_other_info(String id){
+	public Map<String, Object> select_other_info(String id){
 		try {
 			preState_select_otherinfo_by_id.setString(1, id);
 			ResultSet set = preState_select_otherinfo_by_id.executeQuery();
 			if (set.next()) {
-				return JsonParser.otherinfo2map(set.getString("otherinfo"));
+				return JsonParser.toMap(set.getString("otherinfo"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

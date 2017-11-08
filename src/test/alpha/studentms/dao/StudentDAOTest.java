@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -34,8 +35,14 @@ public class StudentDAOTest {
 	
 	@Test
 	public void test_other_info2map(){
-		HashMap<String, String> map = studentDao.select_other_info("21");
+		Map<String, Object> map = studentDao.select_other_info("1");
 		System.out.println(map.keySet());
+	}
+	
+	@Test
+	public void test_select_collection_by_id(){
+		List<Object> list = studentDao.select_collection_by_id("1");
+		System.out.println(list.size());
 	}
 	
 	@Test
