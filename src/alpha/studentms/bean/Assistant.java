@@ -7,7 +7,7 @@ public class Assistant {
 	 */
 	private String id;
 	/*
-	 * 辅导员负责的班级     辅导员全年级怎么表示？？？？？？？？？？？？？？
+	 * 辅导员负责的班级    
 	 */
 	private String classOfTeacher;
 	/*
@@ -15,7 +15,7 @@ public class Assistant {
 	 */
 	private int roleOfTeacher = 0;
 	/*
-	 * 辅导员工号？？？？？？？？？？？？？？？
+	 * 辅导员工号
 	 */
 	private String number;
 	/*

@@ -15,7 +15,7 @@ public class ClassAdvicer {
 	 */
 	private int roleOfTeacher;
 	/*
-	 * 班主任工号？？？？？？？？？？？？？？？
+	 * 班主任工号
 	 */
 	private String number;
 	/*
