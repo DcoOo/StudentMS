@@ -97,13 +97,7 @@ public class StudentDAO {
 	 * constructor
 	 */
 	public StudentDAO(){
-		// get connection
-		try {
-			connection = JdbcUtils.getConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		connection = JdbcUtils.getConnection();
 		// initialize preparedstatement
 		try {
 			preState_select_all = connection.prepareStatement(SELECT_ALL);

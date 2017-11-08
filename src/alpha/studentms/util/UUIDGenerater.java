@@ -2,6 +2,11 @@ package alpha.studentms.util;
 
 import java.util.UUID;
 
+/**
+ * 
+ * @author Administrator
+ *
+ */
 public class UUIDGenerater {
 
     public static String getUUID(){

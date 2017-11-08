@@ -40,13 +40,7 @@ public class LoginDAO {
 	 * constructor
 	 */
 	public LoginDAO(){
-		// get connection
-		try {
-			connection = JdbcUtils.getConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		connection = JdbcUtils.getConnection();
 		// initialize preparedstatement
 		try {
 			preState_insert = connection.prepareStatement(INSERT);
