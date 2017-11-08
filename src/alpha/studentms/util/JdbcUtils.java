@@ -33,7 +33,7 @@ public class JdbcUtils {
 	 * @return
 	 * @throws SQLException
 	 */
-	public static Connection getConnection() {
+	public static Connection getConnection(){
 		Connection connection = null;
 		try {
 			connection = dataSource.getConnection();
