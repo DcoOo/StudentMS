@@ -6,18 +6,30 @@ package alpha.studentms.bean;
  *	通知
  */
 public class Message {
+	/**
+	 * 通知的id
+	 */
 	private String id;
+	/**
+	 * 与通知关联的教师id
+	 */
 	private String teacher;
+	/**
+	 * 通知之的标题
+	 */
 	private String title;
+	/**
+	 * 通知的内容
+	 */
 	private String content;
 	
 	public Message() {}
 
 	/**
-	 * @param id
-	 * @param teacher
-	 * @param title
-	 * @param cntent
+	 * @param id 通知的id
+	 * @param teacher 与通知关联的教师id
+	 * @param title 通知的标题
+	 * @param content 通知的内容
 	 */
 	public Message(String id, String teacher, String title, String content) {
 		super();

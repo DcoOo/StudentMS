@@ -6,18 +6,30 @@ package alpha.studentms.bean;
  *	模板文档
  */
 public class ModelDocument {
+	/**
+	 * 模板文档的id
+	 */
 	private String modelDoc;
+	/**
+	 * 与模板文档关联的教师id
+	 */
 	private String teacher;
+	/**
+	 * 与模板文档关联的通知id
+	 */
 	private String message;
+	/**
+	 * 模板文档的名字
+	 */
 	private String name;
 	
 	public ModelDocument() {}
 
 	/**
-	 * @param modelDoc
-	 * @param teacher
-	 * @param message
-	 * @param name
+	 * @param modelDoc 模板文档的id
+	 * @param teacher 与模板文档关联的教师id
+	 * @param message 与模板文档关联的通知id
+	 * @param name 模板文档的名字
 	 */
 	public ModelDocument(String modelDoc, String teacher, String message, String name) {
 		super();

@@ -6,18 +6,30 @@ package alpha.studentms.bean;
  *	备忘录 
  */
 public class Memo {
+	/**
+	 * 备忘录的id
+	 */
 	private String id;
+	/**
+	 * 与备忘录关联的用户id
+	 */
 	private String user;
+	/**
+	 * 备忘录的标题
+	 */
 	private String title;
+	/**
+	 * 备忘录内容
+	 */
 	private String content;
 	
 	public Memo() {	}
 
 	/**
-	 * @param id
-	 * @param user
-	 * @param title
-	 * @param content
+	 * @param id 备忘录id
+	 * @param user 与备忘录关联的用户id
+	 * @param title 备忘录标题
+	 * @param content 备忘录内容
 	 */
 	public Memo(String id, String user, String title, String content) {
 		super();
