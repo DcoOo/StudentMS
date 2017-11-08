@@ -5,11 +5,7 @@ import static org.junit.Assert.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import org.junit.Before;
 import org.junit.Test;
-
-
 import alpha.studentms.util.JdbcUtils;
 
 public class JdbcUtilsTest {

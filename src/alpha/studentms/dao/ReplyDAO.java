@@ -66,13 +66,7 @@ public class ReplyDAO {
 	 * constructor of ReplyDAO
 	 */
 	public ReplyDAO(){
-		// get db connection
-		try {
-			connection = JdbcUtils.getConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		connection = JdbcUtils.getConnection();
 		
 		// initialize preparedstatement
 		try {

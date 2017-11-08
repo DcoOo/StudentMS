@@ -71,13 +71,7 @@ public class PostDAO {
 	 * constructor of PostDAO
 	 */
 	public PostDAO() {
-		// get db connection
-		try {
-			connection = JdbcUtils.getConnection();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		connection = JdbcUtils.getConnection();
 		
 		// initialize preparedstatement
 		try {
