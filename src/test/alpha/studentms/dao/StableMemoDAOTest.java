@@ -13,7 +13,7 @@ import alpha.studentms.dao.StableMemoDAO;
 /**
  * StableMemoDAO的测试类
  * 
- * @author joker
+ * @author joker 
  *
  */
 public class StableMemoDAOTest {

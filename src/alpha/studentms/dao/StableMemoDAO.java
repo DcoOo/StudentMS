@@ -15,7 +15,7 @@ import alpha.studentms.util.JdbcUtils;
  * 
  * @author joker
  * @see JdbcUtils
- * @see Memo
+ * @see Memo 
  */
 public class StableMemoDAO {
 	private static Connection connection = JdbcUtils.getConnection();
