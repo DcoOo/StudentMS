@@ -8,46 +8,66 @@ import alpha.studentms.bean.Student;
 public interface StudentService {
 
 	/**
-	 * select english grade
+	 * 查询英语成绩
+	 * @param id
+	 * 			用户id
+	 * @return
 	 */
 	float getEnglishGrade(String id);
 	
+	
 	/**
-	 * select class
+	 * 查询班级号
+	 * @param id
+	 * 			用户id
+	 * @return
 	 */
 	String getClassId(String id);
 	
-	/**
-	 * select english grade and class
-	 */
 	
 	/**
-	 * get basic information
+	 * 更新或者采集基本信息，其中基本信息包括以下：
+	 * nation、name、sex、age、email、wechat、qq、
+	 * phone、address、isCYL、register、englishgrade
+	 * @param student 更新数据后的学生bean
 	 */
 	void gatherAndUpdateInfomation(Student student);
 	
 	/**
-	 * get must memo
+	 * 获取必做任务列表
+	 * @param id 
+	 * 			用户id
+	 * @return
 	 */
 	List<Memo> getMustMemo(String id);
 	
 	/**
-	 * get option memo
+	 * 获取选座任务列表
+	 * @param id
+	 * 			用户id
+	 * @return
 	 */
 	List<Memo> getOptionMemo(String id);
 	
 	/**
-	 * get custonm memo
+	 * 获取自定义任务列表
+	 * @param id
+	 * 			用户id
+	 * @return
 	 */
 	List<Memo> getCustomMemo(String id);
 	
 	/**
-	 * add custom memo
+	 * 添加自定义任务
+	 * @param memo
+	 * 			新的自定义任务bean
 	 */
 	void insertCustomMemo(Memo memo);
 	
 	/**
-	 * add option memo
+	 * 添加选做任务
+	 * @param memo
+	 * 			新的选做任务
 	 */
 	void insertOptionMemo(Memo  memo);
 	

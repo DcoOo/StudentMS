@@ -160,10 +160,10 @@ public class StudentDAO {
 
 		}
 		try {
-			System.out.println(SELECT_BY_ID);
+//			System.out.println(SELECT_BY_ID);
 			preState_select_by_id = connection.prepareStatement(SELECT_BY_ID);
 			preState_select_by_id.setString(1, id);
-			System.out.println(preState_select_by_id.toString());
+//			System.out.println(preState_select_by_id.toString());
 			ResultSet set = preState_select_by_id.executeQuery();
 			if (set.next()) {
 				return resultset2student(set);

@@ -4,56 +4,103 @@ import java.util.List;
 
 import alpha.studentms.bean.Memo;
 import alpha.studentms.bean.Student;
+import alpha.studentms.dao.MemoDAO;
+import alpha.studentms.dao.StableMemoDAO;
+import alpha.studentms.dao.StudentDAO;
 import alpha.studentms.service.StudentService;
+import alpha.studentms.util.UUIDGenerater;
 
 public class StudentServiceImple implements StudentService{
 	
+	/**
+	 * DAO
+	 */
+	private StudentDAO studentDAO;
+	private MemoDAO memoDAO;
+	private StableMemoDAO stableMemoDAO;
+	
+	/**
+	 * constructor
+	 */
+	public StudentServiceImple() {
+		studentDAO = new StudentDAO();
+		memoDAO = new MemoDAO();
+		stableMemoDAO = new StableMemoDAO();
+	}
 
+	/**
+	 * get english grade
+	 */
 	@Override
 	public float getEnglishGrade(String id) {
-		return 0;
+		Student student = studentDAO.select_by_id(id, StudentDAO.PRIMARY_ID_CODE);
+		if (student != null) {
+			return student.getEnglish_grade();
+		}
+		return -1;
 	}
 
+	/**
+	 * get class id
+	 */
 	@Override
 	public String getClassId(String id) {
-		// TODO Auto-generated method stub
+		Student student = studentDAO.select_by_id(id, StudentDAO.PRIMARY_ID_CODE);
+		if (student != null) {
+			return student.getClass_id();
+		}
+
 		return null;
 	}
 
+	/**
+	 * gather basic info and update basic info
+	 */
 	@Override
 	public void gatherAndUpdateInfomation(Student student) {
-		// TODO Auto-generated method stub
-		
+		studentDAO.update_basic_info_by_id(student);
 	}
 
+	/**
+	 * 返回必做任务列表
+	 */
 	@Override
 	public List<Memo> getMustMemo(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return stableMemoDAO.getAllCompulsoryMemo(id);
 	}
 
+	/**
+	 * 返回选做任务列表
+	 */
 	@Override
 	public List<Memo> getOptionMemo(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return stableMemoDAO.getAllOptionalMemo(id);
 	}
 
+	/**
+	 * 返回自定义任务列表
+	 */
 	@Override
 	public List<Memo> getCustomMemo(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return memoDAO.searchAllMemoByUser(id);
 	}
 
+	/**
+	 * 插入自定义任务
+	 */
 	@Override
 	public void insertCustomMemo(Memo memo) {
 		// TODO Auto-generated method stub
-		
+		memoDAO.insertMeno(memo);
 	}
 
+	/**
+	 * 插入选做任务
+	 */
 	@Override
 	public void insertOptionMemo(Memo memo) {
 		// TODO Auto-generated method stub
-		
+		stableMemoDAO.insertStableMemo(UUIDGenerater.getUUID(), memo.getUser(), memo.getId());
 	}
 
 }
