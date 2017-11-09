@@ -1,5 +1,7 @@
 package alpha.studentms.serviceImple;
 
-public interface ModelDocumentService {
+public class TeacherServiceImple {
+	
+	
 
 }

@@ -19,11 +19,15 @@ public class StudentDAO {
 	 * id code
 	 */
 	public static final int PRIMARY_ID_CODE = 0;
-	public static final int CLASS_ID_CODE = 1;
 	public static final int STUDENT_NUMBER_CODE = 2;
 	
 	/**
-	 * select by id primary key id, class id, student number
+	 * select by class id
+	 */
+	public static String SELECT_BY_CLASS_ID = "SELECT * FROM t_student WHERE fk_class = ?";
+	
+	/**
+	 * select by id primary key id, student number
 	 */
 	public static String SELECT_BY_ID = "SELECT * FROM t_student WHERE %s = ?";
 	
@@ -87,6 +91,7 @@ public class StudentDAO {
 	private PreparedStatement preState_update_basic_info_by_id;
 	private PreparedStatement preState_update_other_info_by_id;
 	private PreparedStatement preState_update_collection_by_id;
+	private PreparedStatement preState_select_by_class_id;
 	
 	/**
 	 * connection
@@ -103,6 +108,7 @@ public class StudentDAO {
 			preState_select_all = connection.prepareStatement(SELECT_ALL);
 			preState_select_otherinfo_by_id = connection.prepareStatement(SELECT_OTHER_INFO_BY_ID);
 			preState_select_collection_by_id = connection.prepareStatement(SELECT_COLLECTION_BY_ID);
+			preState_select_by_class_id = connection.prepareStatement(SELECT_BY_CLASS_ID);
 			preState_delete_all = connection.prepareStatement(DELETE_ALL);
 //			preState_insert = connection.prepareStatement(INSERT);
 			preState_update_basic_info_by_id = connection.prepareStatement(UPDATE_BASIC_INFO);
@@ -117,18 +123,36 @@ public class StudentDAO {
 	}
 	
 	/**
+	 * select students by class id
+	 * @param class_id
+	 * @return
+	 */
+	public List<Student> select_by_class_id(String class_id){
+		try {
+			List<Student> list = new LinkedList<>();
+			preState_select_by_class_id.setString(1, class_id);
+			ResultSet set = preState_select_by_class_id.executeQuery();
+			while (set.next()) {
+				list.add(resultset2student(set));
+			}
+			return list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
 	 * select by id
 	 * @param id
 	 * @param code
 	 * @return
 	 */
-	public List<Student> select_by_id(String id, int code){
+	public Student select_by_id(String id, int code){
 		switch (code) {
 		case StudentDAO.PRIMARY_ID_CODE:
 			SELECT_BY_ID = String.format(SELECT_BY_ID, "pk_id");
-			break;
-		case StudentDAO.CLASS_ID_CODE:
-			SELECT_BY_ID = String.format(SELECT_BY_ID, "fk_class");
 			break;
 		case StudentDAO.STUDENT_NUMBER_CODE:
 			SELECT_BY_ID = String.format(SELECT_BY_ID, "number");
@@ -136,16 +160,14 @@ public class StudentDAO {
 
 		}
 		try {
-			List<Student> list = new LinkedList<>();
 			System.out.println(SELECT_BY_ID);
 			preState_select_by_id = connection.prepareStatement(SELECT_BY_ID);
 			preState_select_by_id.setString(1, id);
 			System.out.println(preState_select_by_id.toString());
 			ResultSet set = preState_select_by_id.executeQuery();
-			while (set.next()) {
-				list.add(resultset2student(set));
+			if (set.next()) {
+				return resultset2student(set);
 			}
-			return list;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

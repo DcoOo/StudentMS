@@ -1,4 +1,5 @@
-/build/
-/.metadata/
-/src/c3p0-config.xml
-/.settings/
+D:\StudentMS\.gitignore
+build/
+.metadata/
+src/c3p0-config.xml
+.settings/

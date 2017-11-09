@@ -1,5 +1,5 @@
 package alpha.studentms.serviceImple;
 
-public interface PostService {
-		
+public class MemoServiceImple {
+
 }

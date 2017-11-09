@@ -1,5 +1,5 @@
 package alpha.studentms.serviceImple;
 
-public interface MemoService {
+public class ReplyServiceImple {
 
 }
