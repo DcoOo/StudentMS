@@ -2,6 +2,7 @@ package alpha.studentms.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import alpha.studentms.bean.ClassAdvicer;
@@ -36,8 +37,8 @@ public class ClassAdvicerDAO {
 			}
 			
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return classAdvicer;
@@ -67,8 +68,8 @@ public class ClassAdvicerDAO {
 				classAdvicer.setCollection(rs.getString("collection"));
 			}
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return classAdvicer;
@@ -99,8 +100,8 @@ public class ClassAdvicerDAO {
 				classAdvicer.setCollection(rs.getString("collection"));
 			}
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return classAdvicer;
@@ -119,8 +120,8 @@ public class ClassAdvicerDAO {
 			sql = con.createStatement();
 			sql.executeUpdate(strSQL);
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 	}
     

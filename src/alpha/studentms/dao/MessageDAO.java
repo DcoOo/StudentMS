@@ -2,7 +2,10 @@ package alpha.studentms.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import alpha.studentms.bean.Message;
 import alpha.studentms.util.JdbcUtils;
@@ -18,6 +21,71 @@ public class MessageDAO {
 	 * 获得数据库的连接
 	 */
 	private static Connection connection = JdbcUtils.getConnection();
+	
+	/**
+	 * 查询所有通知的方法
+	 */
+	public List<Message> getAllMessage(){
+		
+		List<Message> result = new ArrayList<Message>();
+		
+		String sql = "select * from t_message";
+		PreparedStatement selectAlltatement;
+		try{
+			selectAlltatement = connection.prepareStatement(sql);
+			ResultSet rs= selectAlltatement.executeQuery();
+			while(rs.next()){
+				Message message = new Message();
+				
+				message.setId(rs.getString("pk_id"));
+				message.setTeacher(rs.getString("fk_teacher"));
+				message.setTitle(rs.getString("title"));
+				message.setContent(rs.getString("content"));
+				
+				result.add(message);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
+	
+	
+	
+	/**
+	 * 查询所有通知的方法
+	 */
+	public List<Message> getMessage(String teacher){
+        List<Message> result = new ArrayList<Message>();
+		
+		String sql = "select * from t_message where fk_teacher = ?";
+		PreparedStatement selectAlltatement;
+		try{
+			selectAlltatement = connection.prepareStatement(sql);
+			selectAlltatement.setString(1, teacher);
+			ResultSet rs= selectAlltatement.executeQuery();
+			while(rs.next()){
+				Message message = new Message();
+				
+				message.setId(rs.getString("pk_id"));
+				message.setTeacher(rs.getString("fk_teacher"));
+				message.setTitle(rs.getString("title"));
+				message.setContent(rs.getString("content"));
+				
+				result.add(message);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}
+	
+	
+	
 
 	/**
 	 * 添加一个通知

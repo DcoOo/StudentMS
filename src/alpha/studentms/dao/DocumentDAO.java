@@ -2,6 +2,7 @@ package alpha.studentms.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,8 @@ public class DocumentDAO {
 			}
 			
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return document;
@@ -89,8 +90,8 @@ public class DocumentDAO {
 			}*/
 			
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return listDocument;
@@ -122,8 +123,8 @@ public class DocumentDAO {
 			}
 			
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return document;
@@ -147,8 +148,8 @@ public class DocumentDAO {
 			sql = con.createStatement();
 			sql.executeUpdate(strSQL);
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 	}
 	
@@ -165,8 +166,8 @@ public class DocumentDAO {
 			sql = con.createStatement();
 			sql.executeUpdate(strSQL);
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 	}
 	

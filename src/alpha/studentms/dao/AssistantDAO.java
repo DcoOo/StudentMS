@@ -2,6 +2,7 @@ package alpha.studentms.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import alpha.studentms.bean.Assistant;
@@ -41,8 +42,8 @@ public class AssistantDAO {
 			}
 			
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return assistant;
@@ -72,8 +73,8 @@ public class AssistantDAO {
 				assistant.setCollection(rs.getString("collection"));
 			}
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return assistant;
@@ -104,8 +105,8 @@ public class AssistantDAO {
 				assistant.setCollection(rs.getString("collection"));
 			}
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return assistant;
@@ -126,8 +127,8 @@ public class AssistantDAO {
 			sql = con.createStatement();
 			sql.executeUpdate(strSQL);
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 	}
     
