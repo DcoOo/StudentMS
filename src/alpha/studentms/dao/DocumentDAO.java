@@ -1,8 +1,9 @@
 package alpha.studentms.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +12,7 @@ import alpha.studentms.util.JdbcUtils;
 
 public class DocumentDAO {
 	
-	private static Connection con;
-	private Statement sql;
-	private ResultSet rs;
+	private static Connection connection = JdbcUtils.getConnection();
 	
 	
 	/*
@@ -22,13 +21,18 @@ public class DocumentDAO {
 	public Document findByID(String id){
 		
 		Document document = null;
+		String sql = "SELECT * FROM t_doc WHERE pk_doc=?";
+		PreparedStatement preStatement;
 		
 		try{
 			
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			sql = con.createStatement();
-			rs = sql.executeQuery("SELECT * FROM t_doc WHERE pk_doc='"+id+"'");
+			//con = JdbcUtils.getConnection();
+			//sql = con.createStatement();
+			//rs = sql.executeQuery("SELECT * FROM t_doc WHERE pk_doc='"+id+"'");
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, id);
+			ResultSet rs= preStatement.executeQuery();
 			if(rs.next()){
 				document = new Document();
 				document.setId(rs.getString("pk_doc"));
@@ -39,8 +43,8 @@ public class DocumentDAO {
 			}
 			
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return document;
@@ -56,14 +60,18 @@ public class DocumentDAO {
 		
 		List<Document> listDocument = new ArrayList<Document>();
 		Document document = null;
+		String sql = "SELECT * FROM t_doc WHERE fk_student=?";
+		PreparedStatement preStatement;
 		
 		try{
 			
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			sql = con.createStatement();
-			rs = sql.executeQuery("SELECT * FROM t_doc WHERE fk_student='"+student+"'");
-			
+			//con = JdbcUtils.getConnection();
+			//sql = con.createStatement();
+			//rs = sql.executeQuery("SELECT * FROM t_doc WHERE fk_student='"+student+"'");
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, student);
+			ResultSet rs= preStatement.executeQuery();
 			
 			//这里应该使用循环，返回一个list。暂且先不管。！！！！！！！！！！！
 			//！！！！！！！！！！！！！！！！！！！
@@ -89,8 +97,8 @@ public class DocumentDAO {
 			}*/
 			
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return listDocument;
@@ -100,18 +108,23 @@ public class DocumentDAO {
 	
 	
 	/*
-	 * 根据文档ID查询
+	 * 根据文档名称查询
 	 */
 	public Document findByName(String name){
 		
 		Document document = null;
+		String sql = "SELECT * FROM t_doc WHERE name=?";
+		PreparedStatement preStatement;
 		
 		try{
 			
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			sql = con.createStatement();
-			rs = sql.executeQuery("SELECT * FROM t_doc WHERE name='"+name+"'");
+			//con = JdbcUtils.getConnection();
+			//sql = con.createStatement();
+			//rs = sql.executeQuery("SELECT * FROM t_doc WHERE name='"+name+"'");
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, name);
+			ResultSet rs= preStatement.executeQuery();
 			if(rs.next()){
 				document = new Document();
 				document.setId(rs.getString("pk_doc"));
@@ -122,8 +135,8 @@ public class DocumentDAO {
 			}
 			
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return document;
@@ -136,19 +149,27 @@ public class DocumentDAO {
 	 * 插入实体文档信息
 	 */
 	public void add(Document document){
+		String sql = "insert into t_doc(pk_doc,fk_student,address,name) VALUE(?,?,?,?)";
+		PreparedStatement preStatement;
 		try{
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			String strSQL =  "insert into t_doc(pk_doc,fk_student,address,name) VALUE('"
-					+document.getId()+"',"
-					+"'"+document.getStudent()+"',"
-					+"'"+document.getAddress()+"',"
-					+"'"+document.getName()+"')";
-			sql = con.createStatement();
-			sql.executeUpdate(strSQL);
+			//con = JdbcUtils.getConnection();
+			//String strSQL =  "insert into t_doc(pk_doc,fk_student,address,name) VALUE('"
+			//		+document.getId()+"',"
+			//		+"'"+document.getStudent()+"',"
+			//		+"'"+document.getAddress()+"',"
+			//		+"'"+document.getName()+"')";
+			//sql = con.createStatement();
+			//sql.executeUpdate(strSQL);
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, document.getId());
+			preStatement.setString(2, document.getStudent());
+			preStatement.setString(3, document.getAddress());
+			preStatement.setString(4, document.getName());
+			preStatement.executeUpdate();
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 	}
 	
@@ -158,15 +179,20 @@ public class DocumentDAO {
 	 * 删除实体文档信息
 	 */
 	public void delete(String id){
+		String sql = "DELETE FROM t_doc WHERE pk_doc=?";
+		PreparedStatement preStatement;
 		try{
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			String strSQL =  "DELETE FROM t_doc WHERE pk_doc='"+id+"'";
-			sql = con.createStatement();
-			sql.executeUpdate(strSQL);
+			//con = JdbcUtils.getConnection();
+			//String strSQL =  "DELETE FROM t_doc WHERE pk_doc='"+id+"'";
+			//sql = con.createStatement();
+			//sql.executeUpdate(strSQL);
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, id);
+			preStatement.executeUpdate();
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 	}
 	
@@ -176,7 +202,7 @@ public class DocumentDAO {
      * 释放链接
      */
     public static void release(){
-    	JdbcUtils.releaseConnection(con);
+    	JdbcUtils.releaseConnection(connection);
     }
 
 }

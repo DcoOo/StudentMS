@@ -1,18 +1,16 @@
 package alpha.studentms.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-
+import java.sql.SQLException;
 import alpha.studentms.bean.Assistant;
 import alpha.studentms.util.JdbcUtils;
 
 public class AssistantDAO {
 	
 	
-	private static Connection con;
-	private Statement sql;
-	private ResultSet rs;
+	private static Connection connection = JdbcUtils.getConnection();
 	
 	//private JdbcUtils jdbcUtils = new JdbcUtils(); 
 	
@@ -24,13 +22,18 @@ public class AssistantDAO {
 	public Assistant findByID(String id){
 		
 		Assistant assistant = null;
+		String sql = "SELECT * FROM t_teacher WHERE pk_id=?";
+		PreparedStatement preStatement;
 		
 		try{
 			
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			sql = con.createStatement();
-			rs = sql.executeQuery("SELECT * FROM t_teacher WHERE pk_id='"+id+"'");
+			//con = JdbcUtils.getConnection();
+			//sql = con.prepareStatement();
+			//rs = sql.executeQuery("SELECT * FROM t_teacher WHERE pk_id='"+id+"'");
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, id);
+			ResultSet rs= preStatement.executeQuery();
 			if(rs.next()){
 				assistant = new Assistant();
 				assistant.setId(rs.getString("pk_id"));
@@ -41,8 +44,8 @@ public class AssistantDAO {
 			}
 			
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return assistant;
@@ -56,13 +59,18 @@ public class AssistantDAO {
     public Assistant findByClass(String classOfTeacher){
 		
         Assistant assistant = null;
+        String sql = "SELECT * FROM t_teacher WHERE fk_class=?";
+		PreparedStatement preStatement;
 		
 		try{
 			
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			sql = con.createStatement();
-			rs = sql.executeQuery("SELECT * FROM t_teacher WHERE fk_class='"+classOfTeacher+"'");
+			//con = JdbcUtils.getConnection();
+			//sql = con.createStatement();
+			//rs = sql.executeQuery("SELECT * FROM t_teacher WHERE fk_class='"+classOfTeacher+"'");
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, classOfTeacher);
+			ResultSet rs= preStatement.executeQuery();
 			if(rs.next()){
 				assistant = new Assistant();
 				assistant.setId(rs.getString("pk_id"));
@@ -72,8 +80,8 @@ public class AssistantDAO {
 				assistant.setCollection(rs.getString("collection"));
 			}
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return assistant;
@@ -88,13 +96,18 @@ public class AssistantDAO {
     public Assistant findByNumber(String number){
 		
         Assistant assistant = null;
+        String sql = "SELECT * FROM t_teacher WHERE number=?";
+		PreparedStatement preStatement;
 		
 		try{
 			
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			sql = con.createStatement();
-			rs = sql.executeQuery("SELECT * FROM t_teacher WHERE number="+number);
+			//con = JdbcUtils.getConnection();
+			//sql = con.createStatement();
+			//rs = sql.executeQuery("SELECT * FROM t_teacher WHERE number="+number);
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, number);
+			ResultSet rs= preStatement.executeQuery();
 			if(rs.next()){
 				assistant = new Assistant();
 				assistant.setId(rs.getString("pk_id"));
@@ -104,8 +117,8 @@ public class AssistantDAO {
 				assistant.setCollection(rs.getString("collection"));
 			}
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return assistant;
@@ -119,15 +132,21 @@ public class AssistantDAO {
 	 * 修改收藏夹信息
 	 */
 	public void updateCollection(String collection,String id){
+		String sql = "UPDATE t_teacher SET collection=? WHERE pk_id=?";
+		PreparedStatement preStatement;
 		try{
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			String strSQL =  "UPDATE t_teacher SET collection='"+collection+"' WHERE pk_id='"+id+"'";
-			sql = con.createStatement();
-			sql.executeUpdate(strSQL);
+			//con = JdbcUtils.getConnection();
+			//String strSQL =  "UPDATE t_teacher SET collection='"+collection+"' WHERE pk_id='"+id+"'";
+			//sql = con.createStatement();
+			//sql.executeUpdate(strSQL);
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, collection);
+			preStatement.setString(2, id);
+			preStatement.executeUpdate();
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 	}
     
@@ -136,7 +155,7 @@ public class AssistantDAO {
      * 释放链接
      */
     public static void release(){
-    	JdbcUtils.releaseConnection(con);
+    	JdbcUtils.releaseConnection(connection);
     }
 
 }
