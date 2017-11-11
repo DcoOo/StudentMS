@@ -41,6 +41,7 @@ public class MessageDAO {
 				message.setTeacher(rs.getString("fk_teacher"));
 				message.setTitle(rs.getString("title"));
 				message.setContent(rs.getString("content"));
+				message.setOptime(rs.getTimestamp("optime"));
 				
 				result.add(message);
 			}
@@ -73,6 +74,7 @@ public class MessageDAO {
 				message.setTeacher(rs.getString("fk_teacher"));
 				message.setTitle(rs.getString("title"));
 				message.setContent(rs.getString("content"));
+				message.setOptime(rs.getTimestamp("optime"));
 				
 				result.add(message);
 			}
