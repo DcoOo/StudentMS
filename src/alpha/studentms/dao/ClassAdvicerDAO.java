@@ -1,17 +1,15 @@
 package alpha.studentms.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
-
+import java.sql.SQLException;
 import alpha.studentms.bean.ClassAdvicer;
 import alpha.studentms.util.JdbcUtils;
 
 public class ClassAdvicerDAO {
 	
-	private static Connection con;
-	private Statement sql;
-	private ResultSet rs;
+	private static Connection connection = JdbcUtils.getConnection();
 	
 	/*
 	 * 根据班主任ID查询
@@ -19,13 +17,18 @@ public class ClassAdvicerDAO {
 	public ClassAdvicer findByID(String id){
 		
 		ClassAdvicer classAdvicer = null;
+		String sql = "SELECT * FROM t_teacher WHERE pk_id=?";
+		PreparedStatement preStatement;
 		
 		try{
 			
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			sql = con.createStatement();
-			rs = sql.executeQuery("SELECT * FROM t_teacher WHERE pk_id='"+id+"'");
+			//con = JdbcUtils.getConnection();
+			//sql = con.createStatement();
+			//rs = sql.executeQuery("SELECT * FROM t_teacher WHERE pk_id='"+id+"'");
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, id);
+			ResultSet rs= preStatement.executeQuery();
 			if(rs.next()){
 				classAdvicer = new ClassAdvicer();
 				classAdvicer.setId(rs.getString("pk_id"));
@@ -36,8 +39,8 @@ public class ClassAdvicerDAO {
 			}
 			
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return classAdvicer;
@@ -51,13 +54,18 @@ public class ClassAdvicerDAO {
     public ClassAdvicer findByClass(String classOfTeacher){
 		
     	ClassAdvicer classAdvicer = null;
+    	String sql = "SELECT * FROM t_teacher WHERE fk_class=?";
+		PreparedStatement preStatement;
 		
 		try{
 			
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			sql = con.createStatement();
-			rs = sql.executeQuery("SELECT * FROM t_teacher WHERE fk_class='"+classOfTeacher+"'");
+			//con = JdbcUtils.getConnection();
+			//sql = con.createStatement();
+			//rs = sql.executeQuery("SELECT * FROM t_teacher WHERE fk_class='"+classOfTeacher+"'");
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, classOfTeacher);
+			ResultSet rs= preStatement.executeQuery();
 			if(rs.next()){
 				classAdvicer = new ClassAdvicer();
 				classAdvicer.setId(rs.getString("pk_id"));
@@ -67,8 +75,8 @@ public class ClassAdvicerDAO {
 				classAdvicer.setCollection(rs.getString("collection"));
 			}
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return classAdvicer;
@@ -83,13 +91,18 @@ public class ClassAdvicerDAO {
     public ClassAdvicer findByNumber(String number){
 		
     	ClassAdvicer classAdvicer = null;
+    	String sql = "SELECT * FROM t_teacher WHERE number=?";
+		PreparedStatement preStatement;
 		
 		try{
 			
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			sql = con.createStatement();
-			rs = sql.executeQuery("SELECT * FROM t_teacher WHERE number="+number);
+			//con = JdbcUtils.getConnection();
+			//sql = con.createStatement();
+			//rs = sql.executeQuery("SELECT * FROM t_teacher WHERE number="+number);
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, number);
+			ResultSet rs= preStatement.executeQuery();
 			if(rs.next()){
 				classAdvicer = new ClassAdvicer();
 				classAdvicer.setId(rs.getString("pk_id"));
@@ -99,8 +112,8 @@ public class ClassAdvicerDAO {
 				classAdvicer.setCollection(rs.getString("collection"));
 			}
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 		
 		return classAdvicer;
@@ -112,15 +125,21 @@ public class ClassAdvicerDAO {
 	 * 修改收藏夹信息
 	 */
 	public void updateCollection(String collection,String id){
+		String sql = "UPDATE t_teacher SET collection=? WHERE pk_id=?";
+		PreparedStatement preStatement;
 		try{
 			//JdbcUtils jdbcUtils = new JdbcUtils();
-			con = JdbcUtils.getConnection();
-			String strSQL =  "UPDATE t_teacher SET collection='"+collection+"' WHERE pk_id='"+id+"'";
-			sql = con.createStatement();
-			sql.executeUpdate(strSQL);
+			//con = JdbcUtils.getConnection();
+			//String strSQL =  "UPDATE t_teacher SET collection='"+collection+"' WHERE pk_id='"+id+"'";
+			//sql = con.createStatement();
+			//sql.executeUpdate(strSQL);
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setString(1, collection);
+			preStatement.setString(2, id);
+			preStatement.executeUpdate();
 			//con.close();
-		}catch(Exception e){
-			
+		}catch(SQLException e){
+			e.printStackTrace();
 		}
 	}
     
@@ -129,7 +148,7 @@ public class ClassAdvicerDAO {
      * 释放链接
      */
     public static void release(){
-    	JdbcUtils.releaseConnection(con);
+    	JdbcUtils.releaseConnection(connection);
     }
 
 }

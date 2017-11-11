@@ -1,5 +1,7 @@
 package alpha.studentms.bean;
 
+import java.sql.Timestamp;
+
 /**
  * 
  * @author joker
@@ -22,7 +24,10 @@ public class Message {
 	 * 通知的内容
 	 */
 	private String content;
-	
+	/**
+	 * 通知的发送时间
+	 */
+	private Timestamp optime;
 	public Message() {}
 
 	/**
@@ -93,6 +98,15 @@ public class Message {
 	 */
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+
+	public Timestamp getOptime() {
+		return optime;
+	}
+
+	public void setOptime(Timestamp optime) {
+		this.optime = optime;
 	}
 
 	/* (non-Javadoc)
