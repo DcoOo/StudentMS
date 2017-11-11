@@ -135,7 +135,7 @@
                 <div class="col-md-12">必做任务</div>
             </div>
             <div class="row">
-                <div class="col-md-10">任务1</div>
+                <div class="col-md-10">${requestScope.mustMemoList.title}</div>
                 <div class="col-md-1"><a><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
             </div>
 
@@ -148,7 +148,7 @@
                 <div style="border: none" class="col-md-3"><a>编辑</a></div>
             </div>
             <div class="row">
-                <div class="col-md-10">任务1</div>
+                <div class="col-md-10">${requestScope.optionMemoList.title }</div>
                 <div class="col-md-1"><a><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
             </div>
             <div class="row">
@@ -165,7 +165,7 @@
                 <div style="border: none" class="col-md-3"><a>编辑</a></div>
             </div>
             <div class="row">
-                <div class="col-md-10">任务1</div>
+                <div class="col-md-10">${requestScope.customMemoList.title }</div>
                 <div class="col-md-1"><a><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
             </div>
         </div>
