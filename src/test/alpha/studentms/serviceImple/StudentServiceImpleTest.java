@@ -28,5 +28,12 @@ public class StudentServiceImpleTest {
 				"段金昊-", Student.MAN, 20, "1851078679@163.com", "d13408463", "15408463", "18510786796", "北京市朝阳区北四环中路", Student.IS_CYL, Student.IS_REIGSTER, "adf", 85, "aa");
 		studentService.gatherAndUpdateInfomation(student);
 	}
+	
+	@Test
+	public void test_getStudentByUsername(){
+		Student student = studentService.getStudentByUsername("3713111996005063110");
+		System.out.println(student.getId()+"---");
+		assertTrue(student.getId().equals("a"));
+	}
 
 }

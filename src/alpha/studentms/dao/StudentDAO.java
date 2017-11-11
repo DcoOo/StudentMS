@@ -19,6 +19,7 @@ public class StudentDAO {
 	 * id code
 	 */
 	public static final int PRIMARY_ID_CODE = 0;
+	public static final int USERNAME_CODE = 1;
 	public static final int STUDENT_NUMBER_CODE = 2;
 	
 	/**
@@ -157,13 +158,14 @@ public class StudentDAO {
 		case StudentDAO.STUDENT_NUMBER_CODE:
 			SELECT_BY_ID = String.format(SELECT_BY_ID, "number");
 			break;
-
+		case StudentDAO.USERNAME_CODE:
+			SELECT_BY_ID = String.format(SELECT_BY_ID, "id_num");
 		}
 		try {
 //			System.out.println(SELECT_BY_ID);
 			preState_select_by_id = connection.prepareStatement(SELECT_BY_ID);
 			preState_select_by_id.setString(1, id);
-//			System.out.println(preState_select_by_id.toString());
+			System.out.println(preState_select_by_id.toString());
 			ResultSet set = preState_select_by_id.executeQuery();
 			if (set.next()) {
 				return resultset2student(set);

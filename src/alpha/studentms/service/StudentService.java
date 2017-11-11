@@ -6,6 +6,13 @@ import alpha.studentms.bean.Memo;
 import alpha.studentms.bean.Student;
 
 public interface StudentService {
+	
+	/**
+	 * 按照用户登录名查询学生信息
+	 * @param username
+	 * @return
+	 */
+	Student getStudentByUsername(String username);
 
 	/**
 	 * 查询英语成绩

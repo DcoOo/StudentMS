@@ -103,4 +103,9 @@ public class StudentServiceImple implements StudentService{
 		stableMemoDAO.insertStableMemo(UUIDGenerater.getUUID(), memo.getUser(), memo.getId());
 	}
 
+	@Override
+	public Student getStudentByUsername(String username) {
+		return studentDAO.select_by_id(username, StudentDAO.USERNAME_CODE);
+	}
+
 }
