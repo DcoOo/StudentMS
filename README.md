@@ -27,3 +27,5 @@ DocumentDAO.java改用PreparedStatement；
 建议对登陆功能进行测试，能够按照用户名和密码正常登录（对于输入错误的情况，由于前端缺少对应的提示部分，所以没有体现登陆失败）
 
 建议对alpha.studentms.serviceImple.StudentServiceImple的getStudentByUsername（）方法进行测试（其中username是t_student表中的id_num字段）
+
+建议对待办事务的显示进行测试（由于路径问题，显示有bug，所以希望只对内容进行测试）
