@@ -12,7 +12,7 @@ import alpha.studentms.service.StudentService;
 import alpha.studentms.serviceImple.MemoServiceImple;
 import alpha.studentms.serviceImple.StudentServiceImple;
 
-public class MemoController extends HttpServlet{
+public class DeleteMemoController extends HttpServlet{
 	
 	/**
 	 * 

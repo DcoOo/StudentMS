@@ -138,7 +138,7 @@
             <c:forEach var="memo_item" items="${requestScope.mustMemoList}" step="1">
 	            <div class="row">
                 	<div class="col-md-10">${memo_item.title}</div>
-                	<div class="col-md-1"><a href="memocontroller?id=${memo_item.id}&type=0"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
+                	<div class="col-md-1"><a href="deletememocontroller?id=${memo_item.id}&type=0"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
             	</div>
             </c:forEach>
 
@@ -153,7 +153,7 @@
             <c:forEach var="memo_item" items="${requestScope.optionMemoList}" step="1">
 	            <div class="row">
                 	<div class="col-md-10">${memo_item.title}</div>
-                	<div class="col-md-1"><a><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
+                	<div class="col-md-1"><a href="deletememocontroller?id=${memo_item.id }&type=0"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
             	</div>
             </c:forEach>
         </div>
@@ -168,7 +168,7 @@
             <c:forEach var="memo_item" items="${requestScope.customMemoList}" step="1">
 	            <div class="row">
                 	<div class="col-md-10">${memo_item.title}</div>
-                	<div class="col-md-1"><a><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
+                	<div class="col-md-1"><a href = "deletememocontroller?id=${memo_item.id }&type=1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
             	</div>
             </c:forEach>
         </div>
