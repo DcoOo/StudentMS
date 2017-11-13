@@ -45,10 +45,7 @@ public class MemoServiceImple implements MemoService{
 		case MemoService.CUSTOM_MEMO_CODE:
 			memoDAO.deleteMemoById(memoId);
 			break;
-		case MemoService.OPTION_MEMO_CODE:
-			stableMemoDAO.deleteStableMemoById(memoId, userId);
-			break;
-		case MemoService.MUST_MEMO_CODE:
+		case MemoService.MUST_AND_OPTION_MEMO_CODE:
 			stableMemoDAO.deleteStableMemoById(memoId, userId);
 			
 			break;

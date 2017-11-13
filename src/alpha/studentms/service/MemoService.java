@@ -8,9 +8,8 @@ import alpha.studentms.bean.Message;
 public interface MemoService {
 	
 	public static final int CUSTOM_MEMO_CODE = 0;
-	public static final int MUST_MEMO_CODE = 1;
-	public static final int OPTION_MEMO_CODE = 2;
-	public static final int TEACHER_LOG = 3;
+	public static final int MUST_AND_OPTION_MEMO_CODE = 1;
+	public static final int TEACHER_LOG = 2;
 	
 	/**
 	 * 显示所有该用户的备忘录
@@ -30,5 +29,7 @@ public interface MemoService {
 	 * 用户插入一条备忘录
 	 */
 	void addMemoByUserId(String userId, int type, Memo memo);
+	
+	
 
 }
