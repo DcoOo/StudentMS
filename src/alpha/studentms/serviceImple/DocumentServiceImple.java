@@ -6,14 +6,21 @@ import alpha.studentms.dao.DocumentDAO;
 import alpha.studentms.service.DocumentService;
 import alpha.studentms.util.UUIDGenerater;
 
-public class DocumentServiceImple implements DocumentService{
+/**
+ * 文档服务实现类
+ * 
+ * @author joker
+ * @see DocumentDAO
+ * @see DocModelRelDAO
+ */
+public class DocumentServiceImple implements DocumentService {
 
 	public DocumentDAO documentDAO = new DocumentDAO();
 	public DocModelRelDAO docModelRelDAO = new DocModelRelDAO();
-	
+
 	@Override
 	public void studentUploadDocument(Document document, String docId, String modelId) {
-		documentDAO.add(document);		
+		documentDAO.add(document);
 		docModelRelDAO.addRel(UUIDGenerater.getUUID(), docId, modelId);
 	}
 

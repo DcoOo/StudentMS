@@ -15,7 +15,14 @@ import alpha.studentms.serviceImple.DocumentServiceImple;
 import alpha.studentms.util.UUIDGenerater;
 import alpha.studentms.util.UploadFileUtils;
 
-public class StudentUploadHandleServlet extends HttpServlet {
+/**
+ * 学生上传
+ * 
+ * @author joker
+ * @see DocumentService
+ * @see DocumentServiceImple
+ */
+public class StudentUploadHandleController extends HttpServlet {
 
 	public DocumentService documentService = new DocumentServiceImple();
 	/**
@@ -27,10 +34,10 @@ public class StudentUploadHandleServlet extends HttpServlet {
 		// 得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
 		String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
 		String tempPath = this.getServletContext().getRealPath("/WEB-INF/upload");
-		String studentID = (String)request.getAttribute("id");
+		String studentID = (String) request.getAttribute("id");
 		String modelDocID = (String) request.getAttribute("modelDocID");
 		Document document = new Document();
-		Map<String,String> map = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
 		map = UploadFileUtils.fileUpload(request, tempPath, savePath, studentID);
 		document.setName(map.get("saveFileName"));
 		document.setStudent(studentID);
