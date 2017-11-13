@@ -22,7 +22,7 @@ DocumentDAO.java改用PreparedStatement；
 
 实现了service接口，包路径alpha.studentms.serviceImple。
 
-建议对alpha.studentms.bean和alpha.studentms.dao包中修改内容及alpha.studentms.serviceImple包中所有内容进行测试。
+建议对alpha.studentms.bean和alpha.studentms.dao包中修改内容，alpha.studentms.serviceImple包中的LoginServiceImple.java、MessageServiceImple.java、StudentServiceImple.java进行测试。
 
 建议对登陆功能进行测试，能够按照用户名和密码正常登录（对于输入错误的情况，由于前端缺少对应的提示部分，所以没有体现登陆失败）
 
