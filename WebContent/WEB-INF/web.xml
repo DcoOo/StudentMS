@@ -25,4 +25,31 @@
   	<servlet-name>memo</servlet-name>
   	<url-pattern>/servlet/memocontroller</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>studentUploadFile</servlet-name>
+  	<servlet-class>alpha.studentms.controller.StudentUploadHandleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>studentUploadFile</servlet-name>
+  	<url-pattern>/servlet/studentUploadHandle</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>teacherUploadMessage</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherUploadMessageController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>teacherUploadMessage</servlet-name>
+  	<url-pattern>/servlet/teacherUploadMessage</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>studentInfoGather</servlet-name>
+  	<servlet-class>alpha.studentms.controller.StudentInfoGatherController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>studentInfoGather</servlet-name>
+  	<url-pattern>/servlet/studentInfoGather</url-pattern>
+  </servlet-mapping>
 </web-app>

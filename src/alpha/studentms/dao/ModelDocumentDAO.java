@@ -72,12 +72,12 @@ public class ModelDocumentDAO {
 			searchStatement = connection.prepareStatement(sql);
 			searchStatement.setString(1, id);
 			ResultSet set = searchStatement.executeQuery();
-			set.next();
-			
-			modelDocument.setModelDoc(id);
-			modelDocument.setTeacher(set.getString(2));
-			modelDocument.setMessage(set.getString(3));
-			modelDocument.setName(set.getString(4));
+			while (set.next()) {
+				modelDocument.setModelDoc(id);
+				modelDocument.setTeacher(set.getString(2));
+				modelDocument.setMessage(set.getString(3));
+				modelDocument.setName(set.getString(4));
+			}		
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

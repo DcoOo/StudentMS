@@ -11,4 +11,8 @@ import alpha.studentms.bean.ModelDocument;
 public interface ModelDocumentService {
 
 	void uploadFile(ModelDocument modelDocument);
+	
+	ModelDocument searchModelDocumentByID(String modelDocID);
+	
+	void deleteModelDocumentByID(String id);
 }
