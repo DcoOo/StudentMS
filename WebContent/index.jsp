@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -6,9 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>学生登录</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/core.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <link href="/StudentMS/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/StudentMS/js/jquery-3.2.1.min.js"></script>
+    <script src="/StudentMS/js/bootstrap.min.js"></script>
 
     <style>
         .col-md-3,.col-md-5,.row{
@@ -28,7 +29,7 @@
 <body>
 <div class="container">
 <div>
-        <img src="img/logo.jpg" alt="" class="img-circle">
+        <img src="/StudentMS/img/logo.jpg" alt="" class="img-circle">
 </div>
 
 <nav style="background:#1d85d7" class="navbar navbar-default">
@@ -44,7 +45,7 @@
 
         <div class="row">
         <ul class="nav navbar-nav">
-            <li style="background: url(img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
+            <li style="background: url(/StudentMS/img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
                 个人中心
             </li>
         </ul>
@@ -84,7 +85,7 @@
     <div class="col-md-5" style="margin: 0 3px">
         <div class="row">
         <ul class="nav navbar-nav">
-            <li style="background: url(img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
+            <li style="background: url(/StudentMS/img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
                 近期通知
             </li>
         </ul>
@@ -123,7 +124,7 @@
     <div class="col-md-3" style="margin: 0 3px">
         <div class="row">
         <ul class="nav navbar-nav">
-            <li style="background: url(img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
+            <li style="background: url(/StudentMS/img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
                 待办任务
             </li>
         </ul>
@@ -134,10 +135,12 @@
             <div class="row">
                 <div class="col-md-12">必做任务</div>
             </div>
-            <div class="row">
-                <div class="col-md-10">${requestScope.mustMemoList.title}</div>
-                <div class="col-md-1"><a><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
-            </div>
+            <c:forEach var="memo_item" items="${requestScope.mustMemoList}" step="1">
+	            <div class="row">
+                	<div class="col-md-10">${memo_item.title}</div>
+                	<div class="col-md-1"><a href="memocontroller?id=${memo_item.id}&type=0"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
+            	</div>
+            </c:forEach>
 
         </div>
 
@@ -147,14 +150,12 @@
                 <div class="col-md-9">选做任务</div>
                 <div style="border: none" class="col-md-3"><a>编辑</a></div>
             </div>
-            <div class="row">
-                <div class="col-md-10">${requestScope.optionMemoList.title }</div>
-                <div class="col-md-1"><a><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
-            </div>
-            <div class="row">
-                <div class="col-md-10">任务2</div>
-                <div class="col-md-1"><a><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>
-            </div>
+            <c:forEach var="memo_item" items="${requestScope.optionMemoList}" step="1">
+	            <div class="row">
+                	<div class="col-md-10">${memo_item.title}</div>
+                	<div class="col-md-1"><a><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
+            	</div>
+            </c:forEach>
         </div>
         <hr>
 
@@ -164,10 +165,12 @@
 
                 <div style="border: none" class="col-md-3"><a>编辑</a></div>
             </div>
-            <div class="row">
-                <div class="col-md-10">${requestScope.customMemoList.title }</div>
-                <div class="col-md-1"><a><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
-            </div>
+            <c:forEach var="memo_item" items="${requestScope.customMemoList}" step="1">
+	            <div class="row">
+                	<div class="col-md-10">${memo_item.title}</div>
+                	<div class="col-md-1"><a><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
+            	</div>
+            </c:forEach>
         </div>
 
     </div>
