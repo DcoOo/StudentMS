@@ -65,6 +65,9 @@ public class TeacherUploadMessageController extends HttpServlet {
 			modelDocumentService.uploadFile(modelDocument);
 		}
 		teacherService.releaseMessage(message, modelDocument);
+		
+		//TODO 路径处理
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
 	@Override
