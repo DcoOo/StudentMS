@@ -18,4 +18,16 @@ public class ModelDocumentServiceImple implements ModelDocumentService {
 	public void uploadFile(ModelDocument modelDocument) {
 		modelDocumentDAO.insertModelDocument(modelDocument);
 	}
+
+	@Override
+	public ModelDocument searchModelDocumentByID(String modelDocID) {
+		ModelDocument modelDocument;
+		modelDocument = modelDocumentDAO.searchModelDocById(modelDocID);
+		return modelDocument;
+	}
+
+	@Override
+	public void deleteModelDocumentByID(String id) {
+		modelDocumentDAO.deleteModelDocumentById(id);		
+	}
 }

@@ -89,7 +89,7 @@ public class Student {
 	/**
 	 * is CYL
 	 */
-	private int is_cyle;
+	private int is_cyl;
 	
 	/**
 	 * is register
@@ -150,7 +150,7 @@ public class Student {
 		this.qq = qq;
 		this.phone = phone;
 		this.address = address;
-		this.is_cyle = is_cyle;
+		this.is_cyl = is_cyle;
 		this.register = register;
 		this.other_info = other_info;
 		this.english_grade = english_grade;
@@ -262,12 +262,12 @@ public class Student {
 	}
 
 
-	public int getIs_cyle() {
-		return is_cyle;
+	public int getIs_cyl() {
+		return is_cyl;
 	}
 
-	public void setIs_cyle(int is_cyle) {
-		this.is_cyle = is_cyle;
+	public void setIs_cyl(int is_cyl) {
+		this.is_cyl = is_cyl;
 	}
 
 	public int getRegister() {

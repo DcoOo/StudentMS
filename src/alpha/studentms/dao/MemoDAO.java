@@ -97,11 +97,12 @@ public class MemoDAO {
 			searchStatement = connection.prepareStatement(sql);
 			searchStatement.setString(1, id);
 			ResultSet set = searchStatement.executeQuery();
-			set.next();
-			memo.setId(id);
-			memo.setUser(set.getString(2));
-			memo.setTitle(set.getString(3));
-			memo.setContent(set.getString(4));
+			while (set.next()) {
+				memo.setId(id);
+				memo.setUser(set.getString(2));
+				memo.setTitle(set.getString(3));
+				memo.setContent(set.getString(4));
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
