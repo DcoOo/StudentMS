@@ -1,5 +1,8 @@
 package alpha.studentms.service;
 
-public interface ModelDocumentService {
+import alpha.studentms.bean.ModelDocument;
 
+public interface ModelDocumentService {
+	
+	void uploadFile(ModelDocument modelDocument);
 }
