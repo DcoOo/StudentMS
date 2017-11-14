@@ -93,4 +93,22 @@
   	<servlet-name>studentInfoGather</servlet-name>
   	<url-pattern>/servlet/studentInfoGather</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>studentInfoUpdate</servlet-name>
+  	<servlet-class>alpha.studentms.controller.StudentInfoUpdateController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>studentInfoUpdate</servlet-name>
+  	<url-pattern>/servlet/studentInfoUpdate</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>studentClassAndGrade</servlet-name>
+  	<servlet-class>alpha.studentms.controller.StudentClassAndGradeInfoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>studentClassAndGrade</servlet-name>
+  	<url-pattern>/servlet/studentClassAndGradeInfo</url-pattern>
+  </servlet-mapping>
 </web-app>
