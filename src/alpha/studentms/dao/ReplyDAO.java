@@ -202,6 +202,46 @@ public class ReplyDAO {
 		}
 	}
 	
+	
+	/**
+	 * 根据回复id更新like
+	 */
+	public void updateLikeByReplyId(String replyId,int like){
+		String sql = "UPDATE t_reply SET star_num=? WHERE pk_id=?";
+		connection = JdbcUtils.getConnection();
+		PreparedStatement preStatement;
+		try{
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setInt(1, like);
+			preStatement.setString(2, replyId);
+			preStatement.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
+	
+	/**
+	 * 根据回复id更新like
+	 */
+	public void updateOpposeByReplyId(String replyId,int oppose){
+		String sql = "UPDATE t_reply SET oppose_num=? WHERE pk_id=?";
+		connection = JdbcUtils.getConnection();
+		PreparedStatement preStatement;
+		try{
+			preStatement = connection.prepareStatement(sql);
+			preStatement.setInt(1, oppose);
+			preStatement.setString(2, replyId);
+			preStatement.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	/**
 	 * convert from resultset to reply bean
 	 * @param set
