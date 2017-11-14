@@ -6,14 +6,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import alpha.studentms.bean.Memo;
 import alpha.studentms.bean.Student;
-import alpha.studentms.dao.StudentDAO;
-import alpha.studentms.service.DocumentService;
 import alpha.studentms.service.StudentService;
-import alpha.studentms.serviceImple.DocumentServiceImple;
 import alpha.studentms.serviceImple.StudentServiceImple;
 import alpha.studentms.util.StudentInfoUtils;
 
@@ -28,6 +24,10 @@ import alpha.studentms.util.StudentInfoUtils;
  */
 public class StudentInfoGatherController extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public StudentService studentService = new StudentServiceImple();
 
 	@Override
@@ -41,9 +41,9 @@ public class StudentInfoGatherController extends HttpServlet {
 		memo.setUser(student.getId_num());
 		memo.setId(optionMemoID);
 		studentService.gatherAndUpdateInfomation(student);
-		studentService.insertOptionMemo(memo);
+		//studentService.insertOptionMemo(memo);
 		// TODO 更改映射
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		request.getRequestDispatcher("/index.html").forward(request, response);
 	}
 
 	@Override

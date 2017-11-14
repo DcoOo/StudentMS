@@ -38,6 +38,7 @@ public class LoginController extends HttpServlet{
 		if (isLegel) {
 			// 用户名，密码正确
 			if (role.equals("student")) {
+				req.getSession().setAttribute("userId", username);
 				// 学生登陆
 				// 按照登陆名查询用户所有信息
 				Student student = studentService.getStudentByUsername(username);
@@ -53,7 +54,7 @@ public class LoginController extends HttpServlet{
 				req.setAttribute("customMemoList", customMemoList);
 				// 该学生所在班级的班主任以及辅导员发的所有通知
 //				resp.sendRedirect("../index.jsp");
-				this.getServletContext().getRequestDispatcher("/index.html").forward(req, resp);
+				this.getServletContext().getRequestDispatcher("/message.html").forward(req, resp);
 			}
 		}else{
 			// 用户名，密码错误

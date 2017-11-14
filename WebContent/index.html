@@ -84,7 +84,7 @@
 
         <div class="row">
         <ul class="nav navbar-nav">
-            <li style="background: url(img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header" id="centerTitle">
+            <li style="background: url(/StudentMS/img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header" id="centerTitle">
                 近期通知
             </li>
         </ul>
@@ -95,11 +95,9 @@
             <li><a onclick="showNotice()">1</a></li>
             <li><a onclick="showNotice()">1</a></li>
             <li><a onclick="showNotice()">1</a></li>
-            <li><a onclick="showNotice()">1</a></li>`
-        </ul>
-            
+            <li><a onclick="showNotice()">1</a></li>
+          </ul>  
         </div>
-
     </div>
 
 
@@ -107,7 +105,7 @@
     <div class="col-md-2" style="margin: 0 3px">
         <div class="row">
         <ul class="nav navbar-nav">
-            <li style="background: url(img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
+            <li style="background: url(/StudentMS/img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
                 待办任务
             </li>
         </ul>
@@ -230,8 +228,9 @@
         $('#centerTitle').text("个人信息");
         $('#centerContent>*').hide();
 
-        $.getJSON("11.php",function (data) {
+        $.getJSON("/StudentMS/servlet/studentInfoShow",function (data) {
             $('#centerContent').append('<div class="table-responsive">\n' +
+                    '                <form action="/StudentMS/servlet/studentInfoUpdate" method="post">' +
                 '        <table class="table table-bordered table-condensed">\n' +
                 '            <tr>\n' +
                 '                <th>邮箱</th>\n' +
@@ -239,10 +238,9 @@
                 '                <th>手机号</th>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
-                '                <form action="" method="post">' +
-                '                <td><input type="text" name="email" value="'+ data.email + '"></td>\n' +
-                '                <td><input type="text" name="age" value="'+ data.age + '"></td>\n' +
-                '                <td><input type="text" name="phone" value="'+ data.phone + '"></td>\n' +
+                '                <td><input type="text" name="studentEmail" value="'+ data.email + '"></td>\n' +
+                '                <td><input type="text" name="studentAge" value="'+ data.age + '"></td>\n' +
+                '                <td><input type="text" name="studentPhone" value="'+ data.phone + '"></td>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
                 '                <th>民族</th>\n' +
@@ -250,9 +248,9 @@
                 '                <th>团员</th>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
-                '                <td><input type="text" name="nation" value="'+ data.nation + '"></td>\n' +
-                '                <td><input type="text" name="sex" value="'+ data.sex + '"></td>\n' +
-                '                <td><input type="text" name="idCYL" value="'+ data.isCYL + '"></td>\n' +
+                '                <td><input type="text" name="studentNation" value="'+ data.nation + '"></td>\n' +
+                '                <td><input type="text" name="studentSex" value="'+ data.sex + '"></td>\n' +
+                '                <td><input type="text" name="studentCYL" value="'+ data.is_cyl + '"></td>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
                 '                <th>微信</th>\n' +
@@ -260,9 +258,9 @@
                 '                <th>家庭住址</th>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
-                '                <td><input type="text" name="weChart" value="'+ data.weChart + '"></td>\n' +
-                '                <td><input type="text" name="QQ" value="'+ data.QQ + '"></td>\n' +
-                '                <td><input type="text" name="address" value="'+ data.address + '"></td>\n' +
+                '                <td><input type="text" name="studentWechat" value="'+ data.wechat + '"></td>\n' +
+                '                <td><input type="text" name="studentQQ" value="'+ data.qq + '"></td>\n' +
+                '                <td><input type="text" name="studentAddress" value="'+ data.address + '"></td>\n' +
                 '            </tr>\n' +
                 '        </table>\n' +
                 '<button type="submit">提交</button>' +
@@ -296,23 +294,18 @@
     function examResult() {
         $('#centerTitle').text("考试结果");
         $('#centerContent>*').hide();
-        $.getJSON("22.php",function (data) {
+        $.getJSON("/StudentMS/servlet/studentClassAndGradeInfo",function (data) {
             $('#centerContent').append('<div class="table-responsive">\n' +
                 '        <table class="table table-bordered table-condensed">\n' +
                 '            <tr>\n' +
                 '                <th>姓名</th>\n' +
-                '                <th>数学成绩</th>\n' +
-                '                <th>班级</th>\n' +
                 '                <th>英语成绩</th>\n' +
                 '                <th>班级</th>\n' +
-                '                <th></th>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
-                '                <td>'+ data.name + '</td>\n' +
-                '                <td>'+ data.mathScore + '</td>\n' +
-                '                <td>'+ data.mathClass + '</td>\n' +
-                '                <td>'+ data.englishScore + '</td>\n' +
-                '                <td>'+ data.englishClass + '</td>\n' +
+                '                <td>'+ data.studentName + '</td>\n' +
+                '                <td>'+ data.englishGrade + '</td>\n' +
+                '                <td>'+ data.classInfo + '</td>\n' +
                 '            </tr>\n' +
                 '        </table>\n' +
                 '        </div>'

@@ -162,7 +162,7 @@ public class StudentDAO {
 			SELECT_BY_ID = String.format(SELECT_BY_ID, "id_num");
 		}
 		try {
-//			System.out.println(SELECT_BY_ID);
+			System.out.println(SELECT_BY_ID);
 			preState_select_by_id = connection.prepareStatement(SELECT_BY_ID);
 			preState_select_by_id.setString(1, id);
 			System.out.println(preState_select_by_id.toString());
@@ -327,11 +327,11 @@ public class StudentDAO {
 			String name = set.getString("name");
 			int sex = set.getInt("sex");
 			int age = set.getInt("age");
-			String email = set.getString("name");
-			String wechat = set.getString("name");
-			String qq = set.getString("name");
-			String phone = set.getString("name");
-			String address = set.getString("name");
+			String email = set.getString("email");
+			String wechat = set.getString("wechat");
+			String qq = set.getString("qq");
+			String phone = set.getString("phone");
+			String address = set.getString("address");
 			int isCYL = set.getInt("isCYL");
 			int register = set.getInt("register");
 			String other_info = set.getString("otherinfo");
