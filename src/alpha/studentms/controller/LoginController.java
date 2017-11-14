@@ -9,8 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import alpha.studentms.bean.Student;
 import alpha.studentms.service.LoginService;
+import alpha.studentms.service.MemoService;
 import alpha.studentms.service.StudentService;
 import alpha.studentms.serviceImple.LoginServiceImple;
+import alpha.studentms.serviceImple.MemoServiceImple;
 import alpha.studentms.serviceImple.StudentServiceImple;
 
 public class LoginController extends HttpServlet{
@@ -21,7 +23,7 @@ public class LoginController extends HttpServlet{
 	
 	private LoginService loginService = new LoginServiceImple(); 
 	private StudentService studentService = new StudentServiceImple();
-//	private MemoServiceImple MemoService = new MemoServiceImple();
+	private MemoService memoService = new MemoServiceImple();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -43,8 +45,21 @@ public class LoginController extends HttpServlet{
 				req.getSession().setAttribute("userId", student.getId());
 				req.getSession().setAttribute("username", username);
 				req.getSession().setAttribute("classId", student.getClass_id());
-				// 跳转到学生个人中心
-				req.getRequestDispatcher("/servlet/showmemocontroller").forward(req, resp);
+				req.getSession().setAttribute("passwd", passwd);
+				// TODO 测试设置已注册
+				student.setRegister(Student.IS_REIGSTER);
+				// 根据是否已经注册决定跳转到信息采集或者直接进入个人中心
+				if (student.getRegister() == Student.IS_REIGSTER){
+					// 已经注册
+					// 跳转到学生个人中心
+					req.getRequestDispatcher("/servlet/showmemocontroller").forward(req, resp);
+				}else{
+					// 未注册,则跳转到信息采集页面
+					// 将所有的选座事务查询，并提交
+					req.setAttribute("optionMemos",memoService.getAllOptionMemos());
+				}
+			}else{
+				// 教师登陆
 			}
 		}else{
 			// 用户名，密码错误

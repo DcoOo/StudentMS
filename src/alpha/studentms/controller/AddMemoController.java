@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import alpha.studentms.bean.Memo;
 import alpha.studentms.service.StudentService;
 import alpha.studentms.serviceImple.StudentServiceImple;
@@ -31,7 +30,8 @@ public class AddMemoController extends HttpServlet{
 		// 获取用户id
 		String user_id = (String)req.getSession().getAttribute("userId");
 		// 获取待添加备忘录信息
-		String[] titles = req.getParameter("newTask").split(",");
+		String[] titles = req.getParameterValues("newTask");
+		System.out.println(titles.length+"***");
 		Memo memo;
 		for (String title : titles) {
 			memo = new Memo();

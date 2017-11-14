@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import alpha.studentms.bean.Memo;
@@ -130,6 +131,29 @@ public class StableMemoDAO {
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	/**
+	 * 获取所有的选做任务
+	 * @return
+	 */
+	public List<Memo> getAllOptionalMemo(){
+		List<Memo> list = new LinkedList<>();
+		String all_option_list = "SELECT * FROM t_stable_memo WHERE docType = 1";
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(all_option_list);
+			ResultSet set = preparedStatement.executeQuery();
+			while (set.next()) {
+				Memo memo = new Memo();
+				memo.setId(set.getString("pk_id"));
+				memo.setTitle(set.getString("title"));
+			}
+			return list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**

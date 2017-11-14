@@ -28,11 +28,12 @@ public class UpdatePasswdController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		String username = (String) req.getSession().getAttribute("username");
-		String new_passwd = req.getParameter("new_passwd");
+		String new_passwd = req.getParameter("newpasswd");
+		System.out.println(new_passwd+"update");
 		
 		loginService.update(new_passwd, username);
 		
-		req.getRequestDispatcher("/login.jsp").forward(req, resp);
+		req.getRequestDispatcher("/servlet/showmemocontroller").forward(req, resp);
 		
 	}
 

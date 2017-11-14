@@ -56,5 +56,12 @@ public class MemoServiceImple implements MemoService{
 		}
 		
 	}
+	
+	@Override
+	public List<Memo> getAllOptionMemos() {
+		List<Memo> optionMemoList = stableMemoDAO.getAllOptionalMemo();
+		return optionMemoList;
+
+	}
 
 }

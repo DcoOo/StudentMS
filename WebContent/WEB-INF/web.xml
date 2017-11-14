@@ -57,6 +57,10 @@
   	<servlet-name>updatepasswd</servlet-name>
   	<servlet-class>alpha.studentms.controller.UpdatePasswdController</servlet-class>
   </servlet>
+  <servlet-mapping>
+  	<servlet-name>updatepasswd</servlet-name>
+  	<url-pattern>/servlet/updatepasswdcontroller</url-pattern>
+  </servlet-mapping>
   
   <servlet>
   	<servlet-name>showmessage</servlet-name>

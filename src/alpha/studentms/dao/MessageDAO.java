@@ -136,4 +136,5 @@ public class MessageDAO {
 	public void releaseConnection() {
 		JdbcUtils.releaseConnection(connection);
 	}
+	
 }
