@@ -2,10 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/2002/xmlspec/dtd/2.10/xmlspec.dtd">
 <c3p0-config>
   <named-config name="studentms"> 
-      <property name="user">root</property>
-      <property name="password">mariadbdjh</property>
+      <property name="user">joker</property>
+      <property name="password">HAPPY</property>
       <property name="driverClass">com.mysql.jdbc.Driver</property>
-      <property name="jdbcUrl">jdbc:mysql://localhost:3306/sutdent_ms</property>
+      <property name="jdbcUrl">jdbc:mysql://localhost:3306/student_ms</property>
        <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数 -->
 <property name="acquireIncrement">5</property>
 <!--初始化时获取十个连接，取值应在minPoolSize与maxPoolSize之间 -->
