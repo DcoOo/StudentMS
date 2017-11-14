@@ -6,6 +6,8 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import alpha.studentms.bean.Document;
+
 public class JsonParser {
 	
 
@@ -30,6 +32,12 @@ public class JsonParser {
 		return object.toMap();
 	}
 	
+	
+	public static String obj2json(Object obj){
+		JSONObject object = new JSONObject(obj);
+		return object.toString();
+	}
+	
 	public static void main(String[] args){
 //		String json = "[\"asdf\",\"ffda\", \"dddd\"]";
 //		List<Object> list = toList(json);
@@ -37,6 +45,12 @@ public class JsonParser {
 		String jsonMap = "{\"ads\":\"dddd\", \"ffff\":\"ddd\"}";
 		Map<String, Object> map = toMap(jsonMap);
 		System.out.println(map.keySet());
+		
+		Document document = new Document();
+		document.setAddress("aaaa");
+		document.setId("aaaa");
+		
+		System.out.println(obj2json(document));
 	}
 
 }

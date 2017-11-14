@@ -64,7 +64,7 @@ public class StudentDAO {
 	 */
 	public  static String UPDATE_BASIC_INFO = "UPDATE t_student "
 			+ "SET nation = ?, name = ?, sex = ?, age = ?, email = ?, wechat = ?, qq = ?, phone = ?, address = ?, isCYL = ?, englishgrade = ?"
-			+ "WHERE pk_id = ?";
+			+ "WHERE id_num = ?";
 
 	/**
 	 * update collection
@@ -264,9 +264,9 @@ public class StudentDAO {
 			preState_update_basic_info_by_id.setString(7, student.getQq());
 			preState_update_basic_info_by_id.setString(8, student.getPhone());
 			preState_update_basic_info_by_id.setString(9, student.getAddress());
-			preState_update_basic_info_by_id.setInt(10, student.getIs_cyle());
+			preState_update_basic_info_by_id.setInt(10, student.getIs_cyl());
 			preState_update_basic_info_by_id.setFloat(11, student.getEnglish_grade());
-			preState_update_basic_info_by_id.setString(12, student.getId());
+			preState_update_basic_info_by_id.setString(12, student.getId_num());
 			preState_update_basic_info_by_id.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

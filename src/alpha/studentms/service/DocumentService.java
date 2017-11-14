@@ -8,7 +8,7 @@ public interface DocumentService {
 	/**
 	 * upload document
 	 */
-	void studentUploadDocument(Document document);
+	void studentUploadDocument(Document document, String docID, String modelID);
 	
 	/**
 	 * download document
