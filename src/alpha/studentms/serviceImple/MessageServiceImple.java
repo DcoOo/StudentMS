@@ -1,6 +1,7 @@
 package alpha.studentms.serviceImple;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import alpha.studentms.bean.Message;
@@ -31,6 +32,13 @@ public class MessageServiceImple implements MessageService {
 		resultSet = messageDAO.getMessage(teacher_id);
 		
 		return resultSet;
+	}
+	
+	@Override
+	public List<Message> getClassMessage(String class_id) {
+		List<Message> msgs= new LinkedList<>();
+//		messageDAO.g
+		return msgs;
 	}
 
 }

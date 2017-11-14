@@ -148,7 +148,6 @@
         <div>
             <div class="row">
                 <div class="col-md-9">选做任务</div>
-                <div style="border: none" class="col-md-3"><a>编辑</a></div>
             </div>
             <c:forEach var="memo_item" items="${requestScope.optionMemoList}" step="1">
 	            <div class="row">
@@ -163,7 +162,7 @@
             <div class="row">
                 <div class="col-md-9">自定义任务</div>
 
-                <div style="border: none" class="col-md-3"><a>编辑</a></div>
+                <div style="border: none" class="col-md-3"><a onclick="customize()">编辑</a></div>
             </div>
             <c:forEach var="memo_item" items="${requestScope.customMemoList}" step="1">
 	            <div class="row">
@@ -171,11 +170,63 @@
                 	<div class="col-md-1"><a href = "deletememocontroller?id=${memo_item.id }&type=1"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></a></div>
             	</div>
             </c:forEach>
+            <form action="/StudentMS/servlet/addmemocontroller">
+            	<div id="input" style="display: none">
+                    <a href="#" id="addTask">添加新任务</a>
+                    <div id="addTaskDiv" style="display: none">
+                        <a href="#" id="AddMoreFileBox">再加一条</a>
+                        <div id="InputsWrapper">
+                            <div>
+                            <input type="text" name="newTask" id="field_1" value=""/><a href="#" class="removeclass">×</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-default" id="button" style="display: none">提交</button>
+            	
+            </form>
         </div>
 
     </div>
 </div>
-
 </div>
+<script>
+	function customize(){
+        $('.id').show();
+        $('.myTask').show();
+        $('#button').show();
+        $('.sign').hide();
+        $('.task').hide();
+        $('#input').show();
+        $('#addTask').click(function (e) {
+            $('#addTaskDiv').show();
+        });
+        var MaxInputs       = 8; //maximum input boxes allowed
+        var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID
+        var AddButton       = $("#AddMoreFileBox"); //Add button ID
+        var x = InputsWrapper.length; //initlal text box count
+        var FieldCount=1; //to keep track of text box added
+        $(AddButton).click(function (e)  //on add input button click
+        {
+            if(x <= MaxInputs) //max input box allowed
+            {
+                FieldCount++; //text box added increment
+                //add input box
+                $(InputsWrapper).append('<div>' +
+                    '<input type="text" name="newTask" id="field_'+ FieldCount +'"/><a href="#" class="removeclass">×</a>' +
+                    '</div>');
+                x++; //text box increment
+            }
+            return false;
+        });
+        $("body").on("click",".removeclass", function(e){ //user click on remove text
+            if( x > 1 ) {
+                $(this).parent('div').remove(); //remove text box
+                x--; //decrement textbox
+            }
+            return false;
+        })
+	}
+</script>
 </body>
 </html>

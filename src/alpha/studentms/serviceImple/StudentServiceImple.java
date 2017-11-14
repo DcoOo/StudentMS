@@ -107,5 +107,11 @@ public class StudentServiceImple implements StudentService{
 	public Student getStudentByUsername(String username) {
 		return studentDAO.select_by_id(username, StudentDAO.USERNAME_CODE);
 	}
+	
+	@Override
+	public String getTeacherId(String student_id) {
+		String classId = studentDAO.select_class_id(student_id);
+		return studentDAO.select_teacher_id(classId);
+	}
 
 }

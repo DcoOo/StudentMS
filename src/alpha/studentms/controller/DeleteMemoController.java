@@ -6,13 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.catalina.connector.Request;
-
 import alpha.studentms.service.MemoService;
-import alpha.studentms.service.StudentService;
 import alpha.studentms.serviceImple.MemoServiceImple;
-import alpha.studentms.serviceImple.StudentServiceImple;
 
 public class DeleteMemoController extends HttpServlet{
 	
@@ -24,7 +19,6 @@ public class DeleteMemoController extends HttpServlet{
 	/**
 	 * Service
 	 */
-	private StudentService studentService = new StudentServiceImple();
 	private MemoService memoService = new MemoServiceImple(); 
 
 	@Override
@@ -47,10 +41,9 @@ public class DeleteMemoController extends HttpServlet{
 			break;
 		case 1:
 			// 1表示删除自定义任务
+			memoService.deleteMemoByMemoId(memo_id, user_id, MemoService.CUSTOM_MEMO_CODE);
 			break;
 		}
-		req.getRequestDispatcher("/index.jsp").forward(req, resp);
-
+		req.getRequestDispatcher("/servlet/showmemocontroller").forward(req, resp);
 	}
-
 }

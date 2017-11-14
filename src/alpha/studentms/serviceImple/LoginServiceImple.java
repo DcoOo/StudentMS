@@ -37,4 +37,15 @@ public class LoginServiceImple implements LoginService{
 		return false;
 	}
 
+	@Override
+	public void update(String new_passwd, String username) {
+		loginDao.update(username, new_passwd);
+	}
+	
+	@Override
+	public String getPasswdByUsername(String username) {
+		return loginDao.select_by_username(username);
+	}
+	
+
 }
