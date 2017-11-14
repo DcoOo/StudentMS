@@ -1,8 +1,6 @@
 package alpha.studentms.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +30,7 @@ public class StudentClassAndGradeInfoController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		String studentID = (String) session.getAttribute("userId");
 		Student student = studentService.getStudentByUsername(studentID);

@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.connector.Request;
 import org.json.JSONObject;
 
 import alpha.studentms.bean.Student;
@@ -35,13 +34,13 @@ public class StudentInfoShowController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		session.setAttribute("userId", "joker");
 		String studentID = (String) session.getAttribute("userId");
 		Student student = studentService.getStudentByUsername(studentID);
 		JSONObject studentJSON = new JSONObject(student);
-		response.getWriter().print(studentJSON.toString());
+		response.getWriter().write(studentJSON.toString());
 	}
 
 	@Override
