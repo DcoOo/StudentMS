@@ -1,6 +1,8 @@
 package alpha.studentms.service;
 
 import java.util.List;
+
+import alpha.studentms.bean.Assistant;
 import alpha.studentms.bean.Message;
 import alpha.studentms.bean.ModelDocument;
 import alpha.studentms.bean.Student;
@@ -10,14 +12,21 @@ public interface TeacherService {
 	/**
 	 * 添加工作日志
 	 */
-	void addMemo(String userId);
+	void addMemo(String userId,String title,String content);
 	
 	
 	/**
 	 * 查询报道情况
-	 * 查询一个班级（或整个年级）的报道信息，传入一个班级（或年级）id，返回一个学生（student）list
+	 * 查询一个班级（或整个年级）的已报道学生的信息，传入一个班级（或年级）id，返回一个学生（student）list
 	 */
-	List<Student> searchRegister(String whClass);
+	List<Student> searchRegisterYes(String whClass);
+	
+	
+	/**
+	 * 查询报道情况
+	 * 查询一个班级（或整个年级）的未报道学生的信息，传入一个班级（或年级）id，返回一个学生（student）list
+	 */
+	List<Student> searchRegisterNo(String whClass);
 	
 	
 	/**
@@ -25,6 +34,13 @@ public interface TeacherService {
 	 * 查询整个年级的团员信息，传入一个年级id，返回一个学生（student）与是否报到的键值对list
 	 */
 	List<Student> searchCYL(String whClass);
+	
+	
+	/**
+	 * 查询整个班级学生信息
+	 * 查询一个班级（或整个年级）学生的信息，传入一个班级（或年级）id，返回一个学生（student）list
+	 */
+	List<Student> searchAllClass(String whClass);
 	
 	
 	/**
@@ -41,6 +57,9 @@ public interface TeacherService {
 	 */
 	void releaseMessage(Message message,ModelDocument modelDocument);
 	
-	
+	/**
+	 * 根据id查询老师
+	 */
+	Assistant selectById(String id);
 
 }

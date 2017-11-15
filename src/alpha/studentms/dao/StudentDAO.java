@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -218,6 +219,37 @@ public class StudentDAO {
 		return null;
 	}
 	
+	
+	/**
+	 * 查询已经报到的学生
+	 */
+	/*public List<Student> select_students_by_register(){
+		List<Student> result = new ArrayList<Student>();
+		
+		String sql = "SELECT * FROM t_student WHERE register=0";
+		connection = JdbcUtils.getConnection();
+		PreparedStatement preStatement;
+		try{
+			preStatement = connection.prepareStatement(sql);
+			ResultSet rs = preStatement.executeQuery();
+			while(rs.next()){
+				Student student = new Student();
+				student.setId(rs.getString("pk_id"));
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return result;
+		
+	}*/
+	
+	
+	/**
+	 * 查询没有报到的学生
+	 */
+	
+	
 	/**
 	 * select otherinfo by id
 	 * @param id
@@ -327,11 +359,11 @@ public class StudentDAO {
 			String name = set.getString("name");
 			int sex = set.getInt("sex");
 			int age = set.getInt("age");
-			String email = set.getString("name");
-			String wechat = set.getString("name");
-			String qq = set.getString("name");
-			String phone = set.getString("name");
-			String address = set.getString("name");
+			String email = set.getString("email");
+			String wechat = set.getString("wechat");
+			String qq = set.getString("qq");
+			String phone = set.getString("phone");
+			String address = set.getString("address");
 			int isCYL = set.getInt("isCYL");
 			int register = set.getInt("register");
 			String other_info = set.getString("otherinfo");

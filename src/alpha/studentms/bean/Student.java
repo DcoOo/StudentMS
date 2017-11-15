@@ -112,6 +112,11 @@ public class Student {
 	private String collection;
 	
 
+	public Student(){
+		
+	}
+	
+	
 	/**
 	 * 
 	 * @param id

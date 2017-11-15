@@ -8,6 +8,11 @@ import alpha.studentms.bean.Student;
 public interface StudentService {
 	
 	/**
+	 * 查询所有学生的所有数据
+	 */
+	List<Student> getAllStudentInfo(String teacherClass);
+	
+	/**
 	 * 按照用户登录名查询学生信息
 	 * @param username
 	 * @return

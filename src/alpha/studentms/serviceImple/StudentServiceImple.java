@@ -1,5 +1,6 @@
 package alpha.studentms.serviceImple;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import alpha.studentms.bean.Memo;
@@ -106,6 +107,14 @@ public class StudentServiceImple implements StudentService{
 	@Override
 	public Student getStudentByUsername(String username) {
 		return studentDAO.select_by_id(username, StudentDAO.USERNAME_CODE);
+	}
+
+	@Override
+	public List<Student> getAllStudentInfo(String teacherClass) {
+		// TODO Auto-generated method stub
+		List<Student> result = new ArrayList<Student>();
+		result = studentDAO.select_all();
+		return result;
 	}
 
 }
