@@ -1,3 +1,4 @@
+<%@page import="org.omg.CORBA.portable.ValueBase"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -35,7 +36,7 @@
 
     <nav style="background:#1d85d7" class="navbar navbar-default">
     <ul class="nav navbar-nav">
-        <li class="nav-header">
+        <li class="nav-header" onclick="jQuery:window.location.reload()">
             主页
         </li>
     </ul>
@@ -310,8 +311,11 @@
             '<p>'+content+'</p>');
         $.each($.parseJSON(file_json), function(n, value){
         	$('#centerContent').append('<a href='+value.address+' download="name">'+value.name+'</a>'+
-        		'<input type="file">'	+
-        		'<a href="">提交文件</a>'+'<hr>')
+        			'<form action="/StudentMS/servlet/studentUploadHandle" enctype="multipart/form-data" method="post">'+
+        				'<input type="hidden" name="modelDocID" value="' + value.modelDoc + '">'+
+        				'<input type="file" name="file1">'	+
+        				'<input type="submit" value="提交">'+
+        			'</form>')
         });
     }
     
@@ -491,7 +495,7 @@
         var info;
 
 
-        $('#centerContent').append( '<div><strong>教务处介绍</strong><img src="img/2.jpg"><hr><strong>教务处职能：</strong><br><span style="color: #0099ff"><a>教务处新生信息导出</a></span><br><span style="color: #0099ff">新生专业课程介绍</span><br><br><span style="color: #0099ff">新生专业学分介绍</span><br><br><span style="color: #0099ff">新生专业基本规划介绍</span><br><br><span style="color: #0099ff">教务处学校新生有关通知</span><br><span style="color: #0099ff">教务处辅导员及班主任浏览及查询</span><br></div>\n'+
+        $('#centerContent').append( '<div><strong>教务处介绍</strong><img src="/StudentMS/img/2.jpg"><hr><strong>教务处职能：</strong><br><span style="color: #0099ff"><a>教务处新生信息导出</a></span><br><span style="color: #0099ff">新生专业课程介绍</span><br><br><span style="color: #0099ff">新生专业学分介绍</span><br><br><span style="color: #0099ff">新生专业基本规划介绍</span><br><br><span style="color: #0099ff">教务处学校新生有关通知</span><br><span style="color: #0099ff">教务处辅导员及班主任浏览及查询</span><br></div>\n'+
             '<a style="float: right" onclick="intro()">返回</a>\n'
         );
 

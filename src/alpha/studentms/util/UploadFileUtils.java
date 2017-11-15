@@ -26,6 +26,7 @@ public class UploadFileUtils {
 		String saveFileName = "";
 		String realSavePath = "";
 		String message = "";
+		Map<String, String> map = new HashMap<>();
 		File tempFile = new File(tempPath);
 		// 判断上传文件的保存目录是否存在
 		if (!tempFile.exists()) {
@@ -58,11 +59,10 @@ public class UploadFileUtils {
 					String name = item.getFieldName();
 					// 解决普通输入项的数据的中文乱码问题
 					String value = item.getString("UTF-8");
-					System.out.println(name + "=" + value);
+					map.put(name, value);
 				} else {// 如果fileitem中封装的是上传文件
 						// 得到上传的文件名称，
 					String filename = item.getName();
-					System.out.println(filename);
 					if (filename == null || filename.trim().equals("")) {
 						continue;
 					}
@@ -97,7 +97,7 @@ public class UploadFileUtils {
 			message = "文件上传失败！";
 			e.printStackTrace();
 		}
-		Map<String, String> map = new HashMap<>();
+		
 		map.put("message", message);
 		map.put("saveFileName", saveFileName);
 		map.put("realSavePath", realSavePath);

@@ -31,11 +31,14 @@ public class StudentClassAndGradeInfoController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
+		Student student;
 		HttpSession session = request.getSession();
 		String studentID = (String) session.getAttribute("userId");
+		String username = (String)session.getAttribute("username");
+		student = studentService.getStudentByUsername(username);
 		float englishGrade = studentService.getEnglishGrade(studentID);
 		String classInfo = studentService.getClassId(studentID);
-		String studentName = (String)session.getAttribute("username");
+		String studentName = student.getName();
 		String json = "{\"englishGrade\":" + englishGrade + ",\"classInfo\":\"" + classInfo + "\",\"studentName\":\"" + studentName + "\"}";
 		response.getWriter().print(json);		
 	}

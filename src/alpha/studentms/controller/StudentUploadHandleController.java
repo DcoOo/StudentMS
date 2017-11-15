@@ -37,7 +37,7 @@ public class StudentUploadHandleController extends HttpServlet {
 		String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
 		String tempPath = this.getServletContext().getRealPath("/WEB-INF/upload");
 		String studentID = (String) session.getAttribute("userId");
-		String modelDocID = (String) request.getAttribute("modelDocID");
+		String modelDocID;
 		Document document = new Document();
 		Map<String, String> map = new HashMap<>();
 		map = UploadFileUtils.fileUpload(request, tempPath, savePath, studentID);
@@ -46,8 +46,9 @@ public class StudentUploadHandleController extends HttpServlet {
 		document.setAddress(map.get("realSavePath"));
 		String docID = UUIDGenerater.getUUID();
 		document.setId(docID);
+		modelDocID = map.get("modelDocID");
 		documentService.studentUploadDocument(document, docID, modelDocID);
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		request.getRequestDispatcher("/servlet/showmemocontroller").forward(request, response);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -165,21 +165,22 @@ public class StudentDAO {
 	 * @return
 	 */
 	public Student select_by_id(String id, int code){
+		String aString;
 		switch (code) {
 		case StudentDAO.PRIMARY_ID_CODE:
-			SELECT_BY_ID = String.format(SELECT_BY_ID, "pk_id");
+			aString = String.format(SELECT_BY_ID, "pk_id");
 			break;
 		case StudentDAO.STUDENT_NUMBER_CODE:
-			SELECT_BY_ID = String.format(SELECT_BY_ID, "number");
+			aString = String.format(SELECT_BY_ID, "number");
 			break;
 		case StudentDAO.USERNAME_CODE:
-			SELECT_BY_ID = String.format(SELECT_BY_ID, "id_num");
+			aString = String.format(SELECT_BY_ID, "id_num");
 			break;
 		default:
-			SELECT_BY_ID = String.format(SELECT_BY_ID, "pk_id");
+			aString = String.format(SELECT_BY_ID, "pk_id");
 		}
 		try {
-			preState_select_by_id = connection.prepareStatement(SELECT_BY_ID);
+			preState_select_by_id = connection.prepareStatement(aString);
 			preState_select_by_id.setString(1, id);
 			ResultSet set = preState_select_by_id.executeQuery();
 			if (set.next()) {
