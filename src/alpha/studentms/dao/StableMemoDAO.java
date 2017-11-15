@@ -147,6 +147,7 @@ public class StableMemoDAO {
 				Memo memo = new Memo();
 				memo.setId(set.getString("pk_id"));
 				memo.setTitle(set.getString("title"));
+				list.add(memo);
 			}
 			return list;
 		} catch (SQLException e) {

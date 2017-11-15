@@ -32,6 +32,8 @@ public class LoginController extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setCharacterEncoding("UTF-8");
+		resp.setCharacterEncoding("UTF-8");
 		String username = (String) req.getParameter("username");
 		String passwd = (String) req.getParameter("passwd");
 		String role = (String)req.getParameter("role");
@@ -46,8 +48,6 @@ public class LoginController extends HttpServlet{
 				req.getSession().setAttribute("username", username);
 				req.getSession().setAttribute("classId", student.getClass_id());
 				req.getSession().setAttribute("passwd", passwd);
-				// TODO 测试设置已注册
-				student.setRegister(Student.IS_REIGSTER);
 				// 根据是否已经注册决定跳转到信息采集或者直接进入个人中心
 				if (student.getRegister() == Student.IS_REIGSTER){
 					// 已经注册
@@ -57,6 +57,7 @@ public class LoginController extends HttpServlet{
 					// 未注册,则跳转到信息采集页面
 					// 将所有的选座事务查询，并提交
 					req.setAttribute("optionMemos",memoService.getAllOptionMemos());
+					req.getRequestDispatcher("/message.jsp").forward(req, resp);
 				}
 			}else{
 				// 教师登陆

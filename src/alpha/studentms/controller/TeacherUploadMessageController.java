@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import alpha.studentms.bean.Message;
 import alpha.studentms.bean.ModelDocument;
@@ -38,9 +39,10 @@ public class TeacherUploadMessageController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String messageTitle = (String) request.getAttribute("title");
-		String messageContext = (String) request.getAttribute("content");
-		String id = (String) request.getAttribute("id");
+		HttpSession session = request.getSession();
+		String messageTitle = (String) request.getParameter("title");
+		String messageContext = (String) request.getParameter("content");
+		String id = (String) session.getAttribute("userId");
 		String hasModelDoc = (String) request.getAttribute("modelDoc");
 		String messageID = UUIDGenerater.getUUID();
 		ModelDocument modelDocument = null;

@@ -31,7 +31,6 @@ public class AddMemoController extends HttpServlet{
 		String user_id = (String)req.getSession().getAttribute("userId");
 		// 获取待添加备忘录信息
 		String[] titles = req.getParameterValues("newTask");
-		System.out.println(titles.length+"***");
 		Memo memo;
 		for (String title : titles) {
 			memo = new Memo();

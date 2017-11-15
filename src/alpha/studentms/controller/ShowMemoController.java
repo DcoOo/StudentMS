@@ -31,7 +31,6 @@ public class ShowMemoController extends HttpServlet{
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("Show Memo");
 		// 显示用户的所有事务，并返回
 		// 从session中获取用户id
 		String id = (String) req.getSession().getAttribute("userId");

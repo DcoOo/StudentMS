@@ -27,7 +27,7 @@ public class UpdatePasswdController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String username = (String) req.getSession().getAttribute("username");
+		String username = (String) req.getSession().getAttribute("userId");
 		String new_passwd = req.getParameter("newpasswd");
 		System.out.println(new_passwd+"update");
 		

@@ -73,7 +73,7 @@ public class StudentDAO {
 	 * update badic info
 	 */
 	public  static String UPDATE_BASIC_INFO = "UPDATE t_student "
-			+ "SET nation = ?, name = ?, sex = ?, age = ?, email = ?, wechat = ?, qq = ?, phone = ?, address = ?, isCYL = ?, englishgrade = ?"
+			+ "SET nation = ?, name = ?, sex = ?, age = ?, email = ?, wechat = ?, qq = ?, phone = ?, address = ?, isCYL = ?, englishgrade = ?, register = ? "
 			+ "WHERE id_num = ?";
 
 	/**
@@ -174,12 +174,13 @@ public class StudentDAO {
 			break;
 		case StudentDAO.USERNAME_CODE:
 			SELECT_BY_ID = String.format(SELECT_BY_ID, "id_num");
+			break;
+		default:
+			SELECT_BY_ID = String.format(SELECT_BY_ID, "pk_id");
 		}
 		try {
-//			System.out.println(SELECT_BY_ID);
 			preState_select_by_id = connection.prepareStatement(SELECT_BY_ID);
 			preState_select_by_id.setString(1, id);
-			System.out.println(preState_select_by_id.toString());
 			ResultSet set = preState_select_by_id.executeQuery();
 			if (set.next()) {
 				return resultset2student(set);
@@ -280,7 +281,8 @@ public class StudentDAO {
 			preState_update_basic_info_by_id.setString(9, student.getAddress());
 			preState_update_basic_info_by_id.setInt(10, student.getIs_cyl());
 			preState_update_basic_info_by_id.setFloat(11, student.getEnglish_grade());
-			preState_update_basic_info_by_id.setString(12, student.getId_num());
+			preState_update_basic_info_by_id.setInt(12, student.getRegister());
+			preState_update_basic_info_by_id.setString(13, student.getId_num());
 			preState_update_basic_info_by_id.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
