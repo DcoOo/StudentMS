@@ -95,9 +95,11 @@
 
         <div id="centerContent">
         <ul class="">
-        	<c:forEach begin="0" end="${fn:length(requestScope.classAdviserMessages) - 1 }" varStatus="idx">
-        		<li><a onclick="showNotice('${requestScope.classAdviserMessages[idx.index].id }', '${requestScope.classAdviserMessages[idx.index].title}', '${requestScope.classAdviserMessages[idx.index].content }', '${requestScope.classAdviserMessages[idx.index].optime }', '${requestScope.classAdviserMessages[idx.index].teacher }', '${requestScope.modelDocument[idx.index] }')">${requestScope.classAdviserMessages[idx.index].title }</a>
-        	</c:forEach>
+        	<c:if test="${fn:length(requestScope.classAdviserMessages) > 0 }">
+        		<c:forEach begin="0" end="${fn:length(requestScope.classAdviserMessages) - 1 }" varStatus="idx">
+        			<li><a onclick="showNotice('${requestScope.classAdviserMessages[idx.index].id }', '${requestScope.classAdviserMessages[idx.index].title}', '${requestScope.classAdviserMessages[idx.index].content }', '${requestScope.classAdviserMessages[idx.index].optime }', '${requestScope.classAdviserMessages[idx.index].teacher }', '${requestScope.modelDocument[idx.index] }')">${requestScope.classAdviserMessages[idx.index].title }</a>
+        		</c:forEach>
+        	</c:if>
         	<!-- 
         	<c:forEach var="message" items='${requestScope.classAdviserMessages }'>
         		<li><a onclick="showNotice('${message.id }', '${message.title}', '${message.content }', '${message.optime }', '${message.teacher }')">${message.title }</a>
