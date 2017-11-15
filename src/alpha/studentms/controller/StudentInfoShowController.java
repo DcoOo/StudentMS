@@ -37,8 +37,8 @@ public class StudentInfoShowController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		String studentID = (String) session.getAttribute("userId");
-		Student student = studentService.getStudentByUsername(studentID);
+		String userName = (String) session.getAttribute("username");
+		Student student = studentService.getStudentByUsername(userName);
 		JSONObject studentJSON = new JSONObject(student);
 		response.getWriter().write(studentJSON.toString());
 	}

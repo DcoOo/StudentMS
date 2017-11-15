@@ -174,12 +174,13 @@ public class StudentDAO {
 			break;
 		case StudentDAO.USERNAME_CODE:
 			SELECT_BY_ID = String.format(SELECT_BY_ID, "id_num");
+			break;
+		default:
+			SELECT_BY_ID = String.format(SELECT_BY_ID, "pk_id");
 		}
 		try {
-			System.out.println(SELECT_BY_ID);
 			preState_select_by_id = connection.prepareStatement(SELECT_BY_ID);
 			preState_select_by_id.setString(1, id);
-			System.out.println(preState_select_by_id.toString());
 			ResultSet set = preState_select_by_id.executeQuery();
 			if (set.next()) {
 				return resultset2student(set);

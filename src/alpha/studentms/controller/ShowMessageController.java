@@ -56,7 +56,6 @@ public class ShowMessageController extends HttpServlet{
 			modelDocListJson = new JSONArray(modelDocumentService.getModelDocumentByMessageId(msg.getId()));
 			String json = modelDocListJson.toString().replace('\"', '@');
 			json = json.replace('\'', '^');
-			System.out.println(json);
 			docList.add(json);
 		}
 		req.setAttribute("modelDocument", docList);

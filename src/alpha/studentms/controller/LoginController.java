@@ -44,7 +44,7 @@ public class LoginController extends HttpServlet{
 				// 学生登陆
 				// 用户id放入session
 				Student student = studentService.getStudentByUsername(username);
-				req.getSession().setAttribute("userId", username);
+				req.getSession().setAttribute("userId", student.getId());
 				req.getSession().setAttribute("username", username);
 				req.getSession().setAttribute("classId", student.getClass_id());
 				req.getSession().setAttribute("passwd", passwd);

@@ -33,10 +33,9 @@ public class StudentClassAndGradeInfoController extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		String studentID = (String) session.getAttribute("userId");
-		Student student = studentService.getStudentByUsername(studentID);
 		float englishGrade = studentService.getEnglishGrade(studentID);
 		String classInfo = studentService.getClassId(studentID);
-		String studentName = student.getName();
+		String studentName = (String)session.getAttribute("username");
 		String json = "{\"englishGrade\":" + englishGrade + ",\"classInfo\":\"" + classInfo + "\",\"studentName\":\"" + studentName + "\"}";
 		response.getWriter().print(json);		
 	}

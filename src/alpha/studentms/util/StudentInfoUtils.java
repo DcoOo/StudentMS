@@ -27,8 +27,8 @@ public class StudentInfoUtils {
 		StudentService studentService = new StudentServiceImple();
 		Student student;
 		HttpSession session = request.getSession();
-		String studentID = (String) session.getAttribute("userId");
-		student = studentService.getStudentByUsername(studentID);
+		String userName = (String) session.getAttribute("username");
+		student = studentService.getStudentByUsername(userName);
 		String studentNation = (String) request.getParameter("studentNation");
 		String sex = (String) request.getParameter("studentSex");
 		int studentSex = "male".equals(sex)?Student.MAN:Student.WOMAN; 
@@ -47,7 +47,7 @@ public class StudentInfoUtils {
 		student.setSex(studentSex);
 		student.setAddress(studentAddress);
 		student.setEmail(studentEmail);
-		student.setId_num(studentID);
+		student.setId_num(userName);
 		student.setPhone(studentPhone);
 		student.setWechat(studentWeChat);
 		student.setQq(studentQQ);
