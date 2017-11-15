@@ -36,7 +36,7 @@ public class StudentInfoUpdateController extends HttpServlet {
 		student = StudentInfoUtils.updateStudentInfo(request);
 		studentService.gatherAndUpdateInfomation(student);
 
-		request.getRequestDispatcher("/index.html").forward(request, response);
+		request.getRequestDispatcher("/servlet/showmemocontroller").forward(request, response);
 	}
 
 	@Override

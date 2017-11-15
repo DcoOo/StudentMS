@@ -47,7 +47,7 @@ public class StudentUploadHandleController extends HttpServlet {
 		String docID = UUIDGenerater.getUUID();
 		document.setId(docID);
 		documentService.studentUploadDocument(document, docID, modelDocID);
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

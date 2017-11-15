@@ -1,3 +1,5 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -31,22 +33,22 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="age">年龄：</label>
-                    <input type="text" class="form-control" name="studentAge" id="age" placeholder="请输入年龄">
+                    <label for="age">年龄：</label>
+                    <input type="text" class="form-control" name="studentAge" id="age" placeholder="请输入年龄">
                 </div>
 
                 <div class="form-group">
-                    <label for="phone">手机号：</label>
+                    <label for="phone">手机号：</label>
                     <input type="text" class="form-control" name="studentPhone" id="phone" placeholder="请输入手机号">
                 </div>
 
                 <div class="form-group">
-                    <label for="nation">民族：</label>
-                    <input type="text" class="form-control" name="studentNation" id="nation" placeholder="请输入民族">
+                    <label for="nation">民族：</label>
+                    <input type="text" class="form-control" name="studentNation" id="nation" placeholder="请输入民族">
                 </div>
 
                 <div class="form-group">
-                    <label>性别：</label>
+                    <label>性别：</label>
                     <label class="radio-inline">
                         <input type="radio" name="studentSex" id="male" value="male"> 男
                     </label>
@@ -66,47 +68,29 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="weChat">微信：</label>
+                    <label for="weChat">微信：</label>
                     <input type="text" class="form-control" name="studentWechat" id="weChat" placeholder="请输入微信号">
                 </div>
 
                 <div class="form-group">
-                    <label for="QQ">QQ号：</label>
+                    <label for="QQ">QQ:</label>
                     <input type="text" class="form-control" name="studentQQ" id="QQ" placeholder="请输入QQ号">
                 </div>
 
                 <div class="form-group">
                     <label for="address">家庭住址：</label>
-                    <input type="text" class="form-control" name="studentAddress" id="address" placeholder="请输入家庭住址">
+                    <input type="text" class="form-control" name="studentAddress" id="address" placeholder="请输入家庭住址">
                 </div>
 
                 <div class="form-group">
-                    <label>选做任务：</label>
+                    <label>选做任务：</label>
                 <div class="checkbox">
-                    <label>
-                        <input type="checkbox" value="">
-                        Option one is this and that&mdash;be sure to include why it's great
-                    </label>
-                    <label>
-                        <input type="checkbox" value="">
-                        Option one is this and that&mdash;be sure to include why it's great
-                    </label>
-                    <label>
-                        <input type="checkbox" value="">
-                        Option one is this and that&mdash;be sure to include why it's great
-                    </label>
-                    <label>
-                        <input type="checkbox" value="">
-                        Option one is this and that&mdash;be sure to include why it's great
-                    </label>
-                    <label>
-                        <input type="checkbox" value="">
-                        Option one is this and that&mdash;be sure to include why it's great
-                    </label>
-                    <label>
-                        <input type="checkbox" value="">
-                        Option one is this and that&mdash;be sure to include why it's great
-                    </label>
+                    <c:forEach var="memo" items="${optionMemos}">
+                    	<label>
+                    		<input type="checkbox" value="${memo.getId()}" name="optionMemo">
+                    		${memo.getTitle()}
+                    	</label>
+					</c:forEach>
                 </div>
                 </div>
 

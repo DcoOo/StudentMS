@@ -16,4 +16,9 @@ public interface MessageService {
 	 */
 	List<Message> getTeacherMessage(String teacher_id);
 	
+	/**
+	 * 根据班级ID获取通知
+	 */
+	List<Message> getClassMessage(String class_id);
+	
 }

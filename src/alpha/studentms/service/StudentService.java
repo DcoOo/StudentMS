@@ -78,6 +78,13 @@ public interface StudentService {
 	 */
 	void insertOptionMemo(Memo  memo);
 	
+	/**
+	 * 获取学生班主任
+	 * @param student_id
+	 * @return
+	 */
+	String getTeacherId(String student_id);
+	
 	
 	
 }

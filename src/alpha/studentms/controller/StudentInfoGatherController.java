@@ -33,17 +33,24 @@ public class StudentInfoGatherController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO ID怎么来？
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		String[] optionMemos = request.getParameterValues("optionMemo");
 		String optionMemoID = "";
 		Student student;
-		Memo memo = new Memo();
 		student = StudentInfoUtils.updateStudentInfo(request);
-		memo.setUser(student.getId_num());
-		memo.setId(optionMemoID);
+		for (int i = 0; i < optionMemos.length; i++) {
+			Memo memo = new Memo();
+			optionMemoID = optionMemos[i];
+			memo.setUser(student.getId_num());
+			memo.setId(optionMemoID);
+			studentService.insertOptionMemo(memo);
+		}
+		//表示学生已经注册
+		student.setRegister(Student.IS_REIGSTER);
 		studentService.gatherAndUpdateInfomation(student);
-		//studentService.insertOptionMemo(memo);
-		// TODO 更改映射
-		request.getRequestDispatcher("/index.html").forward(request, response);
+		
+		request.getRequestDispatcher("/servlet/showmemocontroller").forward(request, response);
 	}
 
 	@Override

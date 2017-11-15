@@ -30,6 +30,11 @@ public interface MemoService {
 	 */
 	void addMemoByUserId(String userId, int type, Memo memo);
 	
+	/**
+	 * 获取所有的选做任务
+	 */
+	List<Memo> getAllOptionMemos();
+	
 	
 
 }

@@ -53,6 +53,16 @@ public class StudentDAO {
 	public static String DELETE_ALL = "DELETE FROM t_student";
 	
 	/**
+	 * 获取班级ID
+	 */
+	public static String GET_CLASS_ID = "SELECT fk_class FROM t_student WHERE pk_id = ?";
+	
+	/**
+	 * 获取老师ID
+	 */
+	public static String GET_TEACHER_ID = "SELECT fk_teacher FROM t_class WHERE pk_id = ?";
+	
+	/**
 	 * insert student
 	 */
 	public static String INSERT = "INSERT INTO t_student "
@@ -63,7 +73,7 @@ public class StudentDAO {
 	 * update badic info
 	 */
 	public  static String UPDATE_BASIC_INFO = "UPDATE t_student "
-			+ "SET nation = ?, name = ?, sex = ?, age = ?, email = ?, wechat = ?, qq = ?, phone = ?, address = ?, isCYL = ?, englishgrade = ?"
+			+ "SET nation = ?, name = ?, sex = ?, age = ?, email = ?, wechat = ?, qq = ?, phone = ?, address = ?, isCYL = ?, englishgrade = ?, register = ? "
 			+ "WHERE id_num = ?";
 
 	/**
@@ -93,6 +103,8 @@ public class StudentDAO {
 	private PreparedStatement preState_update_other_info_by_id;
 	private PreparedStatement preState_update_collection_by_id;
 	private PreparedStatement preState_select_by_class_id;
+	private PreparedStatement preState_get_class_id;
+	private PreparedStatement preState_get_teacher_id;
 	
 	/**
 	 * connection
@@ -115,7 +127,9 @@ public class StudentDAO {
 			preState_update_basic_info_by_id = connection.prepareStatement(UPDATE_BASIC_INFO);
 			preState_update_other_info_by_id = connection.prepareStatement(UPDATE_OTHER_INFO);
 			preState_update_collection_by_id = connection.prepareStatement(UPDATE_COLLECTION_BY_ID);
-		
+			preState_get_class_id = connection.prepareStatement(GET_CLASS_ID);
+			preState_get_teacher_id = connection.prepareStatement(GET_TEACHER_ID);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -266,7 +280,8 @@ public class StudentDAO {
 			preState_update_basic_info_by_id.setString(9, student.getAddress());
 			preState_update_basic_info_by_id.setInt(10, student.getIs_cyl());
 			preState_update_basic_info_by_id.setFloat(11, student.getEnglish_grade());
-			preState_update_basic_info_by_id.setString(12, student.getId_num());
+			preState_update_basic_info_by_id.setInt(12, student.getRegister());
+			preState_update_basic_info_by_id.setString(13, student.getId_num());
 			preState_update_basic_info_by_id.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -347,7 +362,46 @@ public class StudentDAO {
 		return null;
 	}
 	
+	/**
+	 * 获取班级id
+	 * @param studentId
+	 * @return
+	 */
+	public String select_class_id(String studentId){
+		try {
+			preState_get_class_id.setString(1, studentId);
+			ResultSet set = preState_get_class_id.executeQuery();
+			if (set.next()) {
+				return set.getString("fk_class");
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
+	/**
+	 * 获取老师id
+	 * @param classId
+	 * @return
+	 */
+	public String select_teacher_id(String classId){
+		ResultSet set;
+		try {
+			preState_get_teacher_id.setString(1, classId);
+			set = preState_get_teacher_id.executeQuery();
+			if (set.next()) {
+				return set.getString("fk_teacher");
+		}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
+	}
 	
 	
 	
