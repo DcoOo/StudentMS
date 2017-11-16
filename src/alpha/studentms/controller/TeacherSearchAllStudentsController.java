@@ -31,8 +31,8 @@ public class TeacherSearchAllStudentsController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//老师Attribute名？？？？
-		String assistantID = (String) request.getSession().getAttribute("");
+		
+		String assistantID = (String) request.getSession().getAttribute("userId");
 		
 		Assistant assistant = teacherService.selectById(assistantID);
 		String whClass = assistant.getClassOfTeacher();

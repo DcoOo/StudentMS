@@ -13,7 +13,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import alpha.studentms.bean.Assistant;
-import alpha.studentms.bean.Reply;
 import alpha.studentms.bean.Student;
 import alpha.studentms.service.StudentService;
 import alpha.studentms.service.TeacherService;
@@ -32,8 +31,8 @@ public class TeacherSearchAllStudentsRegisterController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//老师Attribute名？？？？
-		String assistantID = (String) request.getSession().getAttribute("");
+		
+		String assistantID = (String) request.getSession().getAttribute("userId");
 		
 		Assistant assistant = teacherService.selectById(assistantID);
 		String whClass = assistant.getClassOfTeacher();

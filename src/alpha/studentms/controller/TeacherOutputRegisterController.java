@@ -1,16 +1,12 @@
 package alpha.studentms.controller;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import alpha.studentms.bean.Assistant;
 import alpha.studentms.bean.Student;
@@ -31,8 +27,8 @@ public class TeacherOutputRegisterController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//老师Attribute名？？？？
-		String assistantID = (String) request.getSession().getAttribute("");
+		
+		String assistantID = (String) request.getSession().getAttribute("userId");
 		
 		Assistant assistant = teacherService.selectById(assistantID);
 		String whClass = assistant.getClassOfTeacher();
