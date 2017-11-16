@@ -57,6 +57,7 @@ public class ShowMessageController extends HttpServlet{
 			String json = modelDocListJson.toString().replace('\"', '@');
 			json = json.replace('\'', '^');
 			docList.add(json);
+			System.out.println(json+"json");
 		}
 		req.setAttribute("modelDocument", docList);
 		req.getRequestDispatcher("/index.jsp").forward(req, resp);

@@ -27,12 +27,14 @@ public class UpdatePasswdController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		String username = (String) req.getSession().getAttribute("userId");
+		String username = (String) req.getSession().getAttribute("username");
 		String new_passwd = req.getParameter("newpasswd");
 		System.out.println(new_passwd+"update");
+		System.out.println(username+"update passwd username");
 		
 		loginService.update(new_passwd, username);
-		
+		// 更新session中信息
+		req.getSession().setAttribute("passwd", new_passwd);
 		req.getRequestDispatcher("/servlet/showmemocontroller").forward(req, resp);
 		
 	}

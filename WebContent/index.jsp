@@ -35,8 +35,8 @@
 
     <nav style="background:#1d85d7" class="navbar navbar-default">
     <ul class="nav navbar-nav">
-        <li class="nav-header">
-            主页
+        <li class="nav-header" onclick="jQuery:window.location.reload()">
+        	主页
         </li>
     </ul>
 </nav>
@@ -258,10 +258,10 @@
         });
     }
 
-    function passwordChange() {
+	function passwordChange() {
         $('#centerTitle').text("密码修改");
         $('#centerContent>*').hide();
-        $('#centerContent').append('<form action="/StudentMS/servlet/updatepasswdcontroller" method="post">' +
+        $('#centerContent').append('<form action="/StudentMS/servlet/updatepasswdcontroller" method="post" id="passwordForm">' +
             '<div class="form-group">' +
             '<label for="oldPassword">旧密码：</label> ' +
             '<input type="text" class="form-control" id="oldPassword" placeholder="请输入旧密码"> ' +
@@ -274,9 +274,24 @@
             ' <label for="newPasswordRepeat">新密码：</label> ' +
             '<input type="password" class="form-control" id="newPasswordRepeat" placeholder="请再次输入新密码"> '+
             '</div>'+
-            '<button type="submit" class="btn btn-default">确定修改</button> ' +
+            '<button type="button" class="btn btn-default" onclick="formSubmit()">确定修改<tton> ' +
             '</form>'
         );
+    }
+
+    function formSubmit() {
+        var oldpsd = "<%=session.getAttribute("passwd")%>";
+        var oldpsdInput = $('#oldPassword').val();
+        if (oldpsd == oldpsdInput){
+        	if($('#newPassword').val() == $('#newPasswordRepeat').val()){
+            	alert('密码修改成功');
+            	$('#passwordForm').submit();
+        	}else{
+        		alert('两次输入密码不一致');
+        	}
+        }else{
+        	alert('原密码输入错误')
+        }
     }
 
     function examResult() {
@@ -308,11 +323,15 @@
 
         $('#centerContent').append('<h2>'+title+'</h2>' +
             '<p>'+content+'</p>');
+        $('#centerContent').append(''+
+        	'<form action="/StudentMS/servlet/studentUploadHandle" enctype="multipart/form-data" method="post">');
         $.each($.parseJSON(file_json), function(n, value){
-        	$('#centerContent').append('<a href='+value.address+' download="name">'+value.name+'</a>'+
-        		'<input type="file">'	+
-        		'<a href="">提交文件</a>'+'<hr>')
+        	$('#centerContent').append(
+        			'<a href='+value.address+' download="name">'+value.name+'</a>'+
+    				'<input type="hidden" name="modelDocID" value="' + value.modelDoc + '">'+
+    				'<input type="file" name="file1">')	
         });
+        $('#centerContent').append('<input type="submit" value="提交"></form>')
     }
     
     function rules() {
