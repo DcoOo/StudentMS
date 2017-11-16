@@ -87,8 +87,6 @@ public class TeacherServiceImple implements TeacherService {
 
 	@Override
 	public void releaseMessage(Message message, ModelDocument modelDocument) {
-		// TODO Auto-generated method stub
-		
 		if((message != null) && (modelDocument != null)){
 			messageDAO.insertMessage(message);
 			modelDocumentDAO.insertModelDocument(modelDocument);
@@ -140,7 +138,4 @@ public class TeacherServiceImple implements TeacherService {
 		
 		return assistant;
 	}
-	
-	
-
 }

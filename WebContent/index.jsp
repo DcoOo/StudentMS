@@ -1,4 +1,6 @@
+<%@page import="org.omg.CORBA.portable.ValueBase"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page import="java.lang.StringBuilder" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
@@ -16,14 +18,12 @@
         .col-md-2,.col-md-7,.row{
             border: 1px #bcbcbc solid;
         }
-
         .navbar{
             min-height: 30px;
         }
         .navbar-nav>li{
             padding: 5px 5px 5px;
         }
-
     </style>
 </head>
 
@@ -35,7 +35,7 @@
 
     <nav style="background:#1d85d7" class="navbar navbar-default">
     <ul class="nav navbar-nav">
-        <li class="nav-header">
+        <li class="nav-header" onclick="jQuery:window.location.reload()">
             主页
         </li>
     </ul>
@@ -211,11 +211,9 @@
             return false;
         })
 	}
-
 	function alter() {
         $('#centerTitle').text("个人信息");
         $('#centerContent>*').hide();
-
         $.getJSON("/StudentMS/servlet/studentInfoShow",function (data) {
             $('#centerContent').append('<div class="table-responsive">\n' +
                     '                <form action="/StudentMS/servlet/studentInfoUpdate" method="post">' +
@@ -257,14 +255,13 @@
             );
         });
     }
-
     function passwordChange() {
         $('#centerTitle').text("密码修改");
         $('#centerContent>*').hide();
-        $('#centerContent').append('<form action="/StudentMS/servlet/updatepasswdcontroller" method="post">' +
+        $('#centerContent').append('<form action="/StudentMS/servlet/updatepasswdcontroller" id="updatePasswdForm" method="post">' +
             '<div class="form-group">' +
             '<label for="oldPassword">旧密码：</label> ' +
-            '<input type="text" class="form-control" id="oldPassword" placeholder="请输入旧密码"> ' +
+            '<input type="password" class="form-control" id="oldPassword" placeholder="请输入旧密码"> ' +
             '</div> ' +
             '<div class="form-group">' +
             ' <label for="newPassword">新密码：</label> ' +
@@ -274,11 +271,30 @@
             ' <label for="newPasswordRepeat">新密码：</label> ' +
             '<input type="password" class="form-control" id="newPasswordRepeat" placeholder="请再次输入新密码"> '+
             '</div>'+
-            '<button type="submit" class="btn btn-default">确定修改</button> ' +
+            '<button type="button" onclick="formSubmit()" class="btn btn-default">确定修改</button> ' +
             '</form>'
         );
     }
+    
+    function formSubmit() {
+        var oldpsd = "<%=session.getAttribute("passwd")%>";
+        var oldpsdInput = $('#oldPassword').val();
+        if (oldpsd == oldpsdInput){
+        	if ($('#newPassword').val() == $('#newPasswordRepeat').val()){
+        		alert('修改密码成功');
+        		$('#updatePasswdForm').submit();
+        		
+        	}else{
+        		alert("两次密码输入不一致，请重新输入");
+        	}
+        }else{
+        	alert("原密码输入错误，请重新输入");
+        }
+    }
 
+    
+    
+    
     function examResult() {
         $('#centerTitle').text("考试结果");
         $('#centerContent>*').hide();
@@ -302,27 +318,29 @@
     }
     
     function showNotice(id, title, content, optime, teacher, files_json) {
+    	var builder = '';
     	file_json = files_json.replace(/\@/g, '\"');
         $('#centerTitle').text("通知");
         $('#centerContent>*').hide();
-
         $('#centerContent').append('<h2>'+title+'</h2>' +
             '<p>'+content+'</p>');
         $.each($.parseJSON(file_json), function(n, value){
-        	$('#centerContent').append('<a href='+value.address+' download="name">'+value.name+'</a>'+
-        		'<input type="file">'	+
-        		'<a href="">提交文件</a>'+'<hr>')
+        	builder += '<a href='+value.address+' download="name">'+value.name +'</a>'+
+			'<input type="hidden" name="modelDocID" value="' + value.modelDoc + '">'+
+			'<input type="file" name="file1">';
         });
+        
+        $('#centerContent').append(''+
+    	'<form action="/StudentMS/servlet/studentUploadHandle" enctype="multipart/form-data" method="post">' +
+    		builder +
+    		'<input type="submit" value="提交">' +
+    		'</form>');
     }
     
     function rules() {
-
         $('#centerTitle').text("学校规章制度");
         $('#centerContent>*').hide();
-
         var info;
-
-
         $('#centerContent').append('<div class="table-responsive"><strong>大学章程</strong><hr>　北京信息科技大学（以下简称“学校”）是在原北京机械工业学院和原北京信息工程学院的基础上合并组建， 2008年3月26日经教育部批准设立的全日制普通高等学校，办学历史可追溯到1930年代。学校以人才培养、科学研究、社会服务和文化传承创新为主要职能实施高等教育，不断拓展继续教育，积极开展对外交流合作，面向社会依法自主办学。<br>\n' +
             '　　为完善现代大学制度，保障学校依法自主办学，依照《中华人民共和国教育法》、《中华人民共和国高等教育法》、《中国共产党普通高等学校基层组织工作条例》、《高等学校章程制定暂行办法》等法律法规，制定本章程。<br>\n' +
             '　　学校以本章程为依据，制定内部管理制度及规范性文件、实施各项办学活动。<br>\n' +
@@ -457,29 +475,19 @@
             '　　第七十一条 本章程由学校党委常委会负责解释。<br>\n' +
             '　　第七十二条 本章程自北京市教育委员会核准之日起生效。\n<div>\n'
         );
-
-
         $.getJSON("",function (e) {
             info = e;
         })
-
     }
-
-
     function intro() {
         $('#centerTitle').text("部门");
         $('#centerContent>*').hide();
-
         var info;
-
-
         $('#centerContent').append( '<table style="width:650px"><tr><td  colspan="3"><strong><hr>学校部门介绍<hr></strong></td></tr>\n'+
             '<tr><td><a onclick="show1()">教务处</a></td><td><a onclick="show11()">财务处</a></td><td><a onclick="show111()">宿舍管理处</a></td></tr>\n'+
             '<tr><td><a onclick="show3()">安稳处</a></td><td><a onclick="show33()">网络中心</a></td><td><a onclick="show333()">医务处</a></td></tr>\n'+
             '<tr><td><a onclick="show9()">图书馆</a></td></tr></table>\n'
         );
-
-
         $.getJSON("",function (e) {
             info = e;
         })
@@ -487,116 +495,80 @@
     function show1() {
         $('#centerTitle').text("教务处");
         $('#centerContent>*').hide();
-
         var info;
-
-
-        $('#centerContent').append( '<div><strong>教务处介绍</strong><img src="img/2.jpg"><hr><strong>教务处职能：</strong><br><span style="color: #0099ff"><a>教务处新生信息导出</a></span><br><span style="color: #0099ff">新生专业课程介绍</span><br><br><span style="color: #0099ff">新生专业学分介绍</span><br><br><span style="color: #0099ff">新生专业基本规划介绍</span><br><br><span style="color: #0099ff">教务处学校新生有关通知</span><br><span style="color: #0099ff">教务处辅导员及班主任浏览及查询</span><br></div>\n'+
+        $('#centerContent').append( '<div><strong>教务处介绍</strong><img src="/StudentMS/img/2.jpg"><hr><strong>教务处职能：</strong><br><span style="color: #0099ff"><a>教务处新生信息导出</a></span><br><span style="color: #0099ff">新生专业课程介绍</span><br><br><span style="color: #0099ff">新生专业学分介绍</span><br><br><span style="color: #0099ff">新生专业基本规划介绍</span><br><br><span style="color: #0099ff">教务处学校新生有关通知</span><br><span style="color: #0099ff">教务处辅导员及班主任浏览及查询</span><br></div>\n'+
             '<a style="float: right" onclick="intro()">返回</a>\n'
         );
-
-
         $.getJSON("",function (e) {
             info = e;
         })
-
     }
     function show11() {
         $('#centerTitle').text("财务处");
         $('#centerContent>*').hide();
-
         var info;
-
-
         $('#centerContent').append( '<div><strong>财务处介绍</strong><hr><strong>财务处职能：</strong><br><span style="color: #0099ff">财务处银行卡激活流程介绍</span><br><span style="color: #0099ff">新生学费缴纳流程介绍</span><br><br><span style="color: #0099ff">餐卡充值流程介绍</span><br><br><span style="color: #0099ff">助学金申请流程介绍</span><br><br><span style="color: #0099ff"><a>助学金申请表导出</a></span><br><span style="color: #0099ff">国家助学贷款表流程介绍</span><br><span style="color: #0099ff"><a>国家助学贷款申请表导出</a></span><br><span style="color: #0099ff">国家助学贷款表流程介绍</span><br><span style="color: #0099ff">绿色通道申请流程介绍</span><br><span style="color: #0099ff"><a>绿色通道申请表导出</a></span><br></div>\n'+
             '<a style="float: right" onclick="intro()">返回</a>\n'
         );
-
-
         $.getJSON("",function (e) {
             info = e;
         })
-
     }
     function show111() {
         $('#centerTitle').text("宿舍管理处");
         $('#centerContent>*').hide();
-
         var info;
-
-
         $('#centerContent').append( '<div><strong>宿舍管理处介绍</strong><hr><strong>宿舍管理处职能：</strong><br><span style="color: #0099ff">新生宿舍规章制度</span><br><span style="color: #0099ff">新生宿舍消防演练流程</span><br><span style="color: #0099ff">缴纳电费</span><br></div>\n'+
             '<a style="float: right" onclick="intro()">返回</a>\n'
         );
-
-
         $.getJSON("",function (e) {
             info = e;
         })
-
     }
     function show3() {
         $('#centerTitle').text("安稳处");
         $('#centerContent>*').hide();
         var info;
-        $('#centerContent').append( '<div><strong>安稳处介绍</strong><br><hr><strong>安稳处职能：</strong><br><span style="color: #0099ff">安稳处新生校园安全通知</span><br><span style="color: #0099ff"><br>安稳处新生个人安全演练</span><br>活动是为了深入贯彻落实《消防法》，深化“平安校园”创建成果，进一步提高新生的消防安全意识和应急自救逃生能力而精心组织的。活动由学校安稳处牵头，学生处、研究生部、后勤管理处以及各院系协助配合。演练内容包括应对突发情况，掌握逃生技能、开展自救互救、消防安全“四会”知识（会报火警、会扑灭初期火灾、会逃生、会正确使用基本消防器材）等。 <br><span style="color: #0099ff">安稳处新生节假日个人安全提醒<br></span>紧密结合冬季校园安全和元旦、寒假将至的特点，突出了对关系师生生命财产安全的防火、防盗、防电信诈骗、火灾逃生等安全知识和重点内容的宣传。宣传教育活动采取了悬挂条幅、张贴海报、摆放展板、发放宣传单页相结合的方式进行，向过往师生发放《警方安全提示》宣传单页5000余份。<br><span style="color: #0099ff">新生户籍变更<br></span><span style="color: blue">新生户籍变更介绍</span><br><span style="color:blue"><a>新生户籍表导出</a></span></div>\n'+
+        $('#centerContent').append( '<div><strong>安稳处介绍</strong><br><hr><strong>安稳处职能：</strong><br><span style="color: #0099ff">安稳处新生校园安全通知</span><br><span style="color: #0099ff"><br>安稳处新生个人安全演练</span><br>活动是为了深入贯彻落实《消防法》，深化“平安校园”创建成果，进一步提高新生的消防安全意识和应急自救逃生能力而精心组织的。活动由学校安稳处牵头，学生处、研究生部、后勤管理处以及各院系协助配合。演练内容包括应对突发情况，掌握逃生技能、开展自救互救、消防安全“四会”知识（会报火警、会扑灭初期火灾、会逃生、会正确使用基本消防器材）等。 <br><span style="color: #0099ff">安稳处新生节假日个人安全提醒<br></span>紧密结合冬季校园安全和元旦、寒假将至的特点，突出了对关系师生生命财产安全的防火、防盗、防电信诈骗、火灾逃生等安全知识和重点内容的宣传。宣传教育活动采取了悬挂条幅、张贴海报、摆放展板、发放宣传单页相结合的方式进行，向过往师生发放《警方安全提示》宣传单页5000余份。<br><span style="color: #0099ff">新生户籍变更<br></span><span style="color: blue">新生户籍变更介绍</span><br><span style="color:blue"><a>新生户籍表导出</a></span></div>\n'+
             '<a style="float: right" onclick="intro()">返回</a>\n'
         );
-
-
         $.getJSON("",function (e) {
             info = e;
         })
-
     }
     function show33() {
         $('#centerTitle').text("网络中心");
         $('#centerContent>*').hide();
-
         var info;
-
-
         $('#centerContent').append( '<div><strong>网络中心介绍</strong><hr>北京信息科技大学网络管理中心成立于2004年11月，由原北京机械工业学院网络管理中心和原北京信息工程学院网络信息中心合并而成，是学校负责信息化建设以及网络运行维护的直属单位。网络管理中心现有工作人员12人，其中硕士研究生8人，本科4人，平均年龄32岁，是一支充满朝气的年青队伍。目前网络管理中心各项工作运行良好，正在为学校的教学、科研、管理提供着有力的支持。学校网络管理中心协助保障招就办圆满完成全校网上招生和录取工作，“2006、2007年连续荣获CERNET北京高招畅通工程网络保障先进单位”称号。<br>校园网目前主要分成大的四个自治区域，四个区域已用光缆以路由方式互联。核心采用OSPF协议，组成可以快速收敛的骨干环，以增加网络的可靠性，同时也统一了校园网络的CERNET和CHINANET出口；截止 2007年底出口带宽已经达到1000M接入CERNET， 100M接入电信通， 100M接入方宽， 100M接入教委城域网。<br><strong>网络中心职能</strong><br><span style="color: #0099ff">网络中心新生自助缴费流程介绍</span><br>新账号充值，自2012年10月15日起可使用校园的一卡通圈存机上“上网缴费”自助缴纳上网费，新系统将校园一卡通与上网账号进行了绑定，只能给本人上网账号充值。<br><span style="color: #0099ff">网络中心网络报修流程介绍</span><br><span style="color: #0099ff">网络中心校园网络有关通知</span><br></div>\n'+
             '<a style="float: right" onclick="intro()">返回</a>\n'
         );
-
-
         $.getJSON("",function (e) {
             info = e;
         })
-
     }
     function show333() {
         $('#centerTitle').text("医务处");
         $('#centerContent>*').hide();
-
         var info;
-
-
         $('#centerContent').append( '<div><strong>医务处介绍</strong><hr><strong>医务处职能</strong><br><span style="color: #0099ff">医务处规章制度</span><br><span style="color: #0099ff">新生医保办理介绍</span><br><span style="color: #0099ff">新生入学健康检查介绍</span><br><span style="color: #0099ff">新生医疗报销流程介绍</span><br></div>\n'+
             '<a style="float: right" onclick="intro()">返回</a>\n'
         );
-
-
         $.getJSON("",function (e) {
             info = e;
         })
-
     }
     function show9() {
         $('#centerTitle').text("图书馆");
         $('#centerContent>*').hide();
-
         var info;
-
-
         $('#centerContent').append( '<div><strong>图书馆介绍</strong><br>北京信息科技大学图书馆由小营校区图书馆、健翔桥校区图书馆、清河校区图书馆组成。馆舍总面积约9525平方米，阅览座位1180个，纸质图书106万余册，电子图书近178万册，中外文数据库60余个，声像资料3922件，中外文期刊1343种、报纸103种。（数据截至2016年12月）<br>\n' +
-            '     图书馆设有办公室、采编部、图书阅览部、流通部、期刊服务部、参考咨询部、特色资源建设部、技术支持部八个部门。<hr><strong>图书馆职能</strong><br><span style="color: #0099ff">图书馆新生借书流程介绍</span><br>1. 先注册成为馆际互借正式用户。点击BALIS馆际互借中心，进入“用户服务系统”，实名注册。管理员会在2天之内审核通过，注册后不必到图书馆确认。<br>\n' +
-            '2. 进入读者登录界面即可登录联合检索进行检索，找到所需文献后，点击下方的馆际互借填写申请表单，发送馆际互借请求。<br>\n' +
-            '3.   如果出借馆能够满足出借请求，您在2-5个工作日内就可获得所需文献。<br>\n' +
-            '4.   当您接到本馆给您发的“文献到馆”通知后，您就可以直接到本馆“馆际互借处”办理取书手续了。<br>\n' +
-            '5.   阅览完毕图书归还我校图书馆“馆际互借处”，借期30天。特殊情况依出借馆要求按时归还。<br>\n' +
-            '6.   借阅册数为5册，如有过期以及污损图书的现象，按借出馆的有关规定进行处罚。<br><span style="color: #0099ff">图书馆规章制度</span><br>一、校内读者凭本人校园一卡通入馆。卡证不得转借他人使用。<br>\n' +
+            '     图书馆设有办公室、采编部、图书阅览部、流通部、期刊服务部、参考咨询部、特色资源建设部、技术支持部八个部门。<hr><strong>图书馆职能</strong><br><span style="color: #0099ff">图书馆新生借书流程介绍</span><br>1. 先注册成为馆际互借正式用户。点击BALIS馆际互借中心，进入“用户服务系统”，实名注册。管理员会在2天之内审核通过，注册后不必到图书馆确认。<br>\n' +
+            '2. 进入读者登录界面即可登录联合检索进行检索，找到所需文献后，点击下方的馆际互借填写申请表单，发送馆际互借请求。<br>\n' +
+            '3.   如果出借馆能够满足出借请求，您在2-5个工作日内就可获得所需文献。<br>\n' +
+            '4.   当您接到本馆给您发的“文献到馆”通知后，您就可以直接到本馆“馆际互借处”办理取书手续了。<br>\n' +
+            '5.   阅览完毕图书归还我校图书馆“馆际互借处”，借期30天。特殊情况依出借馆要求按时归还。<br>\n' +
+            '6.   借阅册数为5册，如有过期以及污损图书的现象，按借出馆的有关规定进行处罚。<br><span style="color: #0099ff">图书馆规章制度</span><br>一、校内读者凭本人校园一卡通入馆。卡证不得转借他人使用。<br>\n' +
             '二、严禁在馆内任何地方吸烟、用火。\n' +
             '三、自觉维护馆内秩序，出入图书馆请走规定通道，如遇监测器报警请主动配合工作人员查明原因。<br>\n' +
             '四、保持馆内安静、整洁和安全，不喧哗、不打闹，入馆后主动将通讯设备置于静音状态，不在阅览室内接打电话。<br>\n' +
@@ -610,12 +582,9 @@
             '十二、做文明读者，自觉遵守图书馆的各项规章制度，尊重和服从工作人员的管理和指导。</div>\n'+
             '<a style="float: right" onclick="intro()">返回</a>\n'
         );
-
-
         $.getJSON("",function (e) {
             info = e;
         })
-
     }
 </script>
 </html>
