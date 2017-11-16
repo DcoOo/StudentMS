@@ -258,10 +258,10 @@
     function passwordChange() {
         $('#centerTitle').text("密码修改");
         $('#centerContent>*').hide();
-        $('#centerContent').append('<form action="/StudentMS/servlet/updatepasswdcontroller" method="post">' +
+        $('#centerContent').append('<form action="/StudentMS/servlet/updatepasswdcontroller" id="updatePasswdForm" method="post">' +
             '<div class="form-group">' +
             '<label for="oldPassword">旧密码：</label> ' +
-            '<input type="text" class="form-control" id="oldPassword" placeholder="请输入旧密码"> ' +
+            '<input type="password" class="form-control" id="oldPassword" placeholder="请输入旧密码"> ' +
             '</div> ' +
             '<div class="form-group">' +
             ' <label for="newPassword">新密码：</label> ' +
@@ -271,10 +271,30 @@
             ' <label for="newPasswordRepeat">新密码：</label> ' +
             '<input type="password" class="form-control" id="newPasswordRepeat" placeholder="请再次输入新密码"> '+
             '</div>'+
-            '<button type="submit" class="btn btn-default">确定修改</button> ' +
+            '<button type="button" onclick="formSubmit()" class="btn btn-default">确定修改</button> ' +
             '</form>'
         );
     }
+    
+    function formSubmit() {
+        var oldpsd = "<%=session.getAttribute("passwd")%>";
+        var oldpsdInput = $('#oldPassword').val();
+        if (oldpsd == oldpsdInput){
+        	if ($('#newPassword').val() == $('#newPasswordRepeat').val()){
+        		alert('修改密码成功');
+        		$('#updatePasswdForm').submit();
+        		
+        	}else{
+        		alert("两次密码输入不一致，请重新输入");
+        	}
+        }else{
+        	alert("原密码输入错误，请重新输入");
+        }
+    }
+
+    
+    
+    
     function examResult() {
         $('#centerTitle').text("考试结果");
         $('#centerContent>*').hide();
