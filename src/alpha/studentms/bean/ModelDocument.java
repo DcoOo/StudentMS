@@ -23,6 +23,11 @@ public class ModelDocument {
 	 */
 	private String name;
 	
+	/**
+	 * 模板文档保存路径
+	 */
+	private String address;
+	
 	public ModelDocument() {}
 
 	/**
@@ -31,12 +36,13 @@ public class ModelDocument {
 	 * @param message 与模板文档关联的通知id
 	 * @param name 模板文档的名字
 	 */
-	public ModelDocument(String modelDoc, String teacher, String message, String name) {
+	public ModelDocument(String modelDoc, String teacher, String message, String name, String address) {
 		super();
 		this.modelDoc = modelDoc;
 		this.teacher = teacher;
 		this.message = message;
 		this.name = name;
+		this.address = address;
 	}
 
 	/**
@@ -93,6 +99,16 @@ public class ModelDocument {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	/* (non-Javadoc)

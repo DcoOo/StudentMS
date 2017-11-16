@@ -63,5 +63,13 @@ public class StudentDAOTest {
 		List<Student> list = studentDao.select_by_class_id("2");
 		assertTrue(list.size() == 4);
 	}
+	
+	@Test
+	public void test_getclassid(){
+		String classId = studentDao.select_class_id("a");
+		assertTrue(classId.equals("21"));
+		String teacherid = studentDao.select_teacher_id(classId);
+		assertTrue(teacherid.equals("999"));
+	}
 
 }

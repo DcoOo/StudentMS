@@ -18,12 +18,57 @@
   	<url-pattern>/servlet/logincontroller</url-pattern>
   </servlet-mapping>
   <servlet>
-  	<servlet-name>memo</servlet-name>
-  	<servlet-class>alpha.studentms.controller.MemoController</servlet-class>
+  	<servlet-name>deletememo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.DeleteMemoController</servlet-class>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>memo</servlet-name>
-  	<url-pattern>/servlet/memocontroller</url-pattern>
+  	<servlet-name>deletememo</servlet-name>
+  	<url-pattern>/servlet/deletememocontroller</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>showmemo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.ShowMemoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>showmemo</servlet-name>
+  	<url-pattern>/servlet/showmemocontroller</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+  	<servlet-name>addmemo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.AddMemoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>addmemo</servlet-name>
+  	<url-pattern>/servlet/addmemocontroller</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>showpasswd</servlet-name>
+  	<servlet-class>alpha.studentms.controller.ShowPasswdController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>showpasswd</servlet-name>
+  	<url-pattern>/servlet/showpasswdcontroller</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>updatepasswd</servlet-name>
+  	<servlet-class>alpha.studentms.controller.UpdatePasswdController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>updatepasswd</servlet-name>
+  	<url-pattern>/servlet/updatepasswdcontroller</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>showmessage</servlet-name>
+  	<servlet-class>alpha.studentms.controller.ShowMessageController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>showmessage</servlet-name>
+  	<url-pattern>/servlet/showmessagecontroller</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -69,5 +114,14 @@
   <servlet-mapping>
   	<servlet-name>studentClassAndGrade</servlet-name>
   	<url-pattern>/servlet/studentClassAndGradeInfo</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>studentInfoShow</servlet-name>
+  	<servlet-class>alpha.studentms.controller.StudentInfoShowController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>studentInfoShow</servlet-name>
+  	<url-pattern>/servlet/studentInfoShow</url-pattern>
   </servlet-mapping>
 </web-app>

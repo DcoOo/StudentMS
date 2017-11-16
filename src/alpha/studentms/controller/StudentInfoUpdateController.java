@@ -22,17 +22,21 @@ import alpha.studentms.util.StudentInfoUtils;
  */
 public class StudentInfoUpdateController extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public StudentService studentService = new StudentServiceImple();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		Student student;
 		student = StudentInfoUtils.updateStudentInfo(request);
 		studentService.gatherAndUpdateInfomation(student);
 
-		// TODO 更改映射
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		request.getRequestDispatcher("/servlet/showmemocontroller").forward(request, response);
 	}
 
 	@Override

@@ -1,5 +1,7 @@
 package alpha.studentms.serviceImple;
 
+import java.util.List;
+
 import alpha.studentms.bean.ModelDocument;
 import alpha.studentms.dao.ModelDocumentDAO;
 import alpha.studentms.service.ModelDocumentService;
@@ -29,5 +31,10 @@ public class ModelDocumentServiceImple implements ModelDocumentService {
 	@Override
 	public void deleteModelDocumentByID(String id) {
 		modelDocumentDAO.deleteModelDocumentById(id);		
+	}
+	
+	@Override
+	public List<ModelDocument> getModelDocumentByMessageId(String messageid) {
+		return modelDocumentDAO.searchModelDocumentByMessageID(messageid);
 	}
 }

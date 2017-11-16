@@ -1,8 +1,6 @@
 package alpha.studentms.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import alpha.studentms.bean.Student;
 import alpha.studentms.service.StudentService;
 import alpha.studentms.serviceImple.StudentServiceImple;
 
@@ -22,21 +21,23 @@ import alpha.studentms.serviceImple.StudentServiceImple;
  */
 public class StudentClassAndGradeInfoController extends HttpServlet {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public StudentService studentService = new StudentServiceImple();
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-		String studentID = (String) session.getAttribute("studentID");
+		String studentID = (String) session.getAttribute("userId");
 		float englishGrade = studentService.getEnglishGrade(studentID);
 		String classInfo = studentService.getClassId(studentID);
-		Map<String, String> map = new HashMap<>();
-		map.put("englishGrade", englishGrade + "");
-		map.put("classInfo", classInfo);
-		request.setAttribute("studentClassAndGrade", map);
-
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		String studentName = (String)session.getAttribute("username");
+		String json = "{\"englishGrade\":" + englishGrade + ",\"classInfo\":\"" + classInfo + "\",\"studentName\":\"" + studentName + "\"}";
+		response.getWriter().print(json);		
 	}
 
 	@Override
