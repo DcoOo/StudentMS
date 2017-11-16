@@ -96,7 +96,7 @@ public class MessageDAO {
 	 *            通知
 	 */
 	public void insertMessage(Message message) {
-		String sql = "insert into t_message values(?,?,?,?)";
+		String sql = "insert into t_message(pk_id,fk_teacher,title,content) values(?,?,?,?)";
 		PreparedStatement insertStatement;
 		try {
 			insertStatement = connection.prepareStatement(sql);

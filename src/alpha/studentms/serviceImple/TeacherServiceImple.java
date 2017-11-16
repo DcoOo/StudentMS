@@ -90,6 +90,8 @@ public class TeacherServiceImple implements TeacherService {
 		if((message != null) && (modelDocument != null)){
 			messageDAO.insertMessage(message);
 			modelDocumentDAO.insertModelDocument(modelDocument);
+		} else if (message != null) {
+			messageDAO.insertMessage(message);
 		}
 		
 	}

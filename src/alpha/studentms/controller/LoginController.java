@@ -61,6 +61,8 @@ public class LoginController extends HttpServlet{
 				}
 			}else{
 				// 教师登陆
+				req.getSession().setAttribute("userId", "1");
+				req.getRequestDispatcher("/teacher.html").forward(req, resp);
 			}
 		}else{
 			// 用户名，密码错误
