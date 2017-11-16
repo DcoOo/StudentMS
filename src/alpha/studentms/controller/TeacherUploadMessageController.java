@@ -1,7 +1,8 @@
 package alpha.studentms.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -52,21 +53,26 @@ public class TeacherUploadMessageController extends HttpServlet {
 		message.setTitle(messageTitle);
 		message.setContent(messageContext);
 
+		List<ModelDocument> list = new ArrayList<>();
 		if ("modelDoc".equals(hasModelDoc)) {
 			// 得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
 			String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
 			String tempPath = this.getServletContext().getRealPath("/WEB-INF/upload");
 			modelDocument = new ModelDocument();
-			Map<String, String> map = new HashMap<>();
-			map = UploadFileUtils.fileUpload(request, tempPath, savePath, id);
-			modelDocument.setName(map.get("saveFileName"));
-			modelDocument.setTeacher(id);
-			modelDocument.setModelDoc(UUIDGenerater.getUUID());
-			modelDocument.setMessage(messageID);
-			modelDocumentService.uploadFile(modelDocument);
-			modelDocumentService.uploadFile(modelDocument);
+			List<Map<String, String>> mapList = new ArrayList<>();
+			mapList = UploadFileUtils.fileUpload(request, tempPath, savePath, id);
+			for (Map<String, String> map : mapList) {
+				modelDocument.setName(map.get("saveFileName"));
+				modelDocument.setTeacher(id);
+				modelDocument.setModelDoc(UUIDGenerater.getUUID());
+				modelDocument.setMessage(messageID);
+				list.add(modelDocument);
+				modelDocumentService.uploadFile(modelDocument);
+			}
 		}
-		teacherService.releaseMessage(message, modelDocument);
+		for (ModelDocument modelDoc : list) {
+			teacherService.releaseMessage(message, modelDoc);
+		}
 		
 		//TODO 路径处理
 		request.getRequestDispatcher("/index.jsp").forward(request, response);
