@@ -10,10 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import alpha.studentms.bean.Message;
-import alpha.studentms.bean.ModelDocument;
 import alpha.studentms.service.MessageService;
 import alpha.studentms.service.ModelDocumentService;
 import alpha.studentms.service.StudentService;
@@ -57,7 +55,6 @@ public class ShowMessageController extends HttpServlet{
 			String json = modelDocListJson.toString().replace('\"', '@');
 			json = json.replace('\'', '^');
 			docList.add(json);
-			System.out.println(json+"json");
 		}
 		req.setAttribute("modelDocument", docList);
 		req.getRequestDispatcher("/index.jsp").forward(req, resp);
