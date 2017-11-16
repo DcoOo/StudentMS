@@ -1,7 +1,8 @@
 package alpha.studentms.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -39,15 +40,17 @@ public class StudentUploadHandleController extends HttpServlet {
 		String studentID = (String) session.getAttribute("userId");
 		String modelDocID;
 		Document document = new Document();
-		Map<String, String> map = new HashMap<>();
-		map = UploadFileUtils.fileUpload(request, tempPath, savePath, studentID);
-		document.setName(map.get("saveFileName"));
-		document.setStudent(studentID);
-		document.setAddress(map.get("realSavePath"));
-		String docID = UUIDGenerater.getUUID();
-		document.setId(docID);
-		modelDocID = map.get("modelDocID");
-		documentService.studentUploadDocument(document, docID, modelDocID);
+		List<Map<String, String>> mapList = new ArrayList<>();
+		mapList = UploadFileUtils.fileUpload(request, tempPath, savePath, studentID);
+		for (Map<String, String> map : mapList) {
+			String docID = UUIDGenerater.getUUID();
+			modelDocID = map.get("modelDocID");
+			document.setName(map.get("saveFileName"));
+			document.setStudent(studentID);
+			document.setAddress(map.get("realSavePath"));
+			document.setId(docID);
+			documentService.studentUploadDocument(document, docID, modelDocID);
+		}
 		request.getRequestDispatcher("/servlet/showmemocontroller").forward(request, response);
 	}
 

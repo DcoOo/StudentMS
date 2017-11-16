@@ -1,5 +1,6 @@
 <%@page import="org.omg.CORBA.portable.ValueBase"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page import="java.lang.StringBuilder" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
@@ -303,6 +304,7 @@
     }
     
     function showNotice(id, title, content, optime, teacher, files_json) {
+    	var builder = '';
     	file_json = files_json.replace(/\@/g, '\"');
         $('#centerTitle').text("通知");
         $('#centerContent>*').hide();
@@ -310,13 +312,16 @@
         $('#centerContent').append('<h2>'+title+'</h2>' +
             '<p>'+content+'</p>');
         $.each($.parseJSON(file_json), function(n, value){
-        	$('#centerContent').append('<a href='+value.address+' download="name">'+value.name+'</a>'+
-        			'<form action="/StudentMS/servlet/studentUploadHandle" enctype="multipart/form-data" method="post">'+
-        				'<input type="hidden" name="modelDocID" value="' + value.modelDoc + '">'+
-        				'<input type="file" name="file1">'	+
-        				'<input type="submit" value="提交">'+
-        			'</form>')
+        	builder += '<a href='+value.address+' download="name">'+value.name +'</a>'+
+			'<input type="hidden" name="modelDocID" value="' + value.modelDoc + '">'+
+			'<input type="file" name="file1">';
         });
+        
+        $('#centerContent').append(''+
+    	'<form action="/StudentMS/servlet/studentUploadHandle" enctype="multipart/form-data" method="post">' +
+    		builder +
+    		'<input type="submit" value="提交">' +
+    		'</form>');
     }
     
     function rules() {

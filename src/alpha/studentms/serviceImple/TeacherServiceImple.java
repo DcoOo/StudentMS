@@ -36,9 +36,6 @@ public class TeacherServiceImple implements TeacherService {
 	@Override
 	public void releaseMessage(Message message, ModelDocument modelDocument) {
 		// TODO Auto-generated method stub
-		
+	
 	}
-	
-	
-
 }

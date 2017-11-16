@@ -3,6 +3,7 @@ package alpha.studentms.util;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  */
 public class UploadFileUtils {
 
-	public static Map<String, String> fileUpload(HttpServletRequest request, String tempPath, String savePath,
+	public static List<Map<String, String>> fileUpload(HttpServletRequest request, String tempPath, String savePath,
 			String id) {
+		List<Map<String, String>> mapList = new ArrayList<>();
 		String saveFileName = "";
 		String realSavePath = "";
 		String message = "";
@@ -53,7 +55,8 @@ public class UploadFileUtils {
 			upload.setSizeMax(1024 * 1024 * 10);
 			// 4、使用ServletFileUpload解析器解析上传数据，解析结果返回的是一个List<FileItem>集合，每一个FileItem对应一个Form表单的输入项
 			List<FileItem> list = upload.parseRequest(request);
-			for (FileItem item : list) {
+			for (int i=0;i<list.size();i++) {
+				FileItem item = list.get(i);
 				// 如果fileitem中封装的是普通输入项的数据
 				if (item.isFormField()) {
 					String name = item.getFieldName();
@@ -91,17 +94,20 @@ public class UploadFileUtils {
 					// 删除处理文件上传时生成的临时文件
 					item.delete();
 					message = "文件上传成功！";
+					map.put("message", message);
+					map.put("saveFileName", saveFileName);
+					map.put("realSavePath", realSavePath);
+				}
+				if (i%2 == 1) {
+					mapList.add(map);
+					map = new HashMap<>();
 				}
 			}
 		} catch (Exception e) {
 			message = "文件上传失败！";
 			e.printStackTrace();
 		}
-		
-		map.put("message", message);
-		map.put("saveFileName", saveFileName);
-		map.put("realSavePath", realSavePath);
-		return map;
+		return mapList;
 	}
 
 	private static String makeFileName(String filename, String id) {
