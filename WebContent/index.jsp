@@ -326,8 +326,11 @@
         $('#centerContent').append('<h2>'+title+'</h2>' +
             '<p>'+content+'</p>');
         $.each($.parseJSON(file_json), function(n, value){
-        	builder += '<a href='+value.address+' download="name">'+value.name +'</a>'+
-			'<input type="hidden" name="modelDocID" value="' + value.modelDoc + '">'+
+			builder += '<c:url value="/servlet/studentDownLoad" var="downurl">' +
+            '<c:param name="filename"></c:param>' + 
+            '</c:url>' + 
+            '<a href="${downurl}' + value.name + '">' + value.name + '</a>' + 
+        	'<input type="hidden" name="modelDocID" value="' + value.modelDoc + '">'+
 			'<input type="file" name="file1">';
         });
         

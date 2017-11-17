@@ -124,4 +124,31 @@
   	<servlet-name>studentInfoShow</servlet-name>
   	<url-pattern>/servlet/studentInfoShow</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>studentDownLoad</servlet-name>
+  	<servlet-class>alpha.studentms.controller.StudentDownLoadHandleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>studentDownLoad</servlet-name>
+  	<url-pattern>/servlet/studentDownLoad</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>teacherMessageRecycle</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherMessageRecycleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>teacherMessageRecycle</servlet-name>
+  	<url-pattern>/servlet/teacherMessageRecycle</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>teacherDocumentRecycle</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherDocumentRecycleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>teacherDocumentRecycle</servlet-name>
+  	<url-pattern>/servlet/teacherDocumentRecycle</url-pattern>
+  </servlet-mapping>
 </web-app>

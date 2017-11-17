@@ -1,5 +1,9 @@
 package alpha.studentms.serviceImple;
 
+import java.util.List;
+
+import javax.print.Doc;
+
 import alpha.studentms.bean.Document;
 import alpha.studentms.dao.DocModelRelDAO;
 import alpha.studentms.dao.DocumentDAO;
@@ -28,6 +32,13 @@ public class DocumentServiceImple implements DocumentService {
 	public Document studentDownloadDocument(String path) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<Document> getDocumentsByModelDocId(String modelId) {
+		List<Document> documents;
+		documents = documentDAO.getDocumentsByModelDocId(modelId);
+		return documents;
 	}
 
 }
