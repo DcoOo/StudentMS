@@ -2,6 +2,7 @@ package alpha.studentms.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -74,13 +75,14 @@ public class TeacherUploadMessageController extends HttpServlet {
 				list.add(modelDocument);
 			}
 		}
-		
-		for (ModelDocument modelDoc : list) {
-			teacherService.releaseMessage(message, modelDoc);
-		}
-		
+				
 		if (list.isEmpty()) {
 			teacherService.releaseMessage(message, modelDocument);
+		} else {
+			teacherService.releaseMessage(message, list.get(0));
+			for (int i = 1; i < list.size(); i++) {
+				teacherService.releaseMessage(null, modelDocument);				
+			}
 		}
 		// TODO 路径处理
 		request.getRequestDispatcher("/teacher.html").forward(request, response);
