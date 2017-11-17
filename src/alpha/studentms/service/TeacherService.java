@@ -3,6 +3,7 @@ package alpha.studentms.service;
 import java.util.List;
 
 import alpha.studentms.bean.Assistant;
+import alpha.studentms.bean.ClassAdvicer;
 import alpha.studentms.bean.Message;
 import alpha.studentms.bean.ModelDocument;
 import alpha.studentms.bean.Student;
@@ -61,5 +62,7 @@ public interface TeacherService {
 	 * 根据id查询老师
 	 */
 	Assistant selectById(String id);
+	
+	ClassAdvicer selectByNum(String num);
 
 }

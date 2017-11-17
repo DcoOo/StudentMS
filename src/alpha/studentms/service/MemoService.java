@@ -35,6 +35,6 @@ public interface MemoService {
 	 */
 	List<Memo> getAllOptionMemos();
 	
-	
+	List<Memo> getAllCompulsoryMemos();
 
 }

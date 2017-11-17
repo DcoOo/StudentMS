@@ -215,7 +215,9 @@
         $('#centerTitle').text("个人信息");
         $('#centerContent>*').hide();
         $.getJSON("/StudentMS/servlet/studentInfoShow",function (data) {
-            $('#centerContent').append('<div class="table-responsive">\n' +
+            var sex = data.sex == 1? "男":"女";
+            var cyl = data.is_cyl == 1? "是":"否";
+        	$('#centerContent').append('<div class="table-responsive">\n' +
                     '                <form action="/StudentMS/servlet/studentInfoUpdate" method="post">' +
                 '        <table class="table table-bordered table-condensed">\n' +
                 '            <tr>\n' +
@@ -235,8 +237,8 @@
                 '            </tr>\n' +
                 '            <tr>\n' +
                 '                <td><input type="text" name="studentNation" value="'+ data.nation + '"></td>\n' +
-                '                <td><input type="text" name="studentSex" value="'+ data.sex + '"></td>\n' +
-                '                <td><input type="text" name="studentCYL" value="'+ data.is_cyl + '"></td>\n' +
+                '                <td><input type="text" name="studentSex" value="'+ sex + '"></td>\n' +
+                '                <td><input type="text" name="studentCYL" value="'+ cyl + '"></td>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
                 '                <th>微信</th>\n' +
