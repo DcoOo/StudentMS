@@ -27,7 +27,7 @@ public class LoginController extends HttpServlet {
 	private LoginService loginService = new LoginServiceImple();
 	private StudentService studentService = new StudentServiceImple();
 	private MemoService memoService = new MemoServiceImple();
-	private TeacherService TeacherService = new TeacherServiceImple();
+	private TeacherService teacherService = new TeacherServiceImple();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -70,13 +70,20 @@ public class LoginController extends HttpServlet {
 				}
 			} else {
 				// 教师登陆
-				ClassAdvicer classAdvicer = TeacherService.selectByNum(username);
-				if (classAdvicer == null) {
+				ClassAdvicer classAdvicer = teacherService.selectByNum(username);
+				System.out.println(classAdvicer.getRoleOfTeacher());
+				int roleControl = classAdvicer.getRoleOfTeacher();
+				if (classAdvicer != null && roleControl == 1) {
+					req.getSession().setAttribute("userId", classAdvicer.getId());
+					req.getSession().setAttribute("role", 1);
+					req.getRequestDispatcher("/teacher.jsp").forward(req, resp);
+				} else if (roleControl == 0) {
+					req.getSession().setAttribute("userId", classAdvicer.getId());
+					req.getSession().setAttribute("role", 0);
+					req.getRequestDispatcher("/teacher.jsp").forward(req, resp);
+				} else {
 					req.setAttribute("login_flag", "0");
 					req.getRequestDispatcher("/login.jsp").forward(req, resp);
-				} else {
-					req.getSession().setAttribute("userId", classAdvicer.getId());
-					req.getRequestDispatcher("/teacher.html").forward(req, resp);
 				}
 			}
 		} else {

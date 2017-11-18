@@ -58,9 +58,4 @@ public class ClassAdvicer {
 	public void setCollection(String collection) {
 		this.collection = collection;
 	}
-	
-	
-	
-	
-
 }

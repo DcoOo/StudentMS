@@ -19,21 +19,16 @@ import alpha.studentms.service.StudentService;
 import alpha.studentms.service.TeacherService;
 import alpha.studentms.serviceImple.StudentServiceImple;
 import alpha.studentms.serviceImple.TeacherServiceImple;
+import alpha.studentms.util.ExcelCYLUtil;
 import alpha.studentms.util.ExcelUtils;
 
-public class TeacherOutputRegisterController extends HttpServlet {
+public class AssistantOutputCYLInfoController extends HttpServlet{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	public StudentService studentService = new StudentServiceImple();
 	public TeacherService teacherService = new TeacherServiceImple();
 	
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String assistantID = (String) request.getSession().getAttribute("userId");
 		Assistant assistant = teacherService.selectById(assistantID);
 		String whClass = assistant.getClassOfTeacher();
@@ -46,35 +41,35 @@ public class TeacherOutputRegisterController extends HttpServlet {
 		
 		//System.out.println(request.getParameter("check"));
 		
-		//是那种？（全部2，已报到0，未报到1）  Parameter名称是什么？
+		//是那种？（全部2，团员0，非团员1）  Parameter名称是什么？
 		String which = request.getParameter("check");
 		if(which.equals("all")){
-			webBook = ExcelUtils.creatExcelWithRegisterInfo(result);
-			fileName = "所有新生报到信息";
+			webBook = ExcelCYLUtil.creatExcelWithRegisterInfo(result);
+			fileName = "所有新生团员信息";
 		}
 		else if(which.equals("isCheck")){
 			List<Student> tempList = new ArrayList<Student>();
 			for(int i =0;i<result.size();i++){
 				Student tempStudent = new Student();
 				tempStudent = result.get(i);
-				if(tempStudent.getRegister() == 0){
+				if(tempStudent.getIs_cyl() == Student.IS_CYL){
 					tempList.add(tempStudent);
 				}
 			}
-			webBook = ExcelUtils.creatExcelWithRegisterInfo(tempList);
-			fileName = "已报到新生";
+			webBook = ExcelCYLUtil.creatExcelWithRegisterInfo(tempList);
+			fileName = "团员新生";
 		}
 		else{
 			List<Student> tempList = new ArrayList<Student>();
 			for(int i =0;i<result.size();i++){
 				Student tempStudent = new Student();
 				tempStudent = result.get(i);
-				if(tempStudent.getRegister() == 1){
+				if(tempStudent.getIs_cyl() == Student.NOT_CYL){
 					tempList.add(tempStudent);
 				}
 			}
-			webBook = ExcelUtils.creatExcelWithRegisterInfo(tempList);
-			fileName = "未报到新生";
+			webBook = ExcelCYLUtil.creatExcelWithRegisterInfo(tempList);
+			fileName = "非团员新生";
 		}
 		
 		
@@ -90,14 +85,12 @@ public class TeacherOutputRegisterController extends HttpServlet {
         } finally {  
             out.close();  
         }  
-		
 	}
-	
-	
-	
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		doGet(req, resp);
 	}
-
+	
+	
 }

@@ -398,7 +398,44 @@
                         }
                     }
                 }
-                
+                function customize() {
+                    $('.id').show();
+                    $('.myTask').show();
+                    $('#button').show();
+                    $('.sign').hide();
+                    $('.task').hide();
+                    $('#input').show();
+                    $('#addTask').click(function (e) {
+                        $('#addTaskDiv').show();
+                    });
+                    var MaxInputs       = 8; //maximum input boxes allowed
+                    var InputsWrapper   = $("#InputsWrapper"); //Input boxes wrapper ID
+                    var AddButton       = $("#AddMoreFileBox"); //Add button ID
+                    var x = InputsWrapper.length; //initlal text box count
+                    var FieldCount=1; //to keep track of text box added
+                    $(AddButton).click(function (e)  //on add input button click
+                    {
+                        if(x <= MaxInputs) //max input box allowed
+                        {
+                            FieldCount++; //text box added increment
+                            //add input box
+                            $(InputsWrapper).append('<div>' +
+                                '<input type="text" name="myTask[]" id="field_'+ FieldCount +'"/><a href="#" class="removeclass">×</a>' +
+                                '</div>');
+                            x++; //text box increment
+                        }
+                        return false;
+                    });
+                    $("body").on("click",".removeclass", function(e){ //user click on remove text
+                        if( x > 1 ) {
+                            $(this).parent('div').remove(); //remove text box
+                            x--; //decrement textbox
+                        }
+                        return false;
+                    })
+                }
+
+
                 /**
                  * 通知回收
                  */
@@ -436,6 +473,77 @@
                     }
                     content.append('<ul>'+ lis +'</ul>' +
                         '<a onclick="noticeManage()">返回</a>');
+                }
+                
+                /**
+                 * 查询团员情况
+                 **/
+                function CYLSetTitle() {
+                    $('#centerTitle').show();
+                    $('#centerTitle').text("团员情况");
+                }
+                function CYL() {
+                    $.ajaxSettings.async = false;
+                    $.getJSON("/StudentMS/servlet/assistantOutputAllStudentCYLInfo",function(data){
+                        checkArr = data;
+                    });
+                }
+                function getCYL() {
+                    CYLSetTitle();
+                    CYL();
+                    if ($('#centerContent').length > 0){
+                        $('#centerContent').empty();
+                    }
+                 
+                    if ($('#rowCheck').length <= 0){
+                        var info = '';
+                        for (var i =0;i<checkArr.length;i++){
+                            info +=
+                                '<tr>' +
+                                '<td>'+ checkArr[i].name +'</td>' +
+                                '<td>'+ checkArr[i].isCYL +'</td>' +
+                                '</tr>'
+                        }
+                        var content = $('#centerContent');
+                        content.append('<div class="row" id="rowCheck">' +
+                            '<a class="btn btn-default" onclick="getAllCYL()">所有新生</a>' +
+                            '<a class="btn btn-default" onclick="isNotCYL()">非团员新生</a> ' +
+                            '<a class="btn btn-default" onclick="isCYL()">团员新生</a> '+
+                            '<form method="post" action="/StudentMS/servlet/assistantOutputCYLInfo">'+
+                            '<input value="all" name="check" id="downloadContent" type="hidden"/> ' +
+                            '<input class="btn btn-default" type="submit" value="下载导出"/>'+
+                            '</form>'+
+                            '</div>' +
+                            '<table class="table table-bordered table-condensed">' +
+                            '<thead>' +
+                            '<tr>' +
+                            '<th>姓名</th>' +
+                            '<th>是否为团员</th>' +
+                            '</tr>' +
+                            '</thead>' +
+                            '<tbody>' + info + '</tbody></table>'
+                        );
+                    }
+                }
+                function getAllCYL() {
+                    $('#downloadContent').val('all');
+                    $("table tbody tr")
+                        .hide()
+                        .show();
+                }
+                function isNotCYL() {
+                    $('#downloadContent').val('isNotCheck');
+                    $("table tbody tr")
+                        .hide()
+                        .filter(":contains('"+ "否" +"')")
+                        .show();
+                }
+                function isCYL() {
+                    $('#downloadContent').val('isCheck');
+                    $("table tbody tr")
+                        .hide()
+                        .filter(":contains('"+ "是" +"')")
+                        .show();
                 }
                 
                 
