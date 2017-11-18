@@ -132,7 +132,7 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>TeacherSearchAllStudentsRegister</servlet-name>
-  	<url-pattern>/alpha/studentms/controller/TeacherSearchAllStudentsRegisterController</url-pattern>
+  	<url-pattern>/servlet/TeacherSearchAllStudentsRegisterController</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -141,7 +141,7 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>TeacherOutputRegister</servlet-name>
-  	<url-pattern>/alpha/studentms/controller/TeacherOutputRegisterController</url-pattern>
+  	<url-pattern>/servlet/TeacherOutputRegisterController</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -150,7 +150,7 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>TeacherSearchAllStudents</servlet-name>
-  	<url-pattern>/alpha/studentms/controller/TeacherSearchAllStudentsController</url-pattern>
+  	<url-pattern>/servlet/TeacherSearchAllStudentsController</url-pattern>
   </servlet-mapping>
   
   <servlet>
@@ -159,6 +159,6 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>TeacherOutputStudentInfo</servlet-name>
-  	<url-pattern>/alpha/studentms/controller/TeacherOutputStudentInfoController</url-pattern>
+  	<url-pattern>/servlet/TeacherOutputStudentInfoController</url-pattern>
   </servlet-mapping>
 </web-app>
