@@ -35,11 +35,11 @@ public class TeacherOutputStudentInfoController extends HttpServlet {
 		
 		String assistantID = (String) request.getSession().getAttribute("userId");
 		//记得改过来Id
-		Assistant assistant = teacherService.selectById("123");
+		Assistant assistant = teacherService.selectById(assistantID);
 		String whClass = assistant.getClassOfTeacher();
 		List<Student> result = teacherService.searchAllClass(whClass);
 		
-		String[] head = request.getParameterValues("");
+		
 		
 		
 		Workbook webBook ;

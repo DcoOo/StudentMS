@@ -34,7 +34,7 @@ public class TeacherSearchAllStudentsRegisterController extends HttpServlet {
 		
 		String assistantID = (String) request.getSession().getAttribute("userId");
 		//记得改回来
-		Assistant assistant = teacherService.selectById("123");
+		Assistant assistant = teacherService.selectById(assistantID);
 		String whClass = assistant.getClassOfTeacher();
 		List<Student> result = teacherService.searchAllClass(whClass);
 		

@@ -85,7 +85,7 @@ public class TeacherUploadMessageController extends HttpServlet {
 			}
 		}
 		// TODO 路径处理
-		request.getRequestDispatcher("/teacher.html").forward(request, response);
+		request.getRequestDispatcher("/servlet/TeacherShowMemoController").forward(request, response);
 	}
 
 	@Override
