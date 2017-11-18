@@ -187,4 +187,22 @@
   	<servlet-name>TeacherOutputStudentInfo</servlet-name>
   	<url-pattern>/alpha/studentms/controller/TeacherOutputStudentInfoController</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>assistantOutputAllStudentCYLInfo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.AssistantSearchAllStudentCYLController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>assistantOutputAllStudentCYLInfo</servlet-name>
+  	<url-pattern>/servlet/assistantOutputAllStudentCYLInfo</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>assistantOutputCYLInfo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.AssistantOutputCYLInfoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>assistantOutputCYLInfo</servlet-name>
+  	<url-pattern>/servlet/assistantOutputCYLInfo</url-pattern>
+  </servlet-mapping>
 </web-app>
