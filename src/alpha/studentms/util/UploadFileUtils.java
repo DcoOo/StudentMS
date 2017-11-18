@@ -97,15 +97,16 @@ public class UploadFileUtils {
 					map.put("message", message);
 					map.put("saveFileName", saveFileName);
 					map.put("realSavePath", realSavePath);
-				}
-				if (i%2 == 1) {
 					mapList.add(map);
 					map = new HashMap<>();
-				}
+				}				
 			}
 		} catch (Exception e) {
 			message = "文件上传失败！";
 			e.printStackTrace();
+		}
+		if ("0".equals(map.get("flag"))) {
+			mapList.add(map);
 		}
 		return mapList;
 	}

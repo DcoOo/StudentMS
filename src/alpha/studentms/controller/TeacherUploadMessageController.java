@@ -36,46 +36,54 @@ public class TeacherUploadMessageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	public ModelDocumentService modelDocumentService = new ModelDocumentServiceImple();
 	public TeacherService teacherService = new TeacherServiceImple();
+	public ModelDocument modelDocument = null;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String messageTitle = (String) request.getParameter("title");
-		String messageContext = (String) request.getParameter("content");
+		String messageTitle;
+		String messageContext;
 		String id = (String) session.getAttribute("userId");
-		String hasModelDoc = (String) request.getAttribute("modelDoc");
 		String messageID = UUIDGenerater.getUUID();
-		ModelDocument modelDocument = null;
+
+		// 得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
+		String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
+		String tempPath = this.getServletContext().getRealPath("/WEB-INF/temp");
+		List<Map<String, String>> mapList = new ArrayList<>();
+		mapList = UploadFileUtils.fileUpload(request, tempPath, savePath, id);
+		System.out.println(mapList);
+		messageTitle = mapList.get(0).get("title");
+		messageContext = mapList.get(0).get("content");
 		Message message = new Message();
 		message.setId(messageID);
 		message.setTeacher(id);
 		message.setTitle(messageTitle);
 		message.setContent(messageContext);
-
+		
 		List<ModelDocument> list = new ArrayList<>();
-		if ("modelDoc".equals(hasModelDoc)) {
-			// 得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
-			String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
-			String tempPath = this.getServletContext().getRealPath("/WEB-INF/upload");
-			modelDocument = new ModelDocument();
-			List<Map<String, String>> mapList = new ArrayList<>();
-			mapList = UploadFileUtils.fileUpload(request, tempPath, savePath, id);
+		if ("1".equals(mapList.get(0).get("flag"))) {
+
 			for (Map<String, String> map : mapList) {
+				modelDocument = new ModelDocument();
 				modelDocument.setName(map.get("saveFileName"));
 				modelDocument.setTeacher(id);
 				modelDocument.setModelDoc(UUIDGenerater.getUUID());
 				modelDocument.setMessage(messageID);
+				modelDocument.setAddress(map.get("realSavePath").replace("\\", "/"));
 				list.add(modelDocument);
-				modelDocumentService.uploadFile(modelDocument);
 			}
 		}
+		
 		for (ModelDocument modelDoc : list) {
 			teacherService.releaseMessage(message, modelDoc);
 		}
 		
-		//TODO 路径处理
-		request.getRequestDispatcher("/index.jsp").forward(request, response);
+		if (list.isEmpty()) {
+			teacherService.releaseMessage(message, modelDocument);
+		}
+		// TODO 路径处理
+		request.getRequestDispatcher("/teacher.html").forward(request, response);
 	}
 
 	@Override

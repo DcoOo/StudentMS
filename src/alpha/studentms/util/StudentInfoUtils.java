@@ -31,7 +31,7 @@ public class StudentInfoUtils {
 		student = studentService.getStudentByUsername(userName);
 		String studentNation = (String) request.getParameter("studentNation");
 		String sex = (String) request.getParameter("studentSex");
-		int studentSex = "male".equals(sex)?Student.MAN:Student.WOMAN; 
+		int studentSex = "男".equals(sex)?Student.MAN:Student.WOMAN; 
 		String age = (String) request.getParameter("studentAge");
 		int studentAge = Integer.valueOf(age).intValue();
 		String studentEmail = (String) request.getParameter("studentEmail");
@@ -39,7 +39,7 @@ public class StudentInfoUtils {
 		String studentPhone = (String) request.getParameter("studentPhone");
 		String studentQQ = (String) request.getParameter("studentQQ");
 		String isCYL = (String) request.getParameter("studentCYL");
-		int studentCYL = "yes".equals(isCYL)?Student.IS_CYL:Student.NOT_CYL;
+		int studentCYL = "是".equals(isCYL)?Student.IS_CYL:Student.NOT_CYL;
 		String studentAddress = (String) request.getParameter("studentAddress");
 
 		student.setNation(studentNation);

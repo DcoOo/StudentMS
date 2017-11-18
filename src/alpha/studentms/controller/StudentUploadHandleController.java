@@ -36,7 +36,7 @@ public class StudentUploadHandleController extends HttpServlet {
 		HttpSession session = request.getSession();
 		// 得到上传文件的保存目录，将上传的文件存放于WEB-INF目录下，不允许外界直接访问，保证上传文件的安全
 		String savePath = this.getServletContext().getRealPath("/WEB-INF/upload");
-		String tempPath = this.getServletContext().getRealPath("/WEB-INF/upload");
+		String tempPath = this.getServletContext().getRealPath("/WEB-INF/temp");
 		String studentID = (String) session.getAttribute("userId");
 		String modelDocID;
 		Document document = new Document();

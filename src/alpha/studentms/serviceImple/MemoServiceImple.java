@@ -64,4 +64,10 @@ public class MemoServiceImple implements MemoService{
 
 	}
 
+	@Override
+	public List<Memo> getAllCompulsoryMemos() {
+		List<Memo> compulsoryMemos = stableMemoDAO.getAllCompulsoryMemo();
+		return compulsoryMemos;
+	}
+
 }

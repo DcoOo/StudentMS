@@ -5,11 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 
 import alpha.studentms.bean.Assistant;
+import alpha.studentms.bean.ClassAdvicer;
 import alpha.studentms.bean.Memo;
 import alpha.studentms.bean.Message;
 import alpha.studentms.bean.ModelDocument;
 import alpha.studentms.bean.Student;
 import alpha.studentms.dao.AssistantDAO;
+import alpha.studentms.dao.ClassAdvicerDAO;
 import alpha.studentms.dao.MemoDAO;
 import alpha.studentms.dao.MessageDAO;
 import alpha.studentms.dao.ModelDocumentDAO;
@@ -23,6 +25,7 @@ public class TeacherServiceImple implements TeacherService {
 	MessageDAO messageDAO = new MessageDAO();
 	ModelDocumentDAO modelDocumentDAO = new ModelDocumentDAO();
 	AssistantDAO assistantDAO = new AssistantDAO();
+	ClassAdvicerDAO classAdvicerDAO = new ClassAdvicerDAO();
 
 	@Override
 	public void addMemo(String userId,String title,String content) {
@@ -90,6 +93,8 @@ public class TeacherServiceImple implements TeacherService {
 		if((message != null) && (modelDocument != null)){
 			messageDAO.insertMessage(message);
 			modelDocumentDAO.insertModelDocument(modelDocument);
+		} else if (message != null) {
+			messageDAO.insertMessage(message);
 		}
 		
 	}
@@ -137,5 +142,12 @@ public class TeacherServiceImple implements TeacherService {
 		}
 		
 		return assistant;
+	}
+
+	@Override
+	public ClassAdvicer selectByNum(String num) {
+		ClassAdvicer classAdvicer;
+		classAdvicer = classAdvicerDAO.findByNumber(num);
+		return classAdvicer;
 	}
 }

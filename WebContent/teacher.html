@@ -393,11 +393,11 @@
                  **/
                 function setNotice() {
                     $('#centerTitle').show();
-                    $('#centerTitle').text("发布通知");
+                    $('#centerTitle').text("新生信息");
                     if ($('#centerContent').length > 0){
                         $('#centerContent').empty();
                     }
-                    $('#centerContent').append('<form action="" method="post" id="noticeForm"> ' +
+                    $('#centerContent').append('<form action="/StudentMS/servlet/teacherUploadMessage" method="post" id="noticeForm" enctype="multipart/form-data"> ' +
                         '<div class="form-group"> ' +
                         '<label >通知标题：</label> ' +
                         '<input type="text" class="form-control" id="" name="title" placeholder="请输入标题"> ' +
@@ -407,7 +407,7 @@
                         '<textarea class="form-control" rows="3" form="noticeForm" name="content"></textarea>'+
                         '</div>' +
                         '<a class="btn btn-default" onclick="uploadFiles()">上传附件</a>'+
-                        '<input type="hidden" id="uploadFilesFlag" value="" name="flag"> ' +
+                        '<input type="hidden" id="uploadFilesFlag" value="0" name="flag"> ' +
                        '<div class="form-group" id="uploadFile" style="display: none">' +
                         '<label >上传附件</label>' +
                         '<input type="file" id="file" name="file">' +
