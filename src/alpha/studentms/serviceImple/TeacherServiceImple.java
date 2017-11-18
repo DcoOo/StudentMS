@@ -93,8 +93,10 @@ public class TeacherServiceImple implements TeacherService {
 		if((message != null) && (modelDocument != null)){
 			messageDAO.insertMessage(message);
 			modelDocumentDAO.insertModelDocument(modelDocument);
-		} else if (message != null) {
+		} else if (message != null && modelDocument == null) {
 			messageDAO.insertMessage(message);
+		} else {
+			modelDocumentDAO.insertModelDocument(modelDocument);
 		}
 		
 	}
@@ -149,5 +151,13 @@ public class TeacherServiceImple implements TeacherService {
 		ClassAdvicer classAdvicer;
 		classAdvicer = classAdvicerDAO.findByNumber(num);
 		return classAdvicer;
+	}
+
+	@Override
+	public List<Memo> searchAllMemoById(String id) {
+		// TODO Auto-generated method stub
+		List<Memo> memos = new ArrayList<Memo>();
+		memos = memoDAO.searchAllMemoByUser(id);
+		return memos;
 	}
 }

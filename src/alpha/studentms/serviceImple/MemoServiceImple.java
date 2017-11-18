@@ -70,4 +70,18 @@ public class MemoServiceImple implements MemoService{
 		return compulsoryMemos;
 	}
 
+	@Override
+	public Memo getOneMemoById(String id) {
+		// TODO Auto-generated method stub
+		Memo memo = new Memo();
+		memo = memoDAO.searchMemoById(id);
+		return memo;
+	}
+
+	@Override
+	public void deleteMemoById(String id) {
+		// TODO Auto-generated method stub
+		memoDAO.deleteMemoById(id);
+	}
+
 }

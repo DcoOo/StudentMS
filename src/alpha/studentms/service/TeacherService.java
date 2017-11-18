@@ -4,6 +4,7 @@ import java.util.List;
 
 import alpha.studentms.bean.Assistant;
 import alpha.studentms.bean.ClassAdvicer;
+import alpha.studentms.bean.Memo;
 import alpha.studentms.bean.Message;
 import alpha.studentms.bean.ModelDocument;
 import alpha.studentms.bean.Student;
@@ -64,5 +65,11 @@ public interface TeacherService {
 	Assistant selectById(String id);
 	
 	ClassAdvicer selectByNum(String num);
+	
+	
+	/**
+	 * 根据教师id查询所有日志
+	 */
+	List<Memo> searchAllMemoById(String id);
 
 }
