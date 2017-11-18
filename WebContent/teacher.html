@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>班主任个人中心</title>
-    <link href="/StudentMS/css/bootstrap.min.css" rel="stylesheet">
-    <script src="/StudentMS/js/jquery-3.2.1.min.js"></script>
-    <script src="/StudentMS/js/bootstrap.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
     <style>
         .col-md-2,.col-md-7,.row{
@@ -26,7 +26,7 @@
 <body>
 <div class="container">
     <div>
-        <img src="/StudentMS/img/logo.jpg">
+        <img src="img/logo.jpg">
     </div>
 
     <nav style="background:#1d85d7" class="navbar navbar-default">
@@ -42,7 +42,7 @@
 
             <div class="row">
                 <ul class="nav navbar-nav">
-                    <li style="background: url(/StudentMS/img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
+                    <li style="background: url(img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
                         个人中心
                     </li>
                 </ul>
@@ -78,7 +78,7 @@
         <div class="col-md-7" style="margin: 0 3px">
             <div class="row">
                 <ul class="nav navbar-nav">
-                    <li style="background: url(/StudentMS/img/top_comp02.gif) no-repeat; color: #fff; width: 97px; display: none" class="nav-header" id="centerTitle">
+                    <li style="background: url(img/top_comp02.gif) no-repeat; color: #fff; width: 97px; display: none" class="nav-header" id="centerTitle">
                     </li>
                 </ul>
             </div>
@@ -95,7 +95,7 @@
             <div class="row">
                 <div class="col-lg-9">
                     <ul class="nav navbar-nav">
-                        <li style="background: url(/StudentMS/img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
+                        <li style="background: url(img/top_comp02.gif) no-repeat; color: #fff; width: 97px;" class="nav-header">
                             工作日志
                         </li>
                     </ul>
@@ -163,7 +163,7 @@
                 }
                 function check() {
                     $.ajaxSettings.async = false;
-                    $.getJSON("33.php",function(data){
+                    $.getJSON("./alpha/studentms/controller/TeacherSearchAllStudentsRegisterController",function(data){
                         checkArr = data;
                     });
                 }
@@ -175,21 +175,22 @@
                     }
                     if ($('#rowCheck').length <= 0){
                         var info = '';
-                        for (var i =0;i<checkArr.length;i++){
+                         for (var i =0;i<checkArr.length;i++){
                             info +=
                                 '<tr>' +
                                 '<td>'+ checkArr[i].name +'</td>' +
                                 '<td>'+ checkArr[i].isCheck +'</td>' +
                                 '</tr>'
+                                
                         }
                         var content = $('#centerContent');
                         content.append('<div class="row" id="rowCheck">' +
                             '<a class="btn btn-default" onclick="getAll()">所有新生</a>' +
                             '<a class="btn btn-default" onclick="isCheck()">已报到新生</a> ' +
                             '<a class="btn btn-default" onclick="isNotCheck()">未报到新生</a> '+
-                            '<form method="post" action="">'+
+                            '<form method=post action="./alpha/studentms/controller/TeacherOutputRegisterController">'+
                             '<input value="all" name="check" id="downloadContent" type="hidden"/> ' +
-                            '<submit class="btn btn-default" type="submit" >下载导出</input>'+
+                            '<input class="btn btn-default" type="submit" value="下载导出" >'+
                             '</form>'+
                             '</div>' +
                             '<table class="table table-bordered table-condensed">' +
@@ -213,14 +214,14 @@
                     $('#downloadContent').val('isNotCheck');
                     $("table tbody tr")
                         .hide()
-                        .filter(":contains('"+ "n" +"')")
+                        .filter(":contains('"+ "否" +"')")
                         .show();
                 }
                 function isCheck() {
                     $('#downloadContent').val('isCheck');
                     $("table tbody tr")
                         .hide()
-                        .filter(":contains('"+ "y" +"')")
+                        .filter(":contains('"+ "是" +"')")
                         .show();
                 }
 
@@ -231,7 +232,7 @@
 
                 function getInfo() {
                     $.ajaxSettings.async = false;
-                    $.getJSON("44.php",function(data){
+                    $.getJSON("./alpha/studentms/controller/TeacherSearchAllStudentsController",function(data){
                         infos = data;
                     });
                 }
@@ -269,57 +270,57 @@
 
                     var content = $('#centerContent');
                     content.append('<div id="rowInfo">' +
-                        '<form action="" method="post" id="InfoForm">' +
+                        '<form action="./alpha/studentms/controller/TeacherOutputStudentInfoController" method="post" id="InfoForm">' +
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="0">姓名' +
+                        '<input type="checkbox" class="infoHead" name="name" value="0">姓名' +
                         '</label>'+
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="1">学号' +
+                        '<input type="checkbox" class="infoHead" name="number" value="1">学号' +
                         '</label>'+
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="2">班级' +
+                        '<input type="checkbox" class="infoHead" name="class_id" value="2">班级' +
                         '</label>'+
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="3">身份证号' +
+                        '<input type="checkbox" class="infoHead" name="id_num" value="3">身份证号' +
                         '</label>'+
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="4">性别' +
+                        '<input type="checkbox" class="infoHead" name="sex" value="4">性别' +
                         '</label>'+
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="5">年龄' +
+                        '<input type="checkbox" class="infoHead" name="age" value="5">年龄' +
                         '</label>'+
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="6">邮箱' +
+                        '<input type="checkbox" class="infoHead" name="email" value="6">邮箱' +
                         '</label>'+
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="7">微信' +
+                        '<input type="checkbox" class="infoHead" name="wechat" value="7">微信' +
                         '</label>'+
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="8">QQ' +
+                        '<input type="checkbox" class="infoHead" name="qq" value="8">QQ' +
                         '</label>'+
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="9">手机号' +
+                        '<input type="checkbox" class="infoHead" name="phone" value="9">手机号' +
                         '</label>'+
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="10">家庭住址' +
+                        '<input type="checkbox" class="infoHead" name="address" value="10">家庭住址' +
                         '</label>'+
 
                         '<label class="checkbox-inline">' +
-                        '<input type="checkbox" class="infoHead" id="" value="11">民族' +
+                        '<input type="checkbox" class="infoHead" name="nation" value="11">民族' +
                         '</label>'+
                         '<a class="btn btn-default" onclick="infoSubmit()">提交</a>' +
-                        '<button class="btn-default btn" onclick="checkSubmit()" >导出</button>' +
+                        '<input class="btn btn-default" type="submit" value="导出" >' +
                         '</form>' +
                         '<h4 class="text-center"> 学生信息统计 </h4>' +
                         '<div class="table-responsive">'+
@@ -374,9 +375,9 @@
                         data = head[checkVal[i]]
                     }
                     $.ajax({
-                        url:'77.php',
+                        url:'./alpha/studentms/controller/TeacherOutputStudentInfoController',
                         data:data,
-                        type:"post",
+                        type:'POST',
                         success:allInfo()
                     });
                 }

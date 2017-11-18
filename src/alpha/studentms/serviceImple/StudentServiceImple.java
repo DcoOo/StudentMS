@@ -123,4 +123,12 @@ public class StudentServiceImple implements StudentService{
 		return result;
 	}
 
+	@Override
+	public Student getStudentById(String id) {
+		// TODO Auto-generated method stub
+		Student student = new Student();
+		student = studentDAO.select_by_id(id, StudentDAO.PRIMARY_ID_CODE);
+		return student;
+	}
+
 }
