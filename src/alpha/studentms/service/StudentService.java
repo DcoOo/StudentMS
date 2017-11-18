@@ -90,6 +90,11 @@ public interface StudentService {
 	 */
 	String getTeacherId(String student_id);
 	
-	
+	/**
+	 * 根据学生的id查找学生
+	 * @param id
+	 * @return
+	 */
+	Student getStudentById(String id);
 	
 }

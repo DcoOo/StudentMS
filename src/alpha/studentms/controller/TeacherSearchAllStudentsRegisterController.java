@@ -33,8 +33,8 @@ public class TeacherSearchAllStudentsRegisterController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String assistantID = (String) request.getSession().getAttribute("userId");
-		
-		Assistant assistant = teacherService.selectById(assistantID);
+		//记得改回来
+		Assistant assistant = teacherService.selectById("123");
 		String whClass = assistant.getClassOfTeacher();
 		List<Student> result = teacherService.searchAllClass(whClass);
 		
@@ -45,15 +45,19 @@ public class TeacherSearchAllStudentsRegisterController extends HttpServlet {
 			tempStudent = iterator.next();
 			JSONObject studentJSON = new JSONObject();
 			studentJSON.put("name", tempStudent.getName());
-			if(tempStudent.getRegister() == 0){
-				studentJSON.put("name", "是");
+			if(tempStudent.getRegister() == 1){
+				studentJSON.put("isCheck", "是");
 			}
 			else{
-				studentJSON.put("name", "否");
+				studentJSON.put("isCheck", "否");
 			}
 			jSONArray.put(studentJSON);
 		}
-		request.setAttribute("registerJSON", jSONArray);
+		//System.out.println(jSONArray.toString());
+		
+		response.setHeader("content-type", "text/html;charset=UTF-8");
+		response.getWriter().append(jSONArray.toString());
+		
 	}
 	
 	

@@ -124,4 +124,41 @@
   	<servlet-name>studentInfoShow</servlet-name>
   	<url-pattern>/servlet/studentInfoShow</url-pattern>
   </servlet-mapping>
+  
+  
+  <servlet>
+  	<servlet-name>TeacherSearchAllStudentsRegister</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherSearchAllStudentsRegisterController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherSearchAllStudentsRegister</servlet-name>
+  	<url-pattern>/alpha/studentms/controller/TeacherSearchAllStudentsRegisterController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TeacherOutputRegister</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherOutputRegisterController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherOutputRegister</servlet-name>
+  	<url-pattern>/alpha/studentms/controller/TeacherOutputRegisterController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TeacherSearchAllStudents</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherSearchAllStudentsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherSearchAllStudents</servlet-name>
+  	<url-pattern>/alpha/studentms/controller/TeacherSearchAllStudentsController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TeacherOutputStudentInfo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherOutputStudentInfoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherOutputStudentInfo</servlet-name>
+  	<url-pattern>/alpha/studentms/controller/TeacherOutputStudentInfoController</url-pattern>
+  </servlet-mapping>
 </web-app>
