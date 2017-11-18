@@ -76,11 +76,11 @@ public class LoginController extends HttpServlet {
 				if (classAdvicer != null && roleControl == 1) {
 					req.getSession().setAttribute("userId", classAdvicer.getId());
 					req.getSession().setAttribute("role", 1);
-					req.getRequestDispatcher("/teacher.jsp").forward(req, resp);
+					req.getRequestDispatcher("/servlet/TeacherShowMemoController").forward(req, resp);
 				} else if (roleControl == 0) {
 					req.getSession().setAttribute("userId", classAdvicer.getId());
 					req.getSession().setAttribute("role", 0);
-					req.getRequestDispatcher("/teacher.jsp").forward(req, resp);
+					req.getRequestDispatcher("/servlet/TeacherShowMemoController").forward(req, resp);
 				} else {
 					req.setAttribute("login_flag", "0");
 					req.getRequestDispatcher("/login.jsp").forward(req, resp);
