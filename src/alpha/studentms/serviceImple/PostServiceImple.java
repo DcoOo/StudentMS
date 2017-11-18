@@ -104,7 +104,7 @@ public class PostServiceImple implements PostService {
 				tempReplyList = replyDAO.select_by_id(tempPost.getId(), ReplyDAO.POST_ID_CODE);
 				
 				Iterator<Reply> iteratorR = tempReplyList.iterator();
-				System.out.println(iteratorR.hasNext());
+				
 				while(iteratorR.hasNext()){
 					Reply tempReply = iteratorR.next();
 					for(int j=0;j<cuted.length;j++){
@@ -114,7 +114,7 @@ public class PostServiceImple implements PostService {
 						}
 					}
 				}
-				System.out.println(counter);
+				
 				tempResultPost.add(tempPost);
 				tempResultNum.add(counter);
 			}
@@ -122,13 +122,14 @@ public class PostServiceImple implements PostService {
 			
 			/**
 			 * 希尔排序
+			 * 最大的在最前
 			 */
 			int incrementNum = tempResultNum.size()/2;
 			while(incrementNum >=1){
-	            for(int i=0;i<tempResultNum.size();i++){
+	            for(int i=tempResultNum.size()-1;i>=0;i--){
 	                //进行插入排序
 	                for(int j=i;j<tempResultNum.size()-incrementNum;j=j+incrementNum){
-	                    if(tempResultNum.get(j)>tempResultNum.get(j+incrementNum)){
+	                    if(tempResultNum.get(j)<tempResultNum.get(j+incrementNum)){
 	                        int temple = tempResultNum.get(j);
 	                        Post tempPost = tempResultPost.get(j);
 	                        
@@ -148,9 +149,9 @@ public class PostServiceImple implements PostService {
 			/**
 			 * 将排序后的结果去除不包含关键字的帖子，放入到返回列表中
 			 */
-			while(tempResultNum.get(0) == 0){
-				tempResultNum.remove(0);
-				tempResultPost.remove(0);
+			while(tempResultNum.get(tempResultNum.size()-1) == 0){
+				tempResultNum.remove(tempResultNum.size()-1);
+				tempResultPost.remove(tempResultPost.size()-1);
 			}
 			result.addAll(tempResultPost);
 		}
