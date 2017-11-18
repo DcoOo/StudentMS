@@ -20,18 +20,30 @@ import alpha.studentms.serviceImple.DocumentServiceImple;
 import alpha.studentms.serviceImple.MessageServiceImple;
 import alpha.studentms.serviceImple.TeacherServiceImple;
 
-public class TeacherDocumentRecycleController extends HttpServlet{
-	
+/**
+ * 教师文档的下载
+ * 
+ * @author joker
+ * @see TeacherService
+ * @see TeacherServiceImple
+ * @see MessageService
+ * @see MessageServiceImple
+ * @see DocumentService
+ * @see DocumentServiceImple
+ */
+public class TeacherDocumentRecycleController extends HttpServlet {
+
 	public TeacherService teacherService = new TeacherServiceImple();
 	public MessageService messageService = new MessageServiceImple();
 	public DocumentService documentService = new DocumentServiceImple();
-	
+
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		List<ModelDocument> modelDocuments;
 		List<String> json = new ArrayList<>();
-		String messageId = request.getParameter("id");
-		modelDocuments = messageService.getModelDocumentByMessageId(messageId);			
+		String messageId = (String) request.getParameter("id");
+		modelDocuments = messageService.getModelDocumentByMessageId(messageId);
 		for (int j = 0; j < modelDocuments.size(); j++) {
 			String modelId = modelDocuments.get(j).getModelDoc();
 			List<Document> documents = documentService.getDocumentsByModelDocId(modelId);
@@ -39,7 +51,6 @@ public class TeacherDocumentRecycleController extends HttpServlet{
 				json.add(new JSONObject(documents.get(k)).toString());
 			}
 		}
-		System.out.println(json);
 		response.getWriter().print(json);
 	}
 

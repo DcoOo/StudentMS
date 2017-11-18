@@ -483,18 +483,18 @@
                     var content = $('#centerContent');
                     var lis = '';
                     for (var i = 0;i<notice.length;i++){
-                        lis += '<li><a onclick="noticeFile(' + notice[i].id + ')">'+ notice[i].title + '</a></li>';
+                        lis += '<li><a onclick="noticeFile(\'' +notice[i].id +  '\')">'+ notice[i].title + '</a></li>';
                     }
                     content.append('<ul>'+ lis +'</ul>');
 
                 }
                 function noticeFile(id) {
-                	alert(id);
                     var content = $('#centerContent');
                     var files = '';
+
                     $.getJSON('/StudentMS/servlet/teacherDocumentRecycle?id=' + id,function (data) {
                         files = data;
-                    });
+                    }); 
                     content.empty();
                     var lis = '';
                     for (var i = 0;i<files.length;i++){

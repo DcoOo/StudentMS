@@ -22,6 +22,17 @@ import alpha.studentms.serviceImple.DocumentServiceImple;
 import alpha.studentms.serviceImple.MessageServiceImple;
 import alpha.studentms.serviceImple.TeacherServiceImple;
 
+/**
+ * 教师通知的展示
+ * 
+ * @author joker
+ * @see TeacherService
+ * @see TeacherServiceImple
+ * @see MessageService
+ * @see MessageServiceImple
+ * @see DocumentService
+ * @see DocumentServiceImple
+ */
 public class TeacherMessageRecycleController extends HttpServlet{
 	
 	public TeacherService teacherService = new TeacherServiceImple();
@@ -34,14 +45,11 @@ public class TeacherMessageRecycleController extends HttpServlet{
 		response.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		String userId = (String)session.getAttribute("userId");
-		//TODO 调试
-		userId = "1";
 		List<Message> list = messageService.getTeacherMessage(userId);
 		List<String> json = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			json.add(new JSONObject(list.get(i)).toString());
 		}
-		System.out.println(json);
 		response.getWriter().print(json);
 	}
 
