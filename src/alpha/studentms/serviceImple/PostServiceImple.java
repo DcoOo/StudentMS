@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import alpha.studentms.bean.Post;
+import alpha.studentms.bean.Reply;
 import alpha.studentms.bean.Student;
 import alpha.studentms.dao.AssistantDAO;
 import alpha.studentms.dao.ClassAdvicerDAO;
@@ -86,13 +87,34 @@ public class PostServiceImple implements PostService {
 				int counter = 0;
 				Post tempPost = iterator.next();
 				String rempS = tempPost.getContent();
+				String rempTitle = tempPost.getTitle();
 				
 				for(int i=0;i<cuted.length;i++){
 					if(rempS.contains(cuted[i])){
 						counter++;
 					}
+					if(rempTitle.contains(cuted[i])){
+						counter++;
+					}
+					
 				}
 				
+				//查询帖子的所有回复，查找帖子回复中的关键字并计数
+				List<Reply> tempReplyList = new ArrayList<Reply>();
+				tempReplyList = replyDAO.select_by_id(tempPost.getId(), ReplyDAO.POST_ID_CODE);
+				
+				Iterator<Reply> iteratorR = tempReplyList.iterator();
+				System.out.println(iteratorR.hasNext());
+				while(iteratorR.hasNext()){
+					Reply tempReply = iteratorR.next();
+					for(int j=0;j<cuted.length;j++){
+						if(tempReply.getContent().contains(cuted[j])){
+							counter++;
+							
+						}
+					}
+				}
+				System.out.println(counter);
 				tempResultPost.add(tempPost);
 				tempResultNum.add(counter);
 			}
@@ -101,30 +123,35 @@ public class PostServiceImple implements PostService {
 			/**
 			 * 希尔排序
 			 */
-			int h = 0;
-			int n = tempResultNum.size() / 8;
-			while(h <= n){
-				h = 3 * h + 1;
-			}
-			while(h >= 1){
-				for(int i=h;i<n;i++){
-					int j = i - h;
-					int get = tempResultNum.get(i);
-					Post getPost = tempResultPost.get(i);
-					while(j >= 0 && tempResultNum.get(j) > get){
-						tempResultNum.set(j + h, tempResultNum.get(j));
-						tempResultPost.set(j + h, tempResultPost.get(j));
-						j = j - h;
-					}
-					tempResultNum.set(j + h, get);
-					tempResultPost.set(j + h, getPost);
-				}
-				h = (h - 1) / 3;
-			}
+			int incrementNum = tempResultNum.size()/2;
+			while(incrementNum >=1){
+	            for(int i=0;i<tempResultNum.size();i++){
+	                //进行插入排序
+	                for(int j=i;j<tempResultNum.size()-incrementNum;j=j+incrementNum){
+	                    if(tempResultNum.get(j)>tempResultNum.get(j+incrementNum)){
+	                        int temple = tempResultNum.get(j);
+	                        Post tempPost = tempResultPost.get(j);
+	                        
+	                        tempResultNum.set(j, tempResultNum.get(j+incrementNum));
+	                        tempResultPost.set(j, tempResultPost.get(j+incrementNum));
+	                        
+	                        tempResultNum.set(j+incrementNum, temple);
+	                        tempResultPost.set(j+incrementNum, tempPost);
+	                    }
+	                }
+	            }
+	            //设置新的增量
+	            incrementNum = incrementNum/2;
+	        }
+			
 			
 			/**
-			 * 将排序后的结果放入到返回列表中
+			 * 将排序后的结果去除不包含关键字的帖子，放入到返回列表中
 			 */
+			while(tempResultNum.get(0) == 0){
+				tempResultNum.remove(0);
+				tempResultPost.remove(0);
+			}
 			result.addAll(tempResultPost);
 		}
 		

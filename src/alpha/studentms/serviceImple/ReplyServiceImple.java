@@ -69,9 +69,9 @@ public class ReplyServiceImple implements ReplyService {
 	}
 
 	@Override
-	public List<Reply> searchPost(String condition) {
+	public List<Reply> searchReply(String condition) {
 		// TODO Auto-generated method stub
-        List<Reply> result = new ArrayList<Reply>();
+		List<Reply> result = new ArrayList<Reply>();
 		
 		
 		if(!condition.equals("")){
@@ -81,7 +81,7 @@ public class ReplyServiceImple implements ReplyService {
 			String[] cuted;
 			cuted = condition.split(" +");
 			/**
-			 * 查出所有帖子
+			 * 查出所有回复
 			 */
 			List<Reply> temp = new ArrayList<Reply>();
 			temp = replyDAO.select_all();
@@ -89,23 +89,25 @@ public class ReplyServiceImple implements ReplyService {
 			/**
 			 * 记录帖子和包含关键字的数目
 			 */
-			List<Reply> tempResultReply = new ArrayList<Reply>();
+			List<Reply> tempResultPost = new ArrayList<Reply>();
 			List<Integer> tempResultNum = new ArrayList<Integer>();
 			/**
 			 * 遍历帖子，比对关键字，记录数目
 			 */
 			while(iterator.hasNext()){
 				int counter = 0;
-				Reply tempReply = iterator.next();
-				String rempS = tempReply.getContent();
+				Reply tempPost = iterator.next();
+				String rempS = tempPost.getContent();
+				
 				
 				for(int i=0;i<cuted.length;i++){
 					if(rempS.contains(cuted[i])){
 						counter++;
 					}
+					
 				}
 				
-				tempResultReply.add(tempReply);
+				tempResultPost.add(tempPost);
 				tempResultNum.add(counter);
 			}
 			
@@ -113,31 +115,36 @@ public class ReplyServiceImple implements ReplyService {
 			/**
 			 * 希尔排序
 			 */
-			int h = 0;
-			int n = tempResultNum.size() / 8;
-			while(h <= n){
-				h = 3 * h + 1;
-			}
-			while(h >= 1){
-				for(int i=h;i<n;i++){
-					int j = i - h;
-					int get = tempResultNum.get(i);
-					Reply getReply = tempResultReply.get(i);
-					while(j >= 0 && tempResultNum.get(j) > get){
-						tempResultNum.set(j + h, tempResultNum.get(j));
-						tempResultReply.set(j + h, tempResultReply.get(j));
-						j = j - h;
-					}
-					tempResultNum.set(j + h, get);
-					tempResultReply.set(j + h, getReply);
-				}
-				h = (h - 1) / 3;
-			}
+			int incrementNum = tempResultNum.size()/2;
+			while(incrementNum >=1){
+	            for(int i=0;i<tempResultNum.size();i++){
+	                //进行插入排序
+	                for(int j=i;j<tempResultNum.size()-incrementNum;j=j+incrementNum){
+	                    if(tempResultNum.get(j)>tempResultNum.get(j+incrementNum)){
+	                        int temple = tempResultNum.get(j);
+	                        Reply tempPost = tempResultPost.get(j);
+	                        
+	                        tempResultNum.set(j, tempResultNum.get(j+incrementNum));
+	                        tempResultPost.set(j, tempResultPost.get(j+incrementNum));
+	                        
+	                        tempResultNum.set(j+incrementNum, temple);
+	                        tempResultPost.set(j+incrementNum, tempPost);
+	                    }
+	                }
+	            }
+	            //设置新的增量
+	            incrementNum = incrementNum/2;
+	        }
+			
 			
 			/**
-			 * 将排序后的结果放入到返回列表中
+			 * 将排序后的结果去除不包含关键字的帖子，放入到返回列表中
 			 */
-			result.addAll(tempResultReply);
+			while(tempResultNum.get(0) == 0){
+				tempResultNum.remove(0);
+				tempResultPost.remove(0);
+			}
+			result.addAll(tempResultPost);
 		}
 		
 		
