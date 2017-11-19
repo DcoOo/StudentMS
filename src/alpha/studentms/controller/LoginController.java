@@ -57,7 +57,7 @@ public class LoginController extends HttpServlet {
 					req.getSession().setAttribute("userId", student.getId());
 					req.getSession().setAttribute("username", username);
 					req.getSession().setAttribute("classId", student.getClass_id());
-					req.getSession().setAttribute("passwd", EncryptUtils.encoderByMd5(passwd));
+					req.getSession().setAttribute("passwd", encryptPassword);
 					// 根据是否已经注册决定跳转到信息采集或者直接进入个人中心
 					if (student.getRegister() == Student.IS_REIGSTER) {
 						// 已经注册
@@ -90,10 +90,6 @@ public class LoginController extends HttpServlet {
 				}
 				
 			}
-		} else {
-			// 用户名，密码错误
-			req.setAttribute("login_flag", "0");
-			req.getRequestDispatcher("/login.jsp").forward(req, resp);
-		}
+		}	
 	}
 }
