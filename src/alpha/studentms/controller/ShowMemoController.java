@@ -44,7 +44,6 @@ public class ShowMemoController extends HttpServlet{
 		req.setAttribute("optionMemoList", optionMemoList);
 		req.setAttribute("customMemoList", customMemoList);
 		// 该学生所在班级的班主任以及辅导员发的所有通知
-//		req.getRequestDispatcher("/index.jsp").forward(req, resp);
 		req.getRequestDispatcher("/servlet/showmessagecontroller").forward(req, resp);
 	}
 

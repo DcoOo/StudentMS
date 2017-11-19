@@ -7,13 +7,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import alpha.studentms.bean.ClassAdvicer;
 import alpha.studentms.bean.Student;
 import alpha.studentms.service.LoginService;
 import alpha.studentms.service.MemoService;
 import alpha.studentms.service.StudentService;
+import alpha.studentms.service.TeacherService;
 import alpha.studentms.serviceImple.LoginServiceImple;
 import alpha.studentms.serviceImple.MemoServiceImple;
 import alpha.studentms.serviceImple.StudentServiceImple;
+import alpha.studentms.serviceImple.TeacherServiceImple;
+import alpha.studentms.util.EncryptUtils;
 
 public class LoginController extends HttpServlet{
 	/**
@@ -24,6 +28,7 @@ public class LoginController extends HttpServlet{
 	private LoginService loginService = new LoginServiceImple(); 
 	private StudentService studentService = new StudentServiceImple();
 	private MemoService memoService = new MemoServiceImple();
+	private TeacherService teacherService = new TeacherServiceImple();
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,7 +42,8 @@ public class LoginController extends HttpServlet{
 		String username = (String) req.getParameter("username");
 		String passwd = (String) req.getParameter("passwd");
 		String role = (String)req.getParameter("role");
-		boolean isLegel = loginService.check(username, passwd);
+		String encryptPassword = EncryptUtils.encoderByMd5(passwd);
+		boolean isLegel = loginService.check(username, encryptPassword);
 		if (isLegel) {
 			// 用户名，密码正确
 			if (role.equals("student")) {
@@ -47,7 +53,9 @@ public class LoginController extends HttpServlet{
 				req.getSession().setAttribute("userId", student.getId());
 				req.getSession().setAttribute("username", username);
 				req.getSession().setAttribute("classId", student.getClass_id());
-				req.getSession().setAttribute("passwd", passwd);
+				req.getSession().setAttribute("passwd", encryptPassword);
+				req.getSession().setAttribute("role", "student");
+				req.getSession().setAttribute("name", student.getName());
 				// 根据是否已经注册决定跳转到信息采集或者直接进入个人中心
 				if (student.getRegister() == Student.IS_REIGSTER){
 					// 已经注册
@@ -61,6 +69,13 @@ public class LoginController extends HttpServlet{
 				}
 			}else{
 				// 教师登陆
+				ClassAdvicer classAdvicer = teacherService.getTeacherByTeacherNumber(username);
+				req.getSession().setAttribute("userId", classAdvicer.getId());
+				req.getSession().setAttribute("username", username);
+				req.getSession().setAttribute("classId", classAdvicer.getClassOfTeacher());
+				req.getSession().setAttribute("role", "teacher");
+				req.getSession().setAttribute("name", classAdvicer.getNumber());
+				req.getRequestDispatcher("/servlet/showPostController").forward(req, resp);
 			}
 		}else{
 			// 用户名，密码错误

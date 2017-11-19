@@ -23,6 +23,7 @@ public class PostDAOTest {
 	@Test
 	public void test_select_all(){
 		LinkedList<Post> list = postDao.select_all();
+		System.out.println(list.get(0).getTitle());
 		assertTrue(list.size() == 2);
 	}
 	

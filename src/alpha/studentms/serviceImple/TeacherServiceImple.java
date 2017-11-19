@@ -2,17 +2,25 @@ package alpha.studentms.serviceImple;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import org.json.JSONObject;
 
 import alpha.studentms.bean.Assistant;
+import alpha.studentms.bean.ClassAdvicer;
 import alpha.studentms.bean.Memo;
 import alpha.studentms.bean.Message;
 import alpha.studentms.bean.ModelDocument;
+import alpha.studentms.bean.Post;
 import alpha.studentms.bean.Student;
 import alpha.studentms.dao.AssistantDAO;
+import alpha.studentms.dao.ClassAdvicerDAO;
 import alpha.studentms.dao.MemoDAO;
 import alpha.studentms.dao.MessageDAO;
 import alpha.studentms.dao.ModelDocumentDAO;
+import alpha.studentms.dao.PostDAO;
 import alpha.studentms.dao.StudentDAO;
 import alpha.studentms.service.TeacherService;
 import alpha.studentms.util.UUIDGenerater;
@@ -23,6 +31,8 @@ public class TeacherServiceImple implements TeacherService {
 	MessageDAO messageDAO = new MessageDAO();
 	ModelDocumentDAO modelDocumentDAO = new ModelDocumentDAO();
 	AssistantDAO assistantDAO = new AssistantDAO();
+	ClassAdvicerDAO classAdvicerDAO = new ClassAdvicerDAO();
+	private PostDAO postDAO = new PostDAO();
 
 	@Override
 	public void addMemo(String userId,String title,String content) {
@@ -137,5 +147,75 @@ public class TeacherServiceImple implements TeacherService {
 		}
 		
 		return assistant;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Post> getCollectPost(String id) {
+		List<Post> posts = new LinkedList<>();
+		String mapJson = classAdvicerDAO.findByID(id).getCollection();
+		Map<String, Object> map = new JSONObject(mapJson).toMap();
+		for(Object postId : (ArrayList<String>)map.get("collect")){
+			posts.add(postDAO.select_by_id((String)postId));
+		}
+		return posts;
+	}
+
+	@Override
+	public void deleteCollectPost(String teacherId, String postId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean addCollectPost(String teacherId, String postId) {
+		boolean flag = false;
+		String mapJson = classAdvicerDAO.findByID(teacherId).getCollection();
+		JSONObject object = new JSONObject(mapJson);
+		Map<String, Object> map = object.toMap();
+		@SuppressWarnings("unchecked")
+		ArrayList<String> list = (ArrayList<String>) map.get("collect");
+		if (list.contains(postId)) {
+			// 表示已经收藏过
+			return flag;
+		}else{
+			// 之前没有收藏
+			list.add(postId);
+			// 收藏夹更新到数据库
+			classAdvicerDAO.updateCollection(new JSONObject(map).toString(), teacherId);
+			return true;
+		}
+		
+		
+
+	}
+	
+	@Override
+	public String getTeacherNumber(String teacherId) {
+		return classAdvicerDAO.findByID(teacherId).getNumber();
+	}
+
+	@Override
+	public String getTeacherCollectionByUserId(String userId) {
+		return classAdvicerDAO.findByID(userId).getCollection();
+	}
+	
+	@Override
+	public ClassAdvicer getTeacherByTeacherNumber(String number) {
+		return classAdvicerDAO.findByNumber(number);
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getReplyInCollection(String userId) {
+		String collection = classAdvicerDAO.findByID(userId).getCollection();
+		JSONObject obj = new JSONObject(collection);
+		Map<String, Object> map = obj.toMap();
+		return (ArrayList<String>)map.get("reply");
+	}
+
+	@Override
+	public List<Assistant> getAllAssistants() {
+		return assistantDAO.getAssistants();
 	}
 }

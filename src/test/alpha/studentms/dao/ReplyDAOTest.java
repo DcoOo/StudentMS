@@ -18,6 +18,7 @@ public class ReplyDAOTest {
 	public void test_select_by_id() {
 		LinkedList<Reply> list = replyDao.select_by_id("a", ReplyDAO.PRIMARY_ID_CODE);
 		System.out.println(list.size());
+		System.out.println(list.get(0).getOptime());
 		for (Reply reply : list){
 			System.out.println(reply.getStar_num());
 		}

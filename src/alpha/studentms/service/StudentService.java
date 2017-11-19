@@ -3,6 +3,7 @@ package alpha.studentms.service;
 import java.util.List;
 
 import alpha.studentms.bean.Memo;
+import alpha.studentms.bean.Post;
 import alpha.studentms.bean.Student;
 
 public interface StudentService {
@@ -90,6 +91,40 @@ public interface StudentService {
 	 */
 	String getTeacherId(String student_id);
 	
+	/**
+	 * 根据用户id获取到用户收藏的帖子id
+	 * @param id
+	 * @return
+	 */
+	List<Post> getCollectPost(String id);
 	
+	/**
+	 * 更新收藏的
+	 * @param postIdLists
+	 */
+	void deleteCollectPost(String postId, String studentId);
+	
+	/**
+	 * 添加收藏的帖子
+	 * @param post
+	 * @return 
+	 * 		已经收藏过返回false	
+	 * 		否则返回true
+	 */
+	boolean addCollectPost(String studentId, String postId);
+	
+	/**
+	 * 根据学生主键得到学生
+	 * @param userId
+	 * @return
+	 */
+	Student getStudentById(String userId);
+	
+	/**
+	 * 获取所有回复该用户所发布的帖子的回复
+	 * @param userId
+	 * @return
+	 */
+	List<String> getReplyInCollection(String userId);
 	
 }

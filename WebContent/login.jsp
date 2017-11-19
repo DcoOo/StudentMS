@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label for="passwd">密码：</label>
-                    <input type="password" class="form-control" name="passwd" placeholder="请输入密码">
+                    <input type="password" class="form-control" name="passwd" id="passwd" placeholder="请输入密码">
                 </div>
                 <div class="form-group">
                     <label>身份：</label>

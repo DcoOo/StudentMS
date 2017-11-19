@@ -9,10 +9,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>学生个人中心</title>
+    <title id="title">学生个人中心</title>
     <link href="/StudentMS/css/bootstrap.min.css" rel="stylesheet">
     <script src="/StudentMS/js/jquery-3.2.1.min.js"></script>
     <script src="/StudentMS/js/bootstrap.min.js"></script>
+    <script src="/StudentMS/js/md5.js" type="text/javascript"></script>
 
     <style>
         .col-md-2,.col-md-7,.row{
@@ -75,9 +76,13 @@
             <li>
                 <a href="#" onclick="intro()">学校部门介绍</a>
             </li>
+            <li>
+                <a href="#" onclick="docDownload()">文档下载</a>
+            </li>
             <hr/>
             <li>
-                <a href="#">新生论坛</a>
+                <a href="/StudentMS/servlet/showPostController">新生论坛</a>
+
             </li>
         </ul>
     </div>
@@ -95,9 +100,9 @@
 
         <div id="centerContent">
         <ul class="">
-        		<c:if test="${fn:length(requestScope.classAdviserMessages) > 0 }">
-		        	<c:forEach begin="0" end="${fn:length(requestScope.classAdviserMessages) - 1 }" varStatus="idx">
-		        		<li><a onclick="showNotice('${requestScope.classAdviserMessages[idx.index].id }', '${requestScope.classAdviserMessages[idx.index].title}', '${requestScope.classAdviserMessages[idx.index].content }', '${requestScope.classAdviserMessages[idx.index].optime }', '${requestScope.classAdviserMessages[idx.index].teacher }', '${requestScope.modelDocument[idx.index] }')">${requestScope.classAdviserMessages[idx.index].title }</a>
+        		<c:if test="${fn:length(requestScope.classAdviserAndAssistantMessages) > 0 }">
+		        	<c:forEach begin="0" end="${fn:length(requestScope.classAdviserAndAssistantMessages) - 1 }" varStatus="idx">
+		        		<li><a onclick="showNotice('${requestScope.classAdviserAndAssistantMessages[idx.index].id }', '${requestScope.classAdviserAndAssistantMessages[idx.index].title}', '${requestScope.classAdviserAndAssistantMessages[idx.index].content }', '${requestScope.classAdviserAndAssistantMessages[idx.index].optime }', '${requestScope.classAdviserAndAssistantMessages[idx.index].teacher }', '${requestScope.modelDocument[idx.index] }')">${requestScope.classAdviserAndAssistantMessages[idx.index].title }</a>
 		        	</c:forEach>
         	 	</c:if>
         </ul>
@@ -175,6 +180,7 @@
 </div>
 </body>
 <script  type="text/javascript">
+	$('#title').text("老师个人中心");
 	function customize(){
         $('.id').show();
         $('.myTask').show();
@@ -219,9 +225,9 @@
                     '                <form action="/StudentMS/servlet/studentInfoUpdate" method="post">' +
                 '        <table class="table table-bordered table-condensed">\n' +
                 '            <tr>\n' +
-                '                <th>邮箱</th>\n' +
-                '                <th>年龄</th>\n' +
-                '                <th>手机号</th>\n' +
+                '                <th>邮箱<span class="text-danger" id="emailSpan" style="display:none;">(请输入正确的邮箱)</span></th>\n' +
+                '                <th>年龄<span class="text-danger" id="ageSpan" style="display:none;">(正确的年龄)</span></th>\n' +
+                '                <th>手机号<span class="text-danger" id="phoneSpan" style="display:none;">(正确的手机号)</span></th>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
                 '                <td><input type="text" name="studentEmail" value="'+ data.email + '"></td>\n' +
@@ -229,9 +235,9 @@
                 '                <td><input type="text" name="studentPhone" value="'+ data.phone + '"></td>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
-                '                <th>民族</th>\n' +
-                '                <th>性别</th>\n' +
-                '                <th>团员</th>\n' +
+                '                <th>民族<span class="text-danger" id="nationSpan" style="display:none;">(请填写正确的民族)</span></th>\n' +
+                '                <th>性别<span class="text-danger" id="sexSpan" style="display:none;">(只能是男或女)</span></th>\n' +
+                '                <th>团员<span class="text-danger" id="cylSpan" style="display:none;">(只能填写是或否)</span></th>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
                 '                <td><input type="text" name="studentNation" value="'+ data.nation + '"></td>\n' +
@@ -240,7 +246,7 @@
                 '            </tr>\n' +
                 '            <tr>\n' +
                 '                <th>微信</th>\n' +
-                '                <th>QQ</th>\n' +
+                '                <th>QQ<span class="text-danger" id="qqSpan" style="display:none;">(请输入正确的qq号)</span></th>\n' +
                 '                <th>家庭住址</th>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
@@ -254,7 +260,79 @@
                 '       </form>'
             );
         });
+
+	
     }
+        $('body').delegate('input[name="studentSex"]', 'blur', function(){
+        	var patrn = /[男|女]/;
+        	var sex = $('input[name="studentSex"]').val();
+        	if (!patrn.exec(sex)) {
+				$('input[name="studentSex"]')[0].focus();
+				$('#sexSpan').show();
+        	}else{
+        		$('#sexSpan').hide();
+        	}
+        })
+
+        $('body').delegate('input[name="studentCYL"]', 'blur', function(){
+            var patrn = /[是|否]/;
+            var isCYL = $('input[name="studentCYL"]').val();
+            if (!patrn.exec(isCYL)) {
+				$('input[name="studentCYL"]')[0].focus();
+				$('#cylSpan').show();
+            }else{
+        		$('#cylSpan').hide();
+            }
+        })
+
+        $('body').delegate('input[name="studentEmail"]', 'blur', function(){
+            var patrn = /^([0-9A-Za-z\-_\.]+)@([0-9A-Za-z]+\.[A-Za-z]{2,3}(\.[A-Za-z]{2})?)$/g;
+            var email = $('input[name="studentEmail"]').val();
+            if (!patrn.exec(email)) {
+				$('input[name="studentEmail"]')[0].focus();
+				$('#emailSpan').show();
+            }else{
+            	$('#emailSpan').hide();	
+            }
+        })
+
+        $('body').delegate('input[name="studentAge"]', 'blur', function(){
+            $('input[name="studentAge"]').blur(function () {
+                var age = $('input[name="studentAge"]');
+                if (age>30 || age<10) {
+					$('input[name="studentAge"]')[0].focus();
+					$('#ageSpan').show();
+                }else{
+            		$('#ageSpan').hide();	
+                }
+            });
+
+        })
+
+        $('body').delegate('input[name="studentPhone"]', 'blur', function(){
+            var patrn = /^1[34578]\d{9}$/;
+            var phone = $('input[name="studentPhone"]').val();
+            if (!patrn.exec(phone)) {
+				$('input[name="studentPhone"]')[0].focus();
+				$('#phoneSpan').show();
+            }else{
+            	$('#phoneSpan').hide();
+
+            }
+        })
+
+        $('body').delegate('input[name="studentQQ"]', 'blur', function(){
+        	var patrn = /^\d{5,10}$/;
+            var phone = $('input[name="studentQQ"]').val();
+            if (!patrn.exec(phone)) {
+				$('input[name="studentQQ"]')[0].focus();
+				$('#qqSpan').show();
+            }else{
+            	$('#phoneSpan').hide();
+            }
+
+        })
+	
     function passwordChange() {
         $('#centerTitle').text("密码修改");
         $('#centerContent>*').hide();
@@ -278,12 +356,12 @@
     
     function formSubmit() {
         var oldpsd = "<%=session.getAttribute("passwd")%>";
-        var oldpsdInput = $('#oldPassword').val();
-        if (oldpsd == oldpsdInput){
+        var oldpsdInput = $('#oldPassword').val()
+        var md5edPsd = hex_md5(oldpsdInput);
+        if (md5edPsd == oldpsd){
         	if ($('#newPassword').val() == $('#newPasswordRepeat').val()){
         		alert('修改密码成功');
         		$('#updatePasswdForm').submit();
-        		
         	}else{
         		alert("两次密码输入不一致，请重新输入");
         	}
@@ -585,5 +663,23 @@
             info = e;
         })
     }
+    function docDownload() {
+        $('#centerTitle').text("文档下载");
+        $('#centerContent>*').hide();
+
+        $('#centerContent').append('<h5>教务处</h5>' +
+            '<a>《新生信息统计表》</a>' +
+            '<hr>' +
+            '<h5>财务处</h5>' +
+            '<a>《国家助学贷款申请表》</a><br>' +
+            '<a>《绿色通道申请表下载》</a>' +
+            '<hr>' +
+            '<h5>安稳处</h5>' +
+            '<a>《新生户籍变更申请表》</a>' +
+            '<hr>'
+        );
+
+    }
+
 </script>
 </html>

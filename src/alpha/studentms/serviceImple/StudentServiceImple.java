@@ -1,11 +1,19 @@
 package alpha.studentms.serviceImple;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 import alpha.studentms.bean.Memo;
+import alpha.studentms.bean.Post;
 import alpha.studentms.bean.Student;
 import alpha.studentms.dao.MemoDAO;
+import alpha.studentms.dao.PostDAO;
 import alpha.studentms.dao.StableMemoDAO;
 import alpha.studentms.dao.StudentDAO;
 import alpha.studentms.service.StudentService;
@@ -19,6 +27,7 @@ public class StudentServiceImple implements StudentService{
 	private StudentDAO studentDAO;
 	private MemoDAO memoDAO;
 	private StableMemoDAO stableMemoDAO;
+	private PostDAO postDAO;
 	
 	/**
 	 * constructor
@@ -27,6 +36,7 @@ public class StudentServiceImple implements StudentService{
 		studentDAO = new StudentDAO();
 		memoDAO = new MemoDAO();
 		stableMemoDAO = new StableMemoDAO();
+		postDAO = new PostDAO();
 	}
 
 	/**
@@ -121,6 +131,67 @@ public class StudentServiceImple implements StudentService{
 		List<Student> result = new ArrayList<Student>();
 		result = studentDAO.select_all();
 		return result;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Post> getCollectPost(String id) {
+		List<Post> posts = new LinkedList<>();
+		String mapJson = studentDAO.select_collection_by_id(id);
+		Map<String, Object> map = new JSONObject(mapJson).toMap();
+		for(Object postId : (ArrayList<String>)map.get("collect")){
+			posts.add(postDAO.select_by_id((String)postId));
+		}
+		return posts;
+	}
+
+	@Override
+	public void deleteCollectPost(String postId, String studentId) {
+		String listJson = studentDAO.select_collection_by_id(studentId);
+		JSONArray array = new JSONArray(listJson);
+		for(int i = 0; i < array.length(); i++){
+			String tmp = (String)array.get(i);
+			if (tmp.equals(postId)) {
+				array.remove(i);
+			}
+		}
+		// 更新collect到数据库
+		studentDAO.update_collection_by_id(array.toString(), studentId);
+	}
+
+	@Override
+	public boolean addCollectPost(String studentId, String postId) {
+		boolean flag = false;
+		String mapJson = studentDAO.select_collection_by_id(studentId);
+		JSONObject object = new JSONObject(mapJson);
+		Map<String, Object> map = object.toMap();
+		@SuppressWarnings("unchecked")
+		ArrayList<String> list = (ArrayList<String>) map.get("collect");
+		if (list.contains(postId)) {
+			// 表示已经收藏过
+			return flag;
+		}else{
+			// 之前没有收藏
+			list.add(postId);
+			// 收藏夹更新到数据库
+			studentDAO.update_collection_by_id(new JSONObject(map).toString(), studentId);
+			return true;
+		}
+		
+	}
+
+	@Override
+	public Student getStudentById(String userId) {
+		return studentDAO.select_by_id(userId, StudentDAO.PRIMARY_ID_CODE);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getReplyInCollection(String userId) {
+		String collection = studentDAO.select_collection_by_id(userId);
+		JSONObject obj = new JSONObject(collection);
+		Map<String, Object> map = obj.toMap();
+		return (ArrayList<String>)map.get("reply");
 	}
 
 }

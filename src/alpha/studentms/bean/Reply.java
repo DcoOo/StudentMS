@@ -31,7 +31,11 @@ public class Reply {
 	 * 回复内容
 	 */
 	private String content;
+
+	private String optime;
 	
+	public Reply() {
+	}
 	
 	/**
 	 * 构造回复
@@ -99,6 +103,16 @@ public class Reply {
 	public void setContent(String content) {
 		this.content = content;
 	}
+
+	public String getOptime() {
+		return optime;
+	}
+
+	public void setOptime(String optime) {
+		this.optime = optime;
+	}
+	
+	
 	
 	
 }

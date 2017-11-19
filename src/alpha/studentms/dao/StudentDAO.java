@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -216,17 +215,17 @@ public class StudentDAO {
 	}
 	
 	/**
-	 * select collection by id
+	 * 选择学生的collection字段
 	 * @param id
 	 * @return
-	 * a array with the id of post
+	 * 返回字符串
 	 */
-	public List<Object> select_collection_by_id(String id){
+	public String select_collection_by_id(String id){
 		try {
 			preState_select_collection_by_id.setString(1, id);
 			ResultSet set = preState_select_collection_by_id.executeQuery();
 			if (set.next()) {
-				return JsonParser.toList(set.getString("collection"));
+				return set.getString("collection");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -43,13 +43,13 @@ public class ShowMessageController extends HttpServlet{
 		String userId = (String) req.getSession().getAttribute("userId");
 		String teacherID = studentService.getTeacherId(userId);
 		// 获取到班主任的所有通知，并返回到前端
-		List<Message> classAdviserMessages = messageService.getTeacherMessage(teacherID);
-		req.setAttribute("classAdviserMessages", classAdviserMessages);
+		List<Message> classAdviserAndAssistantMessages = messageService.getTeacherMessage(teacherID);
+		req.setAttribute("classAdviserAndAssistantMessages", classAdviserAndAssistantMessages);
 		// 根据通知id，查询到通知对应的模板文档的下载地址，返回到前端
 		List<String> docList = new ArrayList<>();
 		// 每一个通知都放入一个表示List<ModelDocument>的Json字符串
 		JSONArray modelDocListJson;
-		for (Message msg : classAdviserMessages){
+		for (Message msg : classAdviserAndAssistantMessages){
 			// 由于json串含有大量     " , ' 所以用 @ 替代    " , 用  ^ 替代 ' 
 			modelDocListJson = new JSONArray(modelDocumentService.getModelDocumentByMessageId(msg.getId()));
 			String json = modelDocListJson.toString().replace('\"', '@');

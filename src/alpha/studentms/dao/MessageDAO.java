@@ -56,7 +56,7 @@ public class MessageDAO {
 	
 	
 	/**
-	 * 查询所有通知的方法
+	 * 查询所有通知的方法该老师发的通知
 	 */
 	public List<Message> getMessage(String teacher){
         List<Message> result = new ArrayList<Message>();

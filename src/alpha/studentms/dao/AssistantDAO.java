@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+
 import alpha.studentms.bean.Assistant;
 import alpha.studentms.util.JdbcUtils;
 
@@ -148,6 +151,36 @@ public class AssistantDAO {
 		}catch(SQLException e){
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 获取所有的辅导员
+	 * @return
+	 */
+	public List<Assistant> getAssistants(){
+		List<Assistant> list = new LinkedList<>();
+		String sql = "SELECT * FROM t_teacher WHERE role_control = 0";
+		PreparedStatement preState;
+		try {
+			preState = connection.prepareStatement(sql);
+			ResultSet set = preState.executeQuery();
+			while (set.next()) {
+				Assistant assistant = new Assistant();
+				assistant = new Assistant();
+				assistant.setId(set.getString("pk_id"));
+				assistant.setClassOfTeacher(set.getString("fk_class"));
+				assistant.setRoleOfTeacher(set.getInt("role_control"));
+				assistant.setNumber(set.getString("number"));
+				assistant.setCollection(set.getString("collection"));
+				list.add(assistant);
+			}
+			return list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
     
     

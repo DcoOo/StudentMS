@@ -26,8 +26,16 @@ public class Post {
 	 * 回复数量
 	 */
 	private int reply_num;
+	
+	/**
+	 * 发帖时间
+	 */
+	private String optime;
 
 	
+	public Post() {
+	}
+
 	/**
 	 * 构造帖子
 	 * @param id
@@ -86,5 +94,12 @@ public class Post {
 	}
 	
 	
+	public String getOptime() {
+		return optime;
+	}
+
+	public void setOptime(String optime) {
+		this.optime = optime;
+	}
 	
 }

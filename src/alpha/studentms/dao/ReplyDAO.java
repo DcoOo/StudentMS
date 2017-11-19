@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
+import java.util.List;
 
 import alpha.studentms.bean.Reply;
 import alpha.studentms.util.JdbcUtils;
@@ -45,6 +46,8 @@ public class ReplyDAO {
 			+ "VALUES (?, ?, ?, ?, ?, ?) ";
 	
 	
+	private static String SELECT_BY_POSTID = "SELECT * FROM t_reply WHERE fk_post = ? ORDER BY star_num DESC";
+	
 	
 	
 	/**
@@ -55,6 +58,7 @@ public class ReplyDAO {
 	private PreparedStatement preState_delete_by_id;
 	private PreparedStatement preState_delete_all;
 	private PreparedStatement preState_insert;
+	private PreparedStatement preState_select_by_postid;
 	
 	
 	/**
@@ -73,6 +77,7 @@ public class ReplyDAO {
 			preState_select_all = connection.prepareStatement(SELECT_ALL);
 			preState_delete_all = connection.prepareStatement(DELETE_ALL);
 			preState_insert = connection.prepareStatement(INSERT);
+			preState_select_by_postid = connection.prepareStatement(SELECT_BY_POSTID);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,20 +96,22 @@ public class ReplyDAO {
 	public LinkedList<Reply> select_by_id(String id, int code){
 			try {
 				LinkedList<Reply> list = new LinkedList<>();
+				String aString = "";
 				// format SQL with id types
 				switch (code) {
 				case ReplyDAO.PRIMARY_ID_CODE:
-					SELECT_BY_ID = String.format(SELECT_BY_ID, "pk_id");
+					aString = String.format(SELECT_BY_ID, "pk_id");
 					break;
 				case ReplyDAO.USER_ID_CODE:
-					SELECT_BY_ID = String.format(SELECT_BY_ID, "fk_user");
+					aString = String.format(SELECT_BY_ID, "fk_user");
 					break;
 				case ReplyDAO.POST_ID_CODE:
-					SELECT_BY_ID = String.format(SELECT_BY_ID, "fk_post");
+					aString = String.format(SELECT_BY_ID, "fk_post");
 					break;
 				}
 				// initialize selece by id preparedstatement
-				preState_select_by_id = connection.prepareStatement(SELECT_BY_ID);
+				preState_select_by_id = connection.prepareStatement(aString);
+				System.out.println(aString);
 				preState_select_by_id.setString(1, id);
 				ResultSet set = preState_select_by_id.executeQuery();
 				while (set.next()) {
@@ -221,6 +228,41 @@ public class ReplyDAO {
 		
 	}
 	
+	/**
+	 * 对指定回复star增1
+	 */
+	public void addReplyStar(String replyId){
+		String sql = "UPDATE t_reply SET star_num = star_num + 1 WHERE pk_id = ?";
+		PreparedStatement statement;
+		try {
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, replyId);
+			statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 对指定回复oppose增1
+	 */
+	public void addReplyOppose(String replyId){
+		String sql = "UPDATE t_reply SET oppose_num = oppose_num + 1 WHERE pk_id = ?";
+		PreparedStatement statement;
+		try {
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, replyId);
+			statement.execute();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+	}
+	
 	
 	
 	/**
@@ -255,8 +297,29 @@ public class ReplyDAO {
 			int star_num = set.getInt("star_num");
 			int oppose_num = set.getInt("oppose_num");
 			String content = set.getString("content");
+			String optime = set.getString("optime");
 			Reply reply = new Reply(id, user_id, post_id, star_num, oppose_num, content);
+			reply.setOptime(optime);
 			return reply;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	/**
+	 * 根据postid获取到所有属于该帖子的回复
+	 */
+	public List<Reply> getReplysByPostId(String postId){
+		List<Reply> replies = new LinkedList<>();
+		try {
+			preState_select_by_postid.setString(1, postId);
+			ResultSet set = preState_select_by_postid.executeQuery();
+			while(set.next()){
+				replies.add(resultset2reply(set));
+			}
+			return replies;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

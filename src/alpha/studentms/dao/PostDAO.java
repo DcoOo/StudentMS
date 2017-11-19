@@ -26,7 +26,7 @@ public class PostDAO {
 	/**
 	 * select all post
 	 */
-	private static String SELECT_ALL = "SELECT * FROM t_post";
+	private static String SELECT_ALL = "SELECT * FROM t_post ORDER BY optime DESC";
 	
 	/**
 	 * update by id
@@ -230,7 +230,9 @@ public class PostDAO {
 			String title = set.getString("title");
 			String content = set.getString("content");
 			int reply_num = set.getInt("reply_num");
+			String optime = set.getString("optime");
 			Post post = new Post(id, user_id, title, content, reply_num);
+			post.setOptime(optime);
 			return post;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

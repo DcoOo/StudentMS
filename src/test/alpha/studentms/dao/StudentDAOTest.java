@@ -37,8 +37,8 @@ public class StudentDAOTest {
 	
 	@Test
 	public void test_select_collection_by_id(){
-		List<Object> list = studentDao.select_collection_by_id("1");
-		System.out.println(list.size());
+		String list = studentDao.select_collection_by_id("1");
+		System.out.println(list);
 	}
 	
 	@Test

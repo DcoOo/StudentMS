@@ -2,7 +2,11 @@ package alpha.studentms.serviceImple;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
+import org.json.JSONObject;
 
 import alpha.studentms.bean.Post;
 import alpha.studentms.bean.Reply;
@@ -13,6 +17,7 @@ import alpha.studentms.dao.PostDAO;
 import alpha.studentms.dao.ReplyDAO;
 import alpha.studentms.dao.StudentDAO;
 import alpha.studentms.service.ReplyService;
+import alpha.studentms.service.TeacherService;
 import alpha.studentms.util.UUIDGenerater;
 
 public class ReplyServiceImple implements ReplyService {
@@ -22,18 +27,19 @@ public class ReplyServiceImple implements ReplyService {
 	ClassAdvicerDAO classAdvicerDAO = new ClassAdvicerDAO();
 	AssistantDAO assistantDAO = new AssistantDAO();
 	StudentDAO studentDAO = new StudentDAO();
+	TeacherService teacherService = new TeacherServiceImple();
 
 	@Override
-	public void reply(String user, String postId,String content) {
+	public void reply(String replyId, String user, String postId,String content) {
 		// TODO Auto-generated method stub
 		if((!user.equals(""))&&(!postId.equals(""))){
 			
-			Reply reply = new Reply(UUIDGenerater.getUUID(),user,postId,0,0,content);
+			Reply reply = new Reply(replyId,user,postId,0,0,content);
 			replyDAO.insert(reply);
 			
 			Post post = postDAO.select_by_id(postId);
 			int tempNum = post.getReply_num();
-			post.setReply_num(tempNum++);
+			post.setReply_num(++tempNum);
 			postDAO.update_by_Id(post);
 		}
 	}
@@ -176,6 +182,63 @@ public class ReplyServiceImple implements ReplyService {
 				}
 			}
 		}
+	}
+	
+	@Override
+	public void updateReplyOpposeNum(String replyId) {
+		replyDAO.addReplyOppose(replyId);
+		
+	}
+	
+	@Override
+	public void updateReplyStarNum(String replyId) {
+		replyDAO.addReplyStar(replyId);
+		
+	}
+
+	@Override
+	public int getStarNum(String replyId) {
+		System.out.println(replyId);
+		Reply reply = replyDAO.select_by_id(replyId, ReplyDAO.PRIMARY_ID_CODE).get(0);
+		return reply.getStar_num();
+	}
+
+	@Override
+	public int getOpposeNum(String replyId) {
+		Reply reply = replyDAO.select_by_id(replyId, ReplyDAO.PRIMARY_ID_CODE).get(0);
+		return reply.getOppose_num();
+	}
+	
+	@Override
+	public void addReplyIdToPostOwner(String postOwnerId, String replyId) {
+		String studentCollection = studentDAO.select_collection_by_id(postOwnerId);
+		if (studentCollection != null) {
+			// 向学生的collection字段中更新reply链表的值
+			JSONObject obj = new JSONObject(studentCollection);
+			Map<String, Object> map = obj.toMap();
+			@SuppressWarnings("unchecked")
+			ArrayList<String> list = (ArrayList<String>) map.get("reply");
+			list.add(replyId);
+			studentDAO.update_collection_by_id(new JSONObject(map).toString(), postOwnerId);
+			return;
+		}
+		String teacherCollection = teacherService.getTeacherCollectionByUserId(postOwnerId);
+		if (teacherCollection != null) {
+			// 向老师的collection字段中更新reply链表的值
+			JSONObject obj = new JSONObject(teacherCollection);
+			Map<String, Object> map = obj.toMap();
+			@SuppressWarnings("unchecked")
+			ArrayList<String> list = (ArrayList<String>) map.get("reply");
+			list.add(replyId);
+			classAdvicerDAO.updateCollection(new JSONObject(map).toString(), postOwnerId);
+			return;
+		}
+	}
+	
+	@Override
+	public Reply getReplyByReplyId(String replyId) {
+		System.out.println(replyId);
+		return replyDAO.select_by_id(replyId, ReplyDAO.PRIMARY_ID_CODE).get(0);
 	}
 	
 	

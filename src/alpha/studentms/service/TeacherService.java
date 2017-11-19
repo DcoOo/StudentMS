@@ -3,8 +3,10 @@ package alpha.studentms.service;
 import java.util.List;
 
 import alpha.studentms.bean.Assistant;
+import alpha.studentms.bean.ClassAdvicer;
 import alpha.studentms.bean.Message;
 import alpha.studentms.bean.ModelDocument;
+import alpha.studentms.bean.Post;
 import alpha.studentms.bean.Student;
 
 public interface TeacherService {
@@ -61,5 +63,59 @@ public interface TeacherService {
 	 * 根据id查询老师
 	 */
 	Assistant selectById(String id);
+
+	/**
+	 * 获取到用户收藏的帖子id
+	 * @param id
+	 * @return
+	 */
+	List<Post> getCollectPost(String id);
+	
+	/**
+	 * 更新收藏的
+	 * @param postIdLists
+	 */
+	void deleteCollectPost(String teacherId, String postId);
+	
+	/**
+	 * 添加收藏的帖子
+	 * @param post
+	 */
+	boolean addCollectPost(String teacherId, String postId);
+	
+	/**
+	 * 根据教师id获取其工号
+	 * @param teacherId
+	 * @return
+	 */
+	String getTeacherNumber(String teacherId);
+	
+	/**
+	 * 根据教师id获取其collection字段
+	 * @param userId
+	 * @return
+	 */
+	String getTeacherCollectionByUserId(String userId);
+	
+	/**
+	 * 根据老师工号获取老师
+	 * @param number
+	 */
+	ClassAdvicer getTeacherByTeacherNumber(String number);
+	
+
+	/**
+	 * 获取所有回复该用户所发布的帖子的回复
+	 * @param userId
+	 * @return
+	 */
+	List<String> getReplyInCollection(String userId);
+	
+	/**
+	 * 获取所有辅导员id
+	 * @return
+	 */
+	List<Assistant> getAllAssistants();
+
 
 }
