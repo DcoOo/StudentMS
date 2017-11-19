@@ -59,7 +59,11 @@
                 <li>
                     <a href="#" onclick="allInfo()">新生信息统计</a>
                 </li>
-
+				<c:if test="${sessionScope.role == 0}">
+					<li>
+						<a href="#" onclick="getCYL()">团成员统计</a>
+					</li>
+				</c:if>
                 <li class="nav-header">
                     通知管理
                 </li>
@@ -570,7 +574,6 @@
 
 
                 function memoContent(memoid) {
-                    alert(memoid);
                     var url = '/StudentMS/servlet/TeacherShowOneMemoController?memoid='+ memoid;
                     var memoData = '';
                     $.getJSON(url,function (data) {
