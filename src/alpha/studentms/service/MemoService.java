@@ -35,6 +35,16 @@ public interface MemoService {
 	 */
 	List<Memo> getAllOptionMemos();
 	
+	List<Memo> getAllCompulsoryMemos();
 	
+	/**
+	 * 根据memo id获取该memo
+	 */
+	Memo getOneMemoById(String id);
+	
+	/**
+	 * 根据memo id删除memo
+	 */
+	void deleteMemoById(String id);
 
 }

@@ -2,12 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>TTT</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
   	<servlet-name>login</servlet-name>
@@ -237,7 +232,129 @@
   	<servlet-name>showReplyed</servlet-name>
   	<url-pattern>/servlet/showReplyedController</url-pattern>
   </servlet-mapping>
-
+  <servlet>
+  	<servlet-name>studentDownLoad</servlet-name>
+  	<servlet-class>alpha.studentms.controller.StudentDownLoadHandleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>studentDownLoad</servlet-name>
+  	<url-pattern>/servlet/studentDownLoad</url-pattern>
+  </servlet-mapping>
   
-
+  <servlet>
+  	<servlet-name>teacherMessageRecycle</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherMessageRecycleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>teacherMessageRecycle</servlet-name>
+  	<url-pattern>/servlet/teacherMessageRecycle</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>teacherDocumentRecycle</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherDocumentRecycleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>teacherDocumentRecycle</servlet-name>
+  	<url-pattern>/servlet/teacherDocumentRecycle</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TeacherSearchAllStudentsRegister</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherSearchAllStudentsRegisterController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherSearchAllStudentsRegister</servlet-name>
+  	<url-pattern>/servlet/TeacherSearchAllStudentsRegisterController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TeacherOutputRegister</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherOutputRegisterController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherOutputRegister</servlet-name>
+  	<url-pattern>/servlet/TeacherOutputRegisterController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TeacherSearchAllStudents</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherSearchAllStudentsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherSearchAllStudents</servlet-name>
+  	<url-pattern>/servlet/TeacherSearchAllStudentsController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TeacherOutputStudentInfo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherOutputStudentInfoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherOutputStudentInfo</servlet-name>
+  	<url-pattern>/servlet/TeacherOutputStudentInfoController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TeacherAddMemo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherAddMemoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherAddMemo</servlet-name>
+  	<url-pattern>/servlet/TeacherAddMemoController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TeacherShowMemo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherShowMemoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherShowMemo</servlet-name>
+  	<url-pattern>/servlet/TeacherShowMemoController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TeacherShowOneMemo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherShowOneMemoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherShowOneMemo</servlet-name>
+  	<url-pattern>/servlet/TeacherShowOneMemoController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>TeacherDeleteMemo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.TeacherDeleteMemoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>TeacherDeleteMemo</servlet-name>
+  	<url-pattern>/servlet/TeacherDeleteMemoController</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>assistantOutputAllStudentCYLInfo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.AssistantSearchAllStudentCYLController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>assistantOutputAllStudentCYLInfo</servlet-name>
+  	<url-pattern>/servlet/assistantOutputAllStudentCYLInfo</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>assistantOutputCYLInfo</servlet-name>
+  	<servlet-class>alpha.studentms.controller.AssistantOutputCYLInfoController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>assistantOutputCYLInfo</servlet-name>
+  	<url-pattern>/servlet/assistantOutputCYLInfo</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ShowAllClasses</servlet-name>
+  	<servlet-class>alpha.studentms.controller.ShowAllClassesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ShowAllClasses</servlet-name>
+  	<url-pattern>/servlet/ShowAllClassesController</url-pattern>
+  </servlet-mapping>
 </web-app>

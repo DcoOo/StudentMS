@@ -1,6 +1,7 @@
 package alpha.studentms.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,10 +34,20 @@ public class TeacherSearchAllStudentsController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String assistantID = (String) request.getSession().getAttribute("userId");
+		int role = (int)request.getSession().getAttribute("role");
 		
-		Assistant assistant = teacherService.selectById(assistantID);
-		String whClass = assistant.getClassOfTeacher();
-		List<Student> result = teacherService.searchAllClass(whClass);
+        List<Student> result = new ArrayList<Student>();
+		
+		if(role == 0){
+			result = teacherService.searchAllStudnet();
+		}
+		else{
+			Assistant assistant = teacherService.selectById(assistantID);
+			String whClass = assistant.getClassOfTeacher();
+			result = teacherService.searchAllClass(whClass);
+		}
+		
+		
 		
 		JSONArray jSONArray = new JSONArray();
 		Iterator<Student> iterator = result.iterator();
@@ -69,7 +80,7 @@ public class TeacherSearchAllStudentsController extends HttpServlet {
 			else{
 				studentJSON.put("is_cyl","否" );
 			}
-			if(tempStudent.getRegister() == 0){
+			if(tempStudent.getRegister() == 1){
 				studentJSON.put("register","是" );
 			}
 			else{
@@ -80,7 +91,8 @@ public class TeacherSearchAllStudentsController extends HttpServlet {
 			
 			jSONArray.put(studentJSON);
 		}
-		request.setAttribute("registerJSON", jSONArray);
+		response.setHeader("content-type", "text/html;charset=UTF-8");
+		response.getWriter().append(jSONArray.toString());
 	}
 	
 	

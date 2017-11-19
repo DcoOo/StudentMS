@@ -73,8 +73,6 @@ public class DocumentDAO {
 			preStatement.setString(1, student);
 			ResultSet rs= preStatement.executeQuery();
 			
-			//这里应该使用循环，返回一个list。暂且先不管。！！！！！！！！！！！
-			//！！！！！！！！！！！！！！！！！！！
 			
 			
 			while(rs.next()){
@@ -196,6 +194,30 @@ public class DocumentDAO {
 		}
 	}
 	
+	
+	public List<Document> getDocumentsByModelDocId(String id) {
+		List<Document> documents = new ArrayList<>();
+		String sql = "select * from t_doc,t_doc_model_doc_rel where pk_doc = fk_doc and fk_model_doc = ?";
+		PreparedStatement statement;
+		try {
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, id);
+			ResultSet set = statement.executeQuery();
+			while (set.next()) {
+				Document document = new Document();
+				document.setId(set.getString(1));
+				document.setStudent(set.getString(2));
+				document.setAddress(set.getString(3));
+				document.setName(set.getString(4));
+				document.setOpTime(set.getTimestamp(5));
+				documents.add(document);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return documents;
+	}
 	
 	
 	 /*

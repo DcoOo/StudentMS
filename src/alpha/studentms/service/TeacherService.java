@@ -4,6 +4,7 @@ import java.util.List;
 
 import alpha.studentms.bean.Assistant;
 import alpha.studentms.bean.ClassAdvicer;
+import alpha.studentms.bean.Memo;
 import alpha.studentms.bean.Message;
 import alpha.studentms.bean.ModelDocument;
 import alpha.studentms.bean.Post;
@@ -63,6 +64,26 @@ public interface TeacherService {
 	 * 根据id查询老师
 	 */
 	Assistant selectById(String id);
+	
+	ClassAdvicer selectByNum(String num);
+	
+	
+	/**
+	 * 根据教师id查询所有日志
+	 */
+	List<Memo> searchAllMemoById(String id);
+	
+	
+	/**
+	 * 查询所有班级列表
+	 */
+	List<String> searchAllClassId();
+	
+	
+	/**
+	 * 获取所有学生信息
+	 */
+	List<Student> searchAllStudnet();
 
 	/**
 	 * 获取到用户收藏的帖子id

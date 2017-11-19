@@ -115,7 +115,7 @@ public class PostServiceImple implements PostService {
 					}
 				}
 				
-				if (counter != 0) {
+				if(counter != 0){
 					tempResultPost.add(tempPost);
 					tempResultNum.add(counter);
 				}
@@ -151,7 +151,6 @@ public class PostServiceImple implements PostService {
 			/**
 			 * 将排序后的结果去除不包含关键字的帖子，放入到返回列表中
 			 */
-
 			result.addAll(tempResultPost);
 		}
 		return result;

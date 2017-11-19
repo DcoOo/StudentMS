@@ -2,6 +2,7 @@ package alpha.studentms.serviceImple;
 
 import alpha.studentms.dao.LoginDAO;
 import alpha.studentms.service.LoginService;
+import alpha.studentms.util.EncryptUtils;
 
 public class LoginServiceImple implements LoginService{
 	
@@ -23,13 +24,11 @@ public class LoginServiceImple implements LoginService{
 		if (db_passwd == null) {
 			// 用户名不存在
 			return false;
-			
 		}
 		
 		if (!passwd.equals(db_passwd)) {
 			// 密码错误
 			return false;
-			
 		}
 		
 		if (passwd.equals(db_passwd))
@@ -47,5 +46,4 @@ public class LoginServiceImple implements LoginService{
 		return loginDao.select_by_username(username);
 	}
 	
-
 }

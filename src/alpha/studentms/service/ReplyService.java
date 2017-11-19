@@ -27,7 +27,7 @@ public interface ReplyService {
 	/**
 	 * 用户搜索回帖
 	 */
-	List<Reply> searchPost(String condition);
+	List<Reply> searchReply(String condition);
 	
 	
 	/**
@@ -69,5 +69,10 @@ public interface ReplyService {
 	 * @return
 	 */
 	Reply getReplyByReplyId(String replyId);
+	
+	/**
+	 * 删除用户collection字段中的回复id
+	 */
+	void deleteReplyIdInCollection(String userId, String replyId);
 
 }

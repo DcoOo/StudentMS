@@ -50,20 +50,20 @@
                 <div class="form-group">
                     <label>性别：</label>
                     <label class="radio-inline">
-                        <input type="radio" name="studentSex" id="male" value="male"> 男
+                        <input type="radio" name="studentSex" id="male" value="男"> 男
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="studentSex" id="female" value="female"> 女
+                        <input type="radio" name="studentSex" id="female" value="女"> 女
                     </label>
                 </div>
 
                 <div class="form-group">
                     <label>是否为团员：</label>
                     <label class="radio-inline">
-                        <input type="radio" name="studentCYL" id="yes" value="yes"> 是
+                        <input type="radio" name="studentCYL" id="yes" value="是"> 是
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" name="studentCYL" id="no" value="no"> 否
+                        <input type="radio" name="studentCYL" id="no" value="否"> 否
                     </label>
                 </div>
 

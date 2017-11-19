@@ -2,6 +2,7 @@ package alpha.studentms.service;
 
 import java.util.List;
 
+import alpha.studentms.bean.Document;
 import alpha.studentms.bean.ModelDocument;
 
 /**
@@ -24,4 +25,9 @@ public interface ModelDocumentService {
 	 * @return
 	 */
 	List<ModelDocument> getModelDocumentByMessageId(String messageid);
+	
+	/**
+	 * 根据模板文档id查询实体文档
+	 */
+	List<Document> getDocumentByModelDocId(String modelDocId);
 }

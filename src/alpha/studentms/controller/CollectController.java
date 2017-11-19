@@ -38,7 +38,7 @@ public class CollectController extends HttpServlet{
 		// 获取到所收集的帖子的id
 		String postId = req.getParameter("postId");
 		// 检查是否已经收藏过，如果收藏过则返回HAS_COLLECTED
-		if (req.getSession().getAttribute("role").equals("student")){
+		if (req.getSession().getAttribute("part").equals("student")){
 			// 检查学生是否已经收藏
 			if (studentService.addCollectPost(userId, postId)) {
 				// 未收藏过该帖子

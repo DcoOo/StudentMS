@@ -17,6 +17,7 @@ import alpha.studentms.bean.Post;
 import alpha.studentms.bean.Student;
 import alpha.studentms.dao.AssistantDAO;
 import alpha.studentms.dao.ClassAdvicerDAO;
+import alpha.studentms.dao.ClassDAO;
 import alpha.studentms.dao.MemoDAO;
 import alpha.studentms.dao.MessageDAO;
 import alpha.studentms.dao.ModelDocumentDAO;
@@ -33,6 +34,7 @@ public class TeacherServiceImple implements TeacherService {
 	AssistantDAO assistantDAO = new AssistantDAO();
 	ClassAdvicerDAO classAdvicerDAO = new ClassAdvicerDAO();
 	private PostDAO postDAO = new PostDAO();
+	ClassDAO classDAO = new ClassDAO();
 
 	@Override
 	public void addMemo(String userId,String title,String content) {
@@ -99,6 +101,10 @@ public class TeacherServiceImple implements TeacherService {
 	public void releaseMessage(Message message, ModelDocument modelDocument) {
 		if((message != null) && (modelDocument != null)){
 			messageDAO.insertMessage(message);
+			modelDocumentDAO.insertModelDocument(modelDocument);
+		} else if (message != null && modelDocument == null) {
+			messageDAO.insertMessage(message);
+		} else {
 			modelDocumentDAO.insertModelDocument(modelDocument);
 		}
 		
@@ -217,5 +223,36 @@ public class TeacherServiceImple implements TeacherService {
 	@Override
 	public List<Assistant> getAllAssistants() {
 		return assistantDAO.getAssistants();
+	}
+	
+	@Override
+	public ClassAdvicer selectByNum(String num) {
+		ClassAdvicer classAdvicer;
+		classAdvicer = classAdvicerDAO.findByNumber(num);
+		return classAdvicer;
+	}
+
+	@Override
+	public List<Memo> searchAllMemoById(String id) {
+		// TODO Auto-generated method stub
+		List<Memo> memos = new ArrayList<Memo>();
+		memos = memoDAO.searchAllMemoByUser(id);
+		return memos;
+	}
+
+	@Override
+	public List<String> searchAllClassId() {
+		// TODO Auto-generated method stub
+		List<String> result = new ArrayList<String>();
+		result = classDAO.searchAllClassId();
+		return result;
+	}
+
+	@Override
+	public List<Student> searchAllStudnet() {
+		// TODO Auto-generated method stub
+		List<Student> result = new ArrayList<Student>();
+		result = studentDAO.select_all();
+		return result;
 	}
 }

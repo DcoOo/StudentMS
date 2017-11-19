@@ -15,32 +15,39 @@ import org.json.JSONObject;
 import alpha.studentms.bean.Assistant;
 import alpha.studentms.bean.Student;
 import alpha.studentms.service.StudentService;
+import alpha.studentms.service.TeacherService;
 import alpha.studentms.serviceImple.StudentServiceImple;
 import alpha.studentms.serviceImple.TeacherServiceImple;
 
-public class StudentInfoHeader extends HttpServlet {
+public class AssistantSearchAllStudentCYLController extends HttpServlet{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	public StudentService studentService = new StudentServiceImple();
-	public TeacherServiceImple teacherService = new TeacherServiceImple();
-
+	public TeacherService teacherService = new TeacherServiceImple();
+	
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-        String assistantID = (String) request.getSession().getAttribute("");
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String assistantID = (String) request.getSession().getAttribute("userId");
 		Assistant assistant = teacherService.selectById(assistantID);
 		String whClass = assistant.getClassOfTeacher();
 		List<Student> result = teacherService.searchAllClass(whClass);
+		
 		JSONArray jSONArray = new JSONArray();
-			
 		Iterator<Student> iterator = result.iterator();
-		if(iterator.hasNext()){
-			
-		}	
+		while(iterator.hasNext()){
+			Student tempStudent = new Student();
+			tempStudent = iterator.next();
+			JSONObject studentJSON = new JSONObject();
+			studentJSON.put("name", tempStudent.getName());
+			if(tempStudent.getIs_cyl() == Student.IS_CYL){
+				studentJSON.put("isCYL", "是");
+			}
+			else{
+				studentJSON.put("isCYL", "否");
+			}
+			jSONArray.put(studentJSON);
+		}
+		response.setHeader("content-type", "text/html;charset=UTF-8");
+		response.getWriter().print(jSONArray.toString());
 	}
 
 	@Override
@@ -48,4 +55,5 @@ public class StudentInfoHeader extends HttpServlet {
 		doGet(req, resp);
 	}
 
+	
 }

@@ -38,7 +38,7 @@ public class ShowCollectionController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// 得到当前用户id
 		String userId = (String) req.getSession().getAttribute("userId");
-		if (req.getSession().getAttribute("role").equals("student")) {
+		if (req.getSession().getAttribute("part").equals("student")) {
 			// 登陆角色为学生
 			// 得到所有收藏的帖子
 			LinkedList<Post> list = (LinkedList<Post>) studentService.getCollectPost(userId);

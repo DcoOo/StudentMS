@@ -44,7 +44,7 @@ public class ShowReplyedController extends HttpServlet{
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String userId = (String) req.getSession().getAttribute("userId");
 		// 根据角色来决定显示
-		if (req.getSession().getAttribute("role").equals("student")) {
+		if (req.getSession().getAttribute("part").equals("student")) {
 			// 获取该帖子所有的回复的id
 			List<String> replyIdList = studentService.getReplyInCollection(userId);
 			
@@ -59,16 +59,13 @@ public class ShowReplyedController extends HttpServlet{
 				Post post = postService.getPost(reply.getPost_id());
 				replyList.add(reply);
 				postList.add(post);
-				System.out.println("ReplyId"+reply.getId());
 				String name = postService.getNameOrNumberByUserId(reply.getUser_id());
-				System.out.println(name+"-----");
 				nameList.add(name);
 			}
 			req.setAttribute("replyList", replyList);
 			req.setAttribute("postList", postList);
 			req.setAttribute("nameList", nameList);
 		}else{
-			// TODO 教职工
 			// 获取该所有帖子的回复的id
 			List<String> replyIdList = teacherService.getReplyInCollection(userId);
 			// 回复list

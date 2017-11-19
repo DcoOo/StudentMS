@@ -3,6 +3,7 @@ package alpha.studentms.service;
 import java.util.List;
 
 import alpha.studentms.bean.Message;
+import alpha.studentms.bean.ModelDocument;
 
 public interface MessageService {
 
@@ -21,4 +22,7 @@ public interface MessageService {
 	 */
 	List<Message> getClassMessage(String class_id);
 	
+	List<ModelDocument> getModelDocumentByMessageId(String messageId);
+	
+	List<Message> getTeacherselfMessage(String teacher_id);
 }

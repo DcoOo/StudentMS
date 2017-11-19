@@ -149,12 +149,33 @@ public class StableMemoDAO {
 				memo.setTitle(set.getString("title"));
 				list.add(memo);
 			}
-			return list;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return list;
+	}
+	
+	/**
+	 * 获得所有必做任务
+	 * @return
+	 */
+	public List<Memo> getAllCompulsoryMemo() {
+		List<Memo> list = new LinkedList<>();
+		String compulsoryMemos = "SELECT * FROM t_stable_memo WHERE docType = 0";
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(compulsoryMemos);
+			ResultSet set = preparedStatement.executeQuery();
+			while (set.next()) {
+				Memo memo = new Memo();
+				memo.setId(set.getString("pk_id"));
+				memo.setTitle(set.getString("title"));
+				memo.setContent(set.getString("content"));
+				list.add(memo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	/**

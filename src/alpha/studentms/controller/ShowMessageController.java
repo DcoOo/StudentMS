@@ -45,6 +45,7 @@ public class ShowMessageController extends HttpServlet{
 		// 获取到班主任的所有通知，并返回到前端
 		List<Message> classAdviserAndAssistantMessages = messageService.getTeacherMessage(teacherID);
 		req.setAttribute("classAdviserAndAssistantMessages", classAdviserAndAssistantMessages);
+		System.out.println(classAdviserAndAssistantMessages.size()+"---");
 		// 根据通知id，查询到通知对应的模板文档的下载地址，返回到前端
 		List<String> docList = new ArrayList<>();
 		// 每一个通知都放入一个表示List<ModelDocument>的Json字符串

@@ -9,7 +9,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title id="title">学生个人中心</title>
+    <title>学生个人中心</title>
     <link href="/StudentMS/css/bootstrap.min.css" rel="stylesheet">
     <script src="/StudentMS/js/jquery-3.2.1.min.js"></script>
     <script src="/StudentMS/js/bootstrap.min.js"></script>
@@ -36,8 +36,9 @@
 
     <nav style="background:#1d85d7" class="navbar navbar-default">
     <ul class="nav navbar-nav">
-        <li class="nav-header" onclick="jQuery:window.location.reload()">
-            主页
+        <li class="nav-header">
+        <a href="/StudentMS/servlet/showmemocontroller">主页</a>
+            
         </li>
     </ul>
 </nav>
@@ -82,7 +83,6 @@
             <hr/>
             <li>
                 <a href="/StudentMS/servlet/showPostController">新生论坛</a>
-
             </li>
         </ul>
     </div>
@@ -221,7 +221,9 @@
         $('#centerTitle').text("个人信息");
         $('#centerContent>*').hide();
         $.getJSON("/StudentMS/servlet/studentInfoShow",function (data) {
-            $('#centerContent').append('<div class="table-responsive">\n' +
+            var sex = data.sex == 1? "男":"女";
+            var cyl = data.is_cyl == 1? "是":"否";
+        	$('#centerContent').append('<div class="table-responsive">\n' +
                     '                <form action="/StudentMS/servlet/studentInfoUpdate" method="post">' +
                 '        <table class="table table-bordered table-condensed">\n' +
                 '            <tr>\n' +
@@ -241,8 +243,8 @@
                 '            </tr>\n' +
                 '            <tr>\n' +
                 '                <td><input type="text" name="studentNation" value="'+ data.nation + '"></td>\n' +
-                '                <td><input type="text" name="studentSex" value="'+ data.sex + '"></td>\n' +
-                '                <td><input type="text" name="studentCYL" value="'+ data.is_cyl + '"></td>\n' +
+                '                <td><input type="text" name="studentSex" value="'+ sex + '"></td>\n' +
+                '                <td><input type="text" name="studentCYL" value="'+ cyl + '"></td>\n' +
                 '            </tr>\n' +
                 '            <tr>\n' +
                 '                <th>微信</th>\n' +
@@ -368,8 +370,7 @@
         }else{
         	alert("原密码输入错误，请重新输入");
         }
-    }
-    
+    }   
     
     
     function examResult() {
@@ -402,8 +403,11 @@
         $('#centerContent').append('<h2>'+title+'</h2>' +
             '<p>'+content+'</p>');
         $.each($.parseJSON(file_json), function(n, value){
-        	builder += '<a href='+value.address+' download="name">'+value.name +'</a>'+
-			'<input type="hidden" name="modelDocID" value="' + value.modelDoc + '">'+
+			builder += '<c:url value="/servlet/studentDownLoad" var="downurl">' +
+            '<c:param name="filename"></c:param>' + 
+            '</c:url>' + 
+            '<a href="${downurl}' + value.name + '">' + value.name + '</a>' + 
+        	'<input type="hidden" name="modelDocID" value="' + value.modelDoc + '">'+
 			'<input type="file" name="file1">';
         });
         

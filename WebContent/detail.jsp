@@ -41,7 +41,7 @@
     <a name="luntan" style="margin: auto"></a>
     <div class="kuai" style=" margin:10px auto;width: 1000px; height: 200px;border: 1px #CCCCCC solid;border-radius:5px;overflow: hidden;">
     	<!-- 删除帖子按钮，根据身份才能决定是否显示该按钮 -->
-    	<c:if test="${sessionScope.role == 'teacher' || sessionScope.userId == requestScope.post.user_id }">
+    	<c:if test="${sessionScope.part == 'teacher' || sessionScope.userId == requestScope.post.user_id }">
 	<a href="/StudentMS/servlet/deletePostController?postId=${requestScope.post.id }">×</a>
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
     	</c:if>
