@@ -73,8 +73,6 @@ public class DocumentDAO {
 			preStatement.setString(1, student);
 			ResultSet rs= preStatement.executeQuery();
 			
-			//这里应该使用循环，返回一个list。暂且先不管。！！！！！！！！！！！
-			//！！！！！！！！！！！！！！！！！！！
 			
 			
 			while(rs.next()){

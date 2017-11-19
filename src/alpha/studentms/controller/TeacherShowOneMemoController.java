@@ -35,7 +35,6 @@ public class TeacherShowOneMemoController extends HttpServlet {
 		memoJSON.put("id", memo.getId());
 		memoJSON.put("title", memo.getTitle());
 		memoJSON.put("content", memo.getContent());
-		System.out.println(memoJSON.toString());
 		response.setHeader("content-type", "text/html;charset=UTF-8");
 		response.getWriter().append(memoJSON.toString());
 	}

@@ -12,6 +12,7 @@ import alpha.studentms.bean.ModelDocument;
 import alpha.studentms.bean.Student;
 import alpha.studentms.dao.AssistantDAO;
 import alpha.studentms.dao.ClassAdvicerDAO;
+import alpha.studentms.dao.ClassDAO;
 import alpha.studentms.dao.MemoDAO;
 import alpha.studentms.dao.MessageDAO;
 import alpha.studentms.dao.ModelDocumentDAO;
@@ -26,6 +27,7 @@ public class TeacherServiceImple implements TeacherService {
 	ModelDocumentDAO modelDocumentDAO = new ModelDocumentDAO();
 	AssistantDAO assistantDAO = new AssistantDAO();
 	ClassAdvicerDAO classAdvicerDAO = new ClassAdvicerDAO();
+	ClassDAO classDAO = new ClassDAO();
 
 	@Override
 	public void addMemo(String userId,String title,String content) {
@@ -159,5 +161,21 @@ public class TeacherServiceImple implements TeacherService {
 		List<Memo> memos = new ArrayList<Memo>();
 		memos = memoDAO.searchAllMemoByUser(id);
 		return memos;
+	}
+
+	@Override
+	public List<String> searchAllClassId() {
+		// TODO Auto-generated method stub
+		List<String> result = new ArrayList<String>();
+		result = classDAO.searchAllClassId();
+		return result;
+	}
+
+	@Override
+	public List<Student> searchAllStudnet() {
+		// TODO Auto-generated method stub
+		List<Student> result = new ArrayList<Student>();
+		result = studentDAO.select_all();
+		return result;
 	}
 }

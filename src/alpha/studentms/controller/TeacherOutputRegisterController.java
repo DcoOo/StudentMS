@@ -35,9 +35,17 @@ public class TeacherOutputRegisterController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String assistantID = (String) request.getSession().getAttribute("userId");
+		int role = (int)request.getSession().getAttribute("role");
 		Assistant assistant = teacherService.selectById(assistantID);
 		String whClass = assistant.getClassOfTeacher();
-		List<Student> result = teacherService.searchAllClass(whClass);
+        List<Student> result = new ArrayList<Student>();
+		
+		if(role == 0){
+			result = teacherService.searchAllStudnet();
+		}
+		else{
+			result = teacherService.searchAllClass(whClass);
+		}
 		
 		Workbook webBook ;
 		OutputStream out = null; 
@@ -52,7 +60,7 @@ public class TeacherOutputRegisterController extends HttpServlet {
 			webBook = ExcelUtils.creatExcelWithRegisterInfo(result);
 			fileName = "所有新生报到信息";
 		}
-		else if(which.equals("isCheck")){
+		else if(!which.equals("isCheck")){
 			List<Student> tempList = new ArrayList<Student>();
 			for(int i =0;i<result.size();i++){
 				Student tempStudent = new Student();
@@ -62,7 +70,7 @@ public class TeacherOutputRegisterController extends HttpServlet {
 				}
 			}
 			webBook = ExcelUtils.creatExcelWithRegisterInfo(tempList);
-			fileName = "已报到新生";
+			fileName = "未报到新生";
 		}
 		else{
 			List<Student> tempList = new ArrayList<Student>();
@@ -74,7 +82,7 @@ public class TeacherOutputRegisterController extends HttpServlet {
 				}
 			}
 			webBook = ExcelUtils.creatExcelWithRegisterInfo(tempList);
-			fileName = "未报到新生";
+			fileName = "已报到新生";
 		}
 		
 		

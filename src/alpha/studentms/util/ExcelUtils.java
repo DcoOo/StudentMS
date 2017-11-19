@@ -35,7 +35,7 @@ public class ExcelUtils {
         	
         	Cell cell3=row.createCell(0); // 创建一个单元格  第1列
             cell3.setCellValue(tempStudent.getName());  // 给单元格设置值
-            if(tempStudent.getRegister() == 0){
+            if(tempStudent.getRegister() == 1){
             	Cell cell4=row.createCell(1); // 创建一个单元格  第1列
                 cell4.setCellValue("是");  // 给单元格设置值
             }

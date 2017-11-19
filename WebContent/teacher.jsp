@@ -59,6 +59,11 @@
                 <li>
                     <a href="#" onclick="allInfo()">新生信息统计</a>
                 </li>
+                <c:if test="${sessionScope.role == 0}">
+					<li>
+						<a href="#" onclick="getCYL()">团成员统计</a>
+					</li>
+				</c:if>
 
                 <li class="nav-header">
                     通知管理
@@ -132,6 +137,7 @@
                 function checkSetTitle() {
                     $('#centerTitle').show();
                     $('#centerTitle').text("报到情况");
+                    
                 }
                 function check() {
                     $.ajaxSettings.async = false;
@@ -208,8 +214,8 @@
                         infos = data;
                     });
                     
-                    $.getJSON("",function (data) {
-                        classes = data.class;
+                    $.getJSON("/StudentMS/servlet/ShowAllClassesController",function (data) {
+                        classes = data;
                     })
                 }
 
@@ -244,17 +250,17 @@
                                 '</tr>';
                     }
                     
-                    var premission = '';
+                    var premission = ${sessionScope.role};
                     var classCheck = '';
 
-                    if (premission == ''){
-                        classCheck += '<label>';
+                    if (premission == 0){
+                        classCheck += '<label>班级：</label>';
                         for (var i = 0;i<classes.length;i++){
                             classCheck += '<label class="checkbox-inline">' +
-                                '<input type="checkbox" class="classesCheck" id="" name='+classes[i]+' value="0">'+ classes[i] +
+                                '<input type="checkbox" class="classesCheck" id="" name='+classes[i].class1+' value="'+ classes[i].class1 +'">'+ classes[i].class1 +
                                 '</label>';
                         }
-                        classCheck += '</label>'
+                        
 
                     }
                     
@@ -308,10 +314,10 @@
 
                         '<label class="checkbox-inline">' +
                         '<input type="checkbox" class="infoHead" name="nation" value="11">民族' +
-                        '</label>'+
+                        '</label><br>'+
                         classCheck +
-                        '<a class="btn btn-default" onclick="infoSubmit()">提交</a>' +
-                        '<input class="btn btn-default" type="submit" value="导出" >' +
+                        '<br><div class="pull-right"><a class="btn btn-default" onclick="infoSubmit()">提交</a>' +
+                        '<input class="btn btn-default" type="submit" value="导出" ></div>' +
                         '</form>' +
                         '<h4 class="text-center"> 学生信息统计 </h4>' +
                         '<div class="table-responsive">'+
@@ -342,21 +348,24 @@
 
                 function getCheckVal() {
                     var obj = document.getElementsByClassName("infoHead");
+                    checkVal.splice(0,checkVal.length);
+                    classCheckVal.splice(0,classCheckVal.length);
                     for(var k in obj){
                         if(obj[k].checked)
                             checkVal.push(obj[k].value);
                     }
                     
                     var obj1 = document.getElementsByClassName("classesCheck");
-                    for(var k in obj){
-                        if(obj[k].checked)
-                            classCheckVal.push(obj[k].value);
+                    for(var k in obj1){
+                        if(obj1[k].checked)
+                            classCheckVal.push(obj1[k].value);
                     }
 
                 }
 
                 function infoSubmit() {
                     getCheckVal();
+                    //alert(classCheckVal.length);
                     $('#infoTable tr td').hide();
                     for (var i = 0;i<checkVal.length;i++){
                         var msg = 'col'+ checkVal[i];
@@ -364,12 +373,19 @@
 
                     }
                     
-                    for (var i = 0;i<classCheckVal.length;i++){
-                        $("table tbody tr")
-                            .hide()
-                            .filter(":contains('"+ classCheckVal[i] +"')")
-                            .show();
-                    }
+                    if(classCheckVal.length != 0){
+                    	for (var i = 0;i<classCheckVal.length;i++){
+                            $("table tbody tr")
+                                .hide()
+                                .filter(":contains('"+ classCheckVal[i] +"')")
+                                .show();
+                        }
+                    }else{
+                    	$("table tbody tr")
+                       .hide()
+                       .show();
+                   }
+                    
                 }
 
                 function checkSubmit() {
@@ -386,10 +402,6 @@
                         success:allInfo()
                     });
                 }
-
-
-
-
 
 
 
@@ -579,6 +591,7 @@
                         .hide()
                         .filter(":contains('"+ "是" +"')")
                         .show();
+
                 }
                 
                 
@@ -623,5 +636,6 @@
 
 </div>
 </div>
+
 </body>
 </html>

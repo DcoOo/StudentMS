@@ -241,4 +241,13 @@
   	<servlet-name>assistantOutputCYLInfo</servlet-name>
   	<url-pattern>/servlet/assistantOutputCYLInfo</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>ShowAllClasses</servlet-name>
+  	<servlet-class>alpha.studentms.controller.ShowAllClassesController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ShowAllClasses</servlet-name>
+  	<url-pattern>/servlet/ShowAllClassesController</url-pattern>
+  </servlet-mapping>
 </web-app>

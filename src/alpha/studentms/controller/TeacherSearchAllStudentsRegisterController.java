@@ -1,6 +1,7 @@
 package alpha.studentms.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -33,10 +34,19 @@ public class TeacherSearchAllStudentsRegisterController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String assistantID = (String) request.getSession().getAttribute("userId");
+		int role = (int)request.getSession().getAttribute("role");
 		//记得改回来
 		Assistant assistant = teacherService.selectById(assistantID);
 		String whClass = assistant.getClassOfTeacher();
-		List<Student> result = teacherService.searchAllClass(whClass);
+		
+        List<Student> result = new ArrayList<Student>();
+		
+		if(role == 0){
+			result = teacherService.searchAllStudnet();
+		}
+		else{
+			result = teacherService.searchAllClass(whClass);
+		}
 		
 		JSONArray jSONArray = new JSONArray();
 		Iterator<Student> iterator = result.iterator();
@@ -49,7 +59,7 @@ public class TeacherSearchAllStudentsRegisterController extends HttpServlet {
 				studentJSON.put("isCheck", "是");
 			}
 			else{
-				studentJSON.put("isNotCheck", "否");
+				studentJSON.put("isCheck", "否");
 			}
 			jSONArray.put(studentJSON);
 		}

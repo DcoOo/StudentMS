@@ -292,8 +292,7 @@
         }else{
         	alert("原密码输入错误，请重新输入");
         }
-    }
-    
+    }   
     
     
     function examResult() {

@@ -71,5 +71,17 @@ public interface TeacherService {
 	 * 根据教师id查询所有日志
 	 */
 	List<Memo> searchAllMemoById(String id);
+	
+	
+	/**
+	 * 查询所有班级列表
+	 */
+	List<String> searchAllClassId();
+	
+	
+	/**
+	 * 获取所有学生信息
+	 */
+	List<Student> searchAllStudnet();
 
 }

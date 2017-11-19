@@ -34,10 +34,34 @@ public class TeacherOutputStudentInfoController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String assistantID = (String) request.getSession().getAttribute("userId");
+		int role = (int)request.getSession().getAttribute("role");
 		//记得改过来Id
 		Assistant assistant = teacherService.selectById(assistantID);
 		String whClass = assistant.getClassOfTeacher();
-		List<Student> result = teacherService.searchAllClass(whClass);
+		List<Student> result = new ArrayList<Student>();
+		List<String> allClass = new ArrayList<String>();
+		List<String> whichClassSelected = new ArrayList<String>();
+		
+		allClass = teacherService.searchAllClassId();
+		
+		if(role == 0){
+			boolean isAll = false;
+			for(int temp=0;temp<allClass.size();temp++){
+				if(request.getParameterValues(allClass.get(temp)) != null){
+					result.addAll(teacherService.searchAllClass(allClass.get(temp)));
+					isAll = true;
+				}
+			}
+			
+			if(!isAll){
+				result = teacherService.searchAllStudnet();
+			}
+		}
+		else{
+			result = teacherService.searchAllClass(whClass);
+		}
+		
+		
 		
 		
 		
@@ -58,6 +82,7 @@ public class TeacherOutputStudentInfoController extends HttpServlet {
 		String[] qq = request.getParameterValues("qq");
 		String[] phone = request.getParameterValues("phone");
 		String[] address = request.getParameterValues("address");
+		
 		
 		
 		List<Boolean> which = new ArrayList<Boolean>();
