@@ -49,7 +49,7 @@ public class TeacherSearchAllStudentsRegisterController extends HttpServlet {
 				studentJSON.put("isCheck", "是");
 			}
 			else{
-				studentJSON.put("isCheck", "否");
+				studentJSON.put("isNotCheck", "否");
 			}
 			jSONArray.put(studentJSON);
 		}

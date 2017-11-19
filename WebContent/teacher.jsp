@@ -119,9 +119,11 @@
     </div>
 
         <script>
-                var infos = [];
-                var checkArr = [];
-                var checkVal = [];
+        var infos = [];
+        var checkArr = [];
+        var checkVal = [];
+        var classes = [];
+        var classCheckVal = [];
 
 
                 /**
@@ -205,6 +207,10 @@
                     $.getJSON("/StudentMS/servlet/TeacherSearchAllStudentsController",function(data){
                         infos = data;
                     });
+                    
+                    $.getJSON("",function (data) {
+                        classes = data.class;
+                    })
                 }
 
 
@@ -237,7 +243,21 @@
                                 '<td class="col11">'+ infos[i].nation +'</td>' +
                                 '</tr>';
                     }
+                    
+                    var premission = '';
+                    var classCheck = '';
 
+                    if (premission == ''){
+                        classCheck += '<label>';
+                        for (var i = 0;i<classes.length;i++){
+                            classCheck += '<label class="checkbox-inline">' +
+                                '<input type="checkbox" class="classesCheck" id="" name='+classes[i]+' value="0">'+ classes[i] +
+                                '</label>';
+                        }
+                        classCheck += '</label>'
+
+                    }
+                    
                     var content = $('#centerContent');
                     content.append('<div id="rowInfo">' +
                         '<form action="/StudentMS/servlet/TeacherOutputStudentInfoController" method="post" id="InfoForm">' +
@@ -289,6 +309,7 @@
                         '<label class="checkbox-inline">' +
                         '<input type="checkbox" class="infoHead" name="nation" value="11">民族' +
                         '</label>'+
+                        classCheck +
                         '<a class="btn btn-default" onclick="infoSubmit()">提交</a>' +
                         '<input class="btn btn-default" type="submit" value="导出" >' +
                         '</form>' +
@@ -325,6 +346,13 @@
                         if(obj[k].checked)
                             checkVal.push(obj[k].value);
                     }
+                    
+                    var obj1 = document.getElementsByClassName("classesCheck");
+                    for(var k in obj){
+                        if(obj[k].checked)
+                            classCheckVal.push(obj[k].value);
+                    }
+
                 }
 
                 function infoSubmit() {
@@ -334,6 +362,13 @@
                         var msg = 'col'+ checkVal[i];
                         $('.' + msg).show();
 
+                    }
+                    
+                    for (var i = 0;i<classCheckVal.length;i++){
+                        $("table tbody tr")
+                            .hide()
+                            .filter(":contains('"+ classCheckVal[i] +"')")
+                            .show();
                     }
                 }
 
@@ -570,7 +605,6 @@
 
 
                 function memoContent(memoid) {
-                    alert(memoid);
                     var url = '/StudentMS/servlet/TeacherShowOneMemoController?memoid='+ memoid;
                     var memoData = '';
                     $.getJSON(url,function (data) {
