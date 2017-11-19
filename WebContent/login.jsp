@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label>身份：</label>
                     <label class="radio-inline">
-                        <input type="radio" name="role" id="inlineRadio1" value="student"> 学生
+                        <input type="radio" name="role" id="inlineRadio1" checked value="student"> 学生
                     </label>
                     <label class="radio-inline">
                         <input type="radio" name="role" id="inlineRadio2" value="teacher"> 教职工 
