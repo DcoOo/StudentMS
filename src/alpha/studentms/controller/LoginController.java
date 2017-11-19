@@ -71,20 +71,22 @@ public class LoginController extends HttpServlet {
 			} else {
 				// 教师登陆
 				ClassAdvicer classAdvicer = teacherService.selectByNum(username);
-				System.out.println(classAdvicer.getRoleOfTeacher());
-				int roleControl = classAdvicer.getRoleOfTeacher();
-				if (classAdvicer != null && roleControl == 1) {
-					req.getSession().setAttribute("userId", classAdvicer.getId());
-					req.getSession().setAttribute("role", 1);
-					req.getRequestDispatcher("/servlet/TeacherShowMemoController").forward(req, resp);
-				} else if (roleControl == 0) {
-					req.getSession().setAttribute("userId", classAdvicer.getId());
-					req.getSession().setAttribute("role", 0);
-					req.getRequestDispatcher("/servlet/TeacherShowMemoController").forward(req, resp);
-				} else {
+				if(classAdvicer != null){
+					int roleControl = classAdvicer.getRoleOfTeacher();
+					if ( roleControl == 1) {
+						req.getSession().setAttribute("userId", classAdvicer.getId());
+						req.getSession().setAttribute("role", 1);
+						req.getRequestDispatcher("/servlet/TeacherShowMemoController").forward(req, resp);
+					} else if (roleControl == 0) {
+						req.getSession().setAttribute("userId", classAdvicer.getId());
+						req.getSession().setAttribute("role", 0);
+						req.getRequestDispatcher("/servlet/TeacherShowMemoController").forward(req, resp);
+					} 
+				}else {
 					req.setAttribute("login_flag", "0");
 					req.getRequestDispatcher("/login.jsp").forward(req, resp);
 				}
+				
 			}
 		} else {
 			// 用户名，密码错误
