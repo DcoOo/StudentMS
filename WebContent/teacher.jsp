@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>班主任个人中心</title>
+    <title id="title"></title>
+    
     <link href="/StudentMS/css/bootstrap.min.css" rel="stylesheet">
     <script src="/StudentMS/js/jquery-3.2.1.min.js"></script>
     <script src="/StudentMS/js/bootstrap.min.js"></script>
@@ -129,6 +130,16 @@
         var checkVal = [];
         var classes = [];
         var classCheckVal = [];
+        
+       // $('#title').text("老师个人中心");
+       var roleForTitle = ${sessionScope.role};
+        if(roleForTitle){
+        	$('#title').text("班主任个人中心");
+        }
+        else{
+        	
+        	$('#title').text("辅导员个人中心");
+        }
 
 
                 /**

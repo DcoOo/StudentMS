@@ -115,8 +115,10 @@ public class PostServiceImple implements PostService {
 					}
 				}
 				
-				tempResultPost.add(tempPost);
-				tempResultNum.add(counter);
+				if(counter != 0){
+					tempResultPost.add(tempPost);
+					tempResultNum.add(counter);
+				}
 			}
 			
 			
@@ -149,10 +151,7 @@ public class PostServiceImple implements PostService {
 			/**
 			 * 将排序后的结果去除不包含关键字的帖子，放入到返回列表中
 			 */
-			while(tempResultNum.get(tempResultNum.size()-1) == 0){
-				tempResultNum.remove(tempResultNum.size()-1);
-				tempResultPost.remove(tempResultPost.size()-1);
-			}
+			
 			result.addAll(tempResultPost);
 		}
 		

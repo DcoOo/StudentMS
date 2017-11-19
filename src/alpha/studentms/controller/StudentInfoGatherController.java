@@ -47,12 +47,14 @@ public class StudentInfoGatherController extends HttpServlet {
 		String optionMemoID = "";
 		Student student;
 		student = StudentInfoUtils.updateStudentInfo(request);
-		for (int i = 0; i < optionMemos.length; i++) {
-			Memo memo = new Memo();
-			optionMemoID = optionMemos[i];
-			memo.setUser(userId);
-			memo.setId(optionMemoID);
-			studentService.insertOptionMemo(memo);
+		if(optionMemos != null){
+			for (int i = 0; i < optionMemos.length; i++) {
+				Memo memo = new Memo();
+				optionMemoID = optionMemos[i];
+				memo.setUser(userId);
+				memo.setId(optionMemoID);
+				studentService.insertOptionMemo(memo);
+			}
 		}
 		for (Memo memo : memos) {
 			memo.setUser(userId);

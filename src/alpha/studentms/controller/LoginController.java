@@ -90,6 +90,10 @@ public class LoginController extends HttpServlet {
 				}
 				
 			}
-		}	
+		}else{
+			// 用户名或密码错误
+			req.setAttribute("login_flag", "0");
+			req.getRequestDispatcher("/login.jsp").forward(req, resp);
+		}
 	}
 }
