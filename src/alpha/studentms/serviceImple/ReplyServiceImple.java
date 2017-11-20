@@ -244,8 +244,39 @@ public class ReplyServiceImple implements ReplyService {
 	
 	@Override
 	public Reply getReplyByReplyId(String replyId) {
-		System.out.println(replyId);
-		return replyDAO.select_by_id(replyId, ReplyDAO.PRIMARY_ID_CODE).get(0);
+		List<Reply> replys = replyDAO.select_by_id(replyId, ReplyDAO.PRIMARY_ID_CODE); 
+		if (replys.size() == 0) {
+			return null;
+		}else{
+			return replys.get(0);
+		}
+	}
+	
+	@Override
+	public void deleteReplyIdInCollection(String userId, String replyId) {
+		String studentCollection = studentDAO.select_collection_by_id(userId);
+		if (studentCollection != null) {
+			// 向学生的collection字段中删除reply
+			JSONObject obj = new JSONObject(studentCollection);
+			Map<String, Object> map = obj.toMap();
+			@SuppressWarnings("unchecked")
+			ArrayList<String> list = (ArrayList<String>) map.get("reply");
+			list.remove(replyId);
+			studentDAO.update_collection_by_id(new JSONObject(map).toString(), userId);
+			return;
+		}
+		String teacherCollection = teacherService.getTeacherCollectionByUserId(userId);
+		if (teacherCollection != null) {
+			// 向老师的collection字段中删除指定的replyid
+			JSONObject obj = new JSONObject(teacherCollection);
+			Map<String, Object> map = obj.toMap();
+			@SuppressWarnings("unchecked")
+			ArrayList<String> list = (ArrayList<String>) map.get("reply");
+			list.remove(replyId);
+			classAdvicerDAO.updateCollection(new JSONObject(map).toString(), userId);
+			return;
+		}
+		
 	}
 	
 	

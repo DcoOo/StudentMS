@@ -42,11 +42,14 @@ public class ShowCollectionController extends HttpServlet{
 			// 登陆角色为学生
 			// 得到所有收藏的帖子
 			LinkedList<Post> list = (LinkedList<Post>) studentService.getCollectPost(userId);
-			System.out.println(list.size()+"ShowCollection");
 			LinkedList<String> authorList = new LinkedList<>();
 			req.setAttribute("collectedPosts", list);
 			// 将每个帖子的作者加到request中，其键为帖子id
 			for(Post post : list){
+				if (post == null) {
+					list.remove(list);
+					continue;
+				}
 				String author = postService.getNameOrNumberByUserId(post.getUser_id());
 				authorList.add(author);
 			}
@@ -60,6 +63,10 @@ public class ShowCollectionController extends HttpServlet{
 			req.setAttribute("collectedPosts", list);
 			// 将每个帖子的作者加到request中，其键为帖子id
 			for(Post post : list){
+				if (post == null) {
+					list.remove(list);
+					continue;
+				}
 				String author = postService.getNameOrNumberByUserId(post.getUser_id());
 				authorList.add(author);
 			}

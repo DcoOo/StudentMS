@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import alpha.studentms.bean.Memo;
 import alpha.studentms.dao.StableMemoDAO;
+import alpha.studentms.util.UUIDGenerater;
 
 /**
  * StableMemoDAO的测试类
@@ -25,9 +26,11 @@ public class StableMemoDAOTest {
 		stableMemoDAO = new StableMemoDAO();
 	}
 
+
 	@Test
 	public void testInsertStableMemo() {
-		stableMemoDAO.insertStableMemo("2", "1", "2");
+		System.out.println(UUIDGenerater.getUUID());
+//		stableMemoDAO.insertStableMemo("2", "1", "2");
 	}
 
 	@Test

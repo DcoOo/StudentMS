@@ -56,6 +56,10 @@ public class ShowReplyedController extends HttpServlet{
 			LinkedList<String> nameList = new LinkedList<>();
 			for(String replyId : replyIdList){
 				Reply reply = replyService.getReplyByReplyId(replyId); 
+				if (reply == null) {
+					// 该条回复为空
+					continue;
+				}
 				Post post = postService.getPost(reply.getPost_id());
 				replyList.add(reply);
 				postList.add(post);
@@ -76,6 +80,10 @@ public class ShowReplyedController extends HttpServlet{
 			LinkedList<String> nameList = new LinkedList<>();
 			for(String replyId : replyIdList){
 				Reply reply = replyService.getReplyByReplyId(replyId); 
+				if (reply == null) {
+					// 帖子被删除后回复也删除
+					continue;
+				}
 				Post post = postService.getPost(reply.getPost_id());
 				replyList.add(reply);
 				postList.add(post);

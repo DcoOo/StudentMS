@@ -39,12 +39,21 @@ public class DeletePostController extends HttpServlet{
 		String userId = (String) req.getSession().getAttribute("userId");
 		// 获取帖子id
 		String postId = req.getParameter("postId");
+		// 获取删除的帖子
+		Post post = postService.getPost(postId);
+		if (post == null) {
+			// 表示访问的帖子已经被删除
+			req.getRequestDispatcher("/hasdelete.jsp").forward(req, resp);
+		}
 		// 删帖的Id，同时删除帖子的回复 
 		postService.deletePost(userId, postId);
 		// 用户的collection字段中收藏的帖子、以及对应的回复都应该删除
-		// 删除所有用户collection中收藏的帖子id
+		// TODO 删除所有用户collection中收藏的帖子id
 		// 找到所有回复，将帖子的拥有者collection字段中的回复id删除
 		List<Reply> replys = postService.getReplysByPostId(postId);
+		for(Reply reply : replys){
+			replyService.deleteReplyIdInCollection(post.getUser_id(), reply.getId());
+		}
 		req.getRequestDispatcher("/servlet/showPostController").forward(req, resp);
 	}
 	

@@ -111,7 +111,6 @@ public class ReplyDAO {
 				}
 				// initialize selece by id preparedstatement
 				preState_select_by_id = connection.prepareStatement(aString);
-				System.out.println(aString);
 				preState_select_by_id.setString(1, id);
 				ResultSet set = preState_select_by_id.executeQuery();
 				while (set.next()) {

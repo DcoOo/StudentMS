@@ -140,7 +140,10 @@ public class StudentServiceImple implements StudentService{
 		String mapJson = studentDAO.select_collection_by_id(id);
 		Map<String, Object> map = new JSONObject(mapJson).toMap();
 		for(Object postId : (ArrayList<String>)map.get("collect")){
-			posts.add(postDAO.select_by_id((String)postId));
+			Post post = postDAO.select_by_id((String)postId);
+			if (post != null) {
+				posts.add(post);
+			}
 		}
 		return posts;
 	}

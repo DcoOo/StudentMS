@@ -17,4 +17,13 @@ public class UUIDGenerater {
         a = a.replaceAll("-","");
         return a;
     }
+    
+    public static void main(String[] args){
+    	System.out.println(getUUID());
+    	System.out.println(getUUID());
+    	System.out.println(getUUID());
+    	System.out.println(getUUID());
+    	System.out.println(getUUID());
+    	System.out.println(getUUID());
+    }
 }
