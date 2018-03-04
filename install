@@ -30,7 +30,7 @@ install__deepdive_build_deps() {
         )
     else
         sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test  # for gcc >= 4.8 on Precise (12.04)
-        sudo add-apt-repository -y ppa:openjdk-r/ppa  # for openjdk 8
+        # sudo add-apt-repository -y ppa:openjdk-r/ppa  # for openjdk 8
         sudo apt-get update
         build_deps+=(
             # sampler
